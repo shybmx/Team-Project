@@ -1,6 +1,8 @@
 package garits;
 
+import java.awt.*;
 import javafx.scene.paint.Color;
+import javax.swing.*;
 
 public class AdminMenu extends javax.swing.JFrame {
 
@@ -36,7 +38,6 @@ public class AdminMenu extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         manage = new javax.swing.JButton();
-        mainPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,8 +91,6 @@ public class AdminMenu extends javax.swing.JFrame {
         });
         getContentPane().add(manage);
         manage.setBounds(250, 20, 120, 150);
-        getContentPane().add(mainPanel);
-        mainPanel.setBounds(150, 240, 1150, 660);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         getContentPane().add(jLabel2);
@@ -119,8 +118,10 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_archiveDBActionPerformed
 
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
-        Register reg = new Register();
-        mainPanel.add(reg);
+        Register register = new Register();
+        this.getContentPane().add(register);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_manageActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -129,7 +130,6 @@ public class AdminMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton logout;
-    private javax.swing.JPanel mainPanel;
     private javax.swing.JButton manage;
     private javax.swing.JButton restoreDB;
     // End of variables declaration//GEN-END:variables
