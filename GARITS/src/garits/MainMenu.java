@@ -119,8 +119,8 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_updateStockActionPerformed
 
     private void createJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobActionPerformed
-        Jobs job = new Jobs();
-        job.setVisible(true);
+        //Jobs job = new Jobs();
+       // job.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_createJobActionPerformed
 

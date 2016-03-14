@@ -48,7 +48,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(createJobs);
-        createJobs.setBounds(240, 10, 109, 157);
+        createJobs.setBounds(240, 10, 109, 155);
 
         viewCustomer.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\viewicon.png")); // NOI18N
         viewCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +57,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(viewCustomer);
-        viewCustomer.setBounds(360, 10, 115, 157);
+        viewCustomer.setBounds(360, 10, 115, 155);
 
         produceInvoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
         produceInvoice.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +66,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(produceInvoice);
-        produceInvoice.setBounds(480, 10, 117, 157);
+        produceInvoice.setBounds(480, 10, 117, 155);
 
         logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -103,16 +103,10 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobsActionPerformed
-        Jobs job = new Jobs();
-        job.setVisible(true);
+        //Jobs job = new Jobs();
+        //job.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_createJobsActionPerformed
-
-    private void viewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomerActionPerformed
-        CustomerInfo customerinfo = new CustomerInfo();
-        customerinfo.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_viewCustomerActionPerformed
 
     private void produceInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produceInvoiceActionPerformed
         Invoice invoice = new Invoice();
@@ -131,6 +125,12 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         pay.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_paymentActionPerformed
+
+    private void viewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomerActionPerformed
+        CustomerInfo customerinfo = new CustomerInfo();
+        customerinfo.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_viewCustomerActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJobs;

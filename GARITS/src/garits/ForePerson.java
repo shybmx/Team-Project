@@ -10,9 +10,9 @@ public class ForePerson extends javax.swing.JFrame {
         jobList.setOpaque(false);
         jobList.setContentAreaFilled(false); 
         jobList.setBorderPainted(false);
-        viewReport.setOpaque(false);
-        viewReport.setContentAreaFilled(false); 
-        viewReport.setBorderPainted(false);
+        createJob.setOpaque(false);
+        createJob.setContentAreaFilled(false); 
+        createJob.setBorderPainted(false);
         invoice.setOpaque(false);
         invoice.setContentAreaFilled(false); 
         invoice.setBorderPainted(false);
@@ -22,7 +22,6 @@ public class ForePerson extends javax.swing.JFrame {
         payment.setOpaque(false);
         payment.setContentAreaFilled(false); 
         payment.setBorderPainted(false);
-        
         this.setSize(1300, 900);
     }
 
@@ -31,7 +30,7 @@ public class ForePerson extends javax.swing.JFrame {
     private void initComponents() {
 
         logout = new javax.swing.JButton();
-        viewReport = new javax.swing.JButton();
+        createJob = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         invoice = new javax.swing.JButton();
         stock = new javax.swing.JButton();
@@ -49,36 +48,41 @@ public class ForePerson extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(800, 10, 114, 150);
+        logout.setBounds(840, 10, 114, 150);
 
-        viewReport.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\createicon.png")); // NOI18N
-        viewReport.addActionListener(new java.awt.event.ActionListener() {
+        createJob.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createJob.png")); // NOI18N
+        createJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewReportActionPerformed(evt);
+                createJobActionPerformed(evt);
             }
         });
-        getContentPane().add(viewReport);
-        viewReport.setBounds(208, 6, 114, 157);
+        getContentPane().add(createJob);
+        createJob.setBounds(208, 6, 140, 155);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 202, 205);
 
         invoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        invoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invoiceActionPerformed(evt);
+            }
+        });
         getContentPane().add(invoice);
-        invoice.setBounds(320, 10, 120, 150);
+        invoice.setBounds(350, 10, 120, 150);
 
         stock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
         getContentPane().add(stock);
-        stock.setBounds(560, 10, 120, 150);
+        stock.setBounds(590, 10, 120, 150);
 
         payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\payment.png")); // NOI18N
         getContentPane().add(payment);
-        payment.setBounds(680, 10, 120, 150);
+        payment.setBounds(710, 10, 120, 150);
 
         jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\Joblist.png")); // NOI18N
         getContentPane().add(jobList);
-        jobList.setBounds(440, 10, 120, 150);
+        jobList.setBounds(470, 10, 120, 150);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         getContentPane().add(jLabel2);
@@ -93,11 +97,22 @@ public class ForePerson extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void viewReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewReportActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewReportActionPerformed
+    private void createJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobActionPerformed
+        CreateJob createjob = new CreateJob();
+        this.getContentPane().add(createjob);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_createJobActionPerformed
+
+    private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
+        Invoice invoice = new Invoice();
+        this.getContentPane().add(invoice);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_invoiceActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton createJob;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -105,6 +120,5 @@ public class ForePerson extends javax.swing.JFrame {
     private javax.swing.JButton logout;
     private javax.swing.JButton payment;
     private javax.swing.JButton stock;
-    private javax.swing.JButton viewReport;
     // End of variables declaration//GEN-END:variables
 }

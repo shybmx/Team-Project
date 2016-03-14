@@ -30,6 +30,11 @@ public class Register extends javax.swing.JPanel {
         setLayout(null);
 
         editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
+        editUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserActionPerformed(evt);
+            }
+        });
         add(editUser);
         editUser.setBounds(681, 313, 128, 144);
 
@@ -43,6 +48,11 @@ public class Register extends javax.swing.JPanel {
         close.setBounds(814, 313, 125, 144);
 
         addUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\addUserIcon.png")); // NOI18N
+        addUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserActionPerformed(evt);
+            }
+        });
         add(addUser);
         addUser.setBounds(549, 313, 127, 144);
 
@@ -70,6 +80,23 @@ public class Register extends javax.swing.JPanel {
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
+
+    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
+        AddUser adduserPanel = new AddUser();
+        this.add(adduserPanel);
+        this.invalidate();
+        this.validate();
+        //this.setVisible(false);
+        //adduserPanel.setVisible(true);
+    }//GEN-LAST:event_addUserActionPerformed
+
+    private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
+        EditUser edituser = new EditUser();
+        this.add(edituser);
+        //this.remove(this);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_editUserActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addUser;
