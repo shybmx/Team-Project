@@ -35,6 +35,9 @@ public class MainMenu extends javax.swing.JFrame {
         updateStock = new javax.swing.JButton();
         createJob = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jobList = new javax.swing.JButton();
+        payment = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -42,14 +45,14 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        viewCustomers.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\viewicon.png")); // NOI18N
+        viewCustomers.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\customer.png")); // NOI18N
         viewCustomers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewCustomersActionPerformed(evt);
             }
         });
         getContentPane().add(viewCustomers);
-        viewCustomers.setBounds(208, 6, 116, 141);
+        viewCustomers.setBounds(208, 6, 130, 141);
 
         logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
         logout.setToolTipText("");
@@ -59,7 +62,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(699, 6, 114, 140);
+        logout.setBounds(1080, 10, 114, 140);
 
         generateReport.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\reportsicon.png")); // NOI18N
         generateReport.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +71,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(generateReport);
-        generateReport.setBounds(453, 6, 120, 142);
+        generateReport.setBounds(480, 10, 120, 142);
 
         updateStock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
         updateStock.addActionListener(new java.awt.event.ActionListener() {
@@ -77,20 +80,37 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(updateStock);
-        updateStock.setBounds(579, 6, 114, 142);
+        updateStock.setBounds(600, 10, 114, 142);
 
-        createJob.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\createicon.png")); // NOI18N
+        createJob.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createJob.png")); // NOI18N
         createJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createJobActionPerformed(evt);
             }
         });
         getContentPane().add(createJob);
-        createJob.setBounds(330, 6, 117, 143);
+        createJob.setBounds(340, 10, 140, 140);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 202, 205);
+
+        jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        getContentPane().add(jobList);
+        jobList.setBounds(720, 10, 120, 140);
+
+        payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\payment.png")); // NOI18N
+        getContentPane().add(payment);
+        payment.setBounds(840, 10, 120, 140);
+
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(960, 10, 120, 140);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         jLabel3.setText("jLabel3");
@@ -129,14 +149,21 @@ public class MainMenu extends javax.swing.JFrame {
         report.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_generateReportActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;
     private javax.swing.JButton generateReport;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton jobList;
     private javax.swing.JButton logout;
+    private javax.swing.JButton payment;
     private javax.swing.JButton updateStock;
     private javax.swing.JButton viewCustomers;
     // End of variables declaration//GEN-END:variables

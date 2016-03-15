@@ -73,6 +73,11 @@ public class ForePerson extends javax.swing.JFrame {
         invoice.setBounds(350, 10, 120, 150);
 
         stock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
+        stock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stockActionPerformed(evt);
+            }
+        });
         getContentPane().add(stock);
         stock.setBounds(590, 10, 120, 150);
 
@@ -105,11 +110,18 @@ public class ForePerson extends javax.swing.JFrame {
     }//GEN-LAST:event_createJobActionPerformed
 
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
-        Invoice invoice = new Invoice();
-        this.getContentPane().add(invoice);
+        Invoice invoicepanel = new Invoice();
+        this.getContentPane().add(invoicepanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_invoiceActionPerformed
+
+    private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
+        Stock stockpanel = new Stock();
+        this.getContentPane().add(stockpanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_stockActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;

@@ -7,8 +7,7 @@ import javax.swing.*;
 public class AdminMenu extends javax.swing.JFrame {
 
     public AdminMenu() {
-        initComponents();
-        this.setSize(1000, 658);
+         initComponents();
         this.setResizable(false);
         backupDB.setOpaque(false);
         backupDB.setContentAreaFilled(false); 
@@ -94,7 +93,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 1310, 910);
+        jLabel2.setBounds(0, 0, 1300, 910);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -118,7 +117,7 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_archiveDBActionPerformed
 
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
-        Register register = new Register();
+       Register register = new Register(this);
         this.getContentPane().add(register);
         this.invalidate();
         this.validate();

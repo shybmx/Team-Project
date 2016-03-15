@@ -26,6 +26,11 @@ public class JobList extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
 
         editJob.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editjob.png")); // NOI18N
+        editJob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editJobActionPerformed(evt);
+            }
+        });
 
         editStatus.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editstatusicon.png")); // NOI18N
         editStatus.addActionListener(new java.awt.event.ActionListener() {
@@ -84,6 +89,12 @@ public class JobList extends javax.swing.JPanel {
         this.setVisible(false);
         ejs.setVisible(true);
     }//GEN-LAST:event_editStatusActionPerformed
+
+    private void editJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobActionPerformed
+        EditJob editjobpanel = new EditJob();
+        this.setVisible(false);
+        editjobpanel.setVisible(true);
+    }//GEN-LAST:event_editJobActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close;

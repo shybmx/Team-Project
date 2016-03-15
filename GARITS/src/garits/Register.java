@@ -1,9 +1,13 @@
 package garits;
 
-public class Register extends javax.swing.JPanel {
+import java.awt.Graphics;
+import javax.swing.JFrame;
 
-    public Register() {
+public class Register extends javax.swing.JPanel {
+    JFrame myFrame;
+    public Register(JFrame frame) {
         initComponents();
+        myFrame = frame;
         addUser.setOpaque(false);
         addUser.setContentAreaFilled(false); 
         addUser.setBorderPainted(false);
@@ -13,39 +17,23 @@ public class Register extends javax.swing.JPanel {
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
+        buttons.setOpaque(false);
         this.setSize(1300, 900);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttons = new javax.swing.JPanel();
+        addUser = new javax.swing.JButton();
         editUser = new javax.swing.JButton();
         close = new javax.swing.JButton();
-        addUser = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
-
-        editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
-        editUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editUserActionPerformed(evt);
-            }
-        });
-        add(editUser);
-        editUser.setBounds(681, 313, 128, 144);
-
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
-        close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeActionPerformed(evt);
-            }
-        });
-        add(close);
-        close.setBounds(814, 313, 125, 144);
 
         addUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\addUserIcon.png")); // NOI18N
         addUser.addActionListener(new java.awt.event.ActionListener() {
@@ -53,8 +41,23 @@ public class Register extends javax.swing.JPanel {
                 addUserActionPerformed(evt);
             }
         });
-        add(addUser);
-        addUser.setBounds(549, 313, 127, 144);
+        buttons.add(addUser);
+
+        editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
+        editUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserActionPerformed(evt);
+            }
+        });
+        buttons.add(editUser);
+
+        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
+        buttons.add(close);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,8 +72,10 @@ public class Register extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1);
-        jScrollPane1.setBounds(549, 475, 390, 323);
+        buttons.add(jScrollPane1);
+
+        add(buttons);
+        buttons.setBounds(460, 200, 570, 520);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel1);
@@ -79,27 +84,27 @@ public class Register extends javax.swing.JPanel {
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         this.setVisible(false);
+         buttons.remove(this);
+        this.remove(this);
+       
     }//GEN-LAST:event_closeActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
-        AddUser adduserPanel = new AddUser();
-        this.add(adduserPanel);
-        this.invalidate();
-        this.validate();
-        //this.setVisible(false);
-        //adduserPanel.setVisible(true);
+        buttons.setVisible(false);
+        AddUser addUserPanel = new AddUser();
+        myFrame.getContentPane().add(addUserPanel);
     }//GEN-LAST:event_addUserActionPerformed
 
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
         EditUser edituser = new EditUser();
         this.add(edituser);
-        //this.remove(this);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_editUserActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addUser;
+    private javax.swing.JPanel buttons;
     private javax.swing.JButton close;
     private javax.swing.JButton editUser;
     private javax.swing.JLabel jLabel1;
@@ -107,3 +112,4 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
+

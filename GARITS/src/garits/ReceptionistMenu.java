@@ -7,9 +7,6 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         createJobs.setOpaque(false);
         createJobs.setContentAreaFilled(false); 
         createJobs.setBorderPainted(false);
-        viewCustomer.setOpaque(false);
-        viewCustomer.setContentAreaFilled(false); 
-        viewCustomer.setBorderPainted(false);
         produceInvoice.setOpaque(false);
         produceInvoice.setContentAreaFilled(false); 
         produceInvoice.setBorderPainted(false);
@@ -30,34 +27,26 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         createJobs = new javax.swing.JButton();
-        viewCustomer = new javax.swing.JButton();
         produceInvoice = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         payment = new javax.swing.JButton();
         stock = new javax.swing.JButton();
+        jobList = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        createJobs.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\createicon.png")); // NOI18N
+        createJobs.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createJob.png")); // NOI18N
         createJobs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createJobsActionPerformed(evt);
             }
         });
         getContentPane().add(createJobs);
-        createJobs.setBounds(240, 10, 109, 155);
-
-        viewCustomer.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\viewicon.png")); // NOI18N
-        viewCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewCustomerActionPerformed(evt);
-            }
-        });
-        getContentPane().add(viewCustomer);
-        viewCustomer.setBounds(360, 10, 115, 155);
+        createJobs.setBounds(240, 10, 140, 155);
 
         produceInvoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
         produceInvoice.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +55,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(produceInvoice);
-        produceInvoice.setBounds(480, 10, 117, 155);
+        produceInvoice.setBounds(500, 10, 117, 155);
 
         logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +64,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(840, 10, 114, 160);
+        logout.setBounds(990, 10, 114, 160);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
         getContentPane().add(jLabel1);
@@ -88,16 +77,24 @@ public class ReceptionistMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(payment);
-        payment.setBounds(720, 10, 120, 160);
+        payment.setBounds(740, 10, 120, 160);
 
         stock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
         getContentPane().add(stock);
-        stock.setBounds(600, 10, 120, 160);
+        stock.setBounds(620, 10, 120, 160);
+
+        jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        getContentPane().add(jobList);
+        jobList.setBounds(380, 10, 120, 150);
+
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\reportsicon.png")); // NOI18N
+        getContentPane().add(jButton1);
+        jButton1.setBounds(860, 10, 130, 160);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(-80, -30, 1670, 990);
+        jLabel2.setBounds(0, 0, 1300, 990);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -125,21 +122,16 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         pay.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_paymentActionPerformed
-
-    private void viewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomerActionPerformed
-        CustomerInfo customerinfo = new CustomerInfo();
-        customerinfo.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_viewCustomerActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJobs;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jobList;
     private javax.swing.JButton logout;
     private javax.swing.JButton payment;
     private javax.swing.JButton produceInvoice;
     private javax.swing.JButton stock;
-    private javax.swing.JButton viewCustomer;
     // End of variables declaration//GEN-END:variables
 }
