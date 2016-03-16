@@ -77,9 +77,10 @@ public class MechanicMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
-        UpdateStatus update = new UpdateStatus();
-        update.setVisible(true);
-        this.setVisible(false);
+        EditJobStatus editJobStatusPanel = new EditJobStatus();
+        this.getContentPane().add(editJobStatusPanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_editStatusActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed

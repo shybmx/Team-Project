@@ -21,6 +21,15 @@ public class MainMenu extends javax.swing.JFrame {
         generateReport.setOpaque(false);
         generateReport.setContentAreaFilled(false); 
         generateReport.setBorderPainted(false);
+        jobList.setOpaque(false);
+        jobList.setContentAreaFilled(false); 
+        jobList.setBorderPainted(false);
+        payment.setOpaque(false);
+        payment.setContentAreaFilled(false); 
+        payment.setBorderPainted(false);
+        invoice.setOpaque(false);
+        invoice.setContentAreaFilled(false); 
+        invoice.setBorderPainted(false);
         this.setSize(1300, 900);
     }
 
@@ -37,7 +46,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jobList = new javax.swing.JButton();
         payment = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        invoice = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -96,21 +105,31 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel1.setBounds(0, 0, 202, 205);
 
         jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        jobList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobListActionPerformed(evt);
+            }
+        });
         getContentPane().add(jobList);
         jobList.setBounds(720, 10, 120, 140);
 
         payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\payment.png")); // NOI18N
+        payment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentActionPerformed(evt);
+            }
+        });
         getContentPane().add(payment);
         payment.setBounds(840, 10, 120, 140);
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        invoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        invoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                invoiceActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(960, 10, 120, 140);
+        getContentPane().add(invoice);
+        invoice.setBounds(960, 10, 120, 140);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         jLabel3.setText("jLabel3");
@@ -121,9 +140,10 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomersActionPerformed
-       CustomerInfo p2 = new CustomerInfo();
-       p2.setVisible(true);
-       this.setVisible(false);
+        CustomerInfo customerInfoPanel = new CustomerInfo(this);
+        this.getContentPane().add(customerInfoPanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_viewCustomersActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
@@ -133,31 +153,51 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void updateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockActionPerformed
-        Stock stock = new Stock();
-        stock.setVisible(true);
-        this.setVisible(false);
+        Stock stockPanel = new Stock();
+        this.getContentPane().add(stockPanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_updateStockActionPerformed
 
     private void createJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobActionPerformed
-        //Jobs job = new Jobs();
-       // job.setVisible(true);
-        this.setVisible(false);
+        CreateJob createJobPanel = new CreateJob();
+        this.getContentPane().add(createJobPanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_createJobActionPerformed
 
     private void generateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportActionPerformed
-        GenerateReport report = new GenerateReport();
-        report.setVisible(true);
-        this.setVisible(false);
+        GenerateReport reportPanel = new GenerateReport();
+        this.getContentPane().add(reportPanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_generateReportActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
+        Invoice invoicePanel = new Invoice();
+        this.getContentPane().add(invoicePanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_invoiceActionPerformed
+
+    private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
+        JobList jobListPanel = new JobList(this);
+        this.getContentPane().add(jobListPanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_jobListActionPerformed
+
+    private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
+        Payment paymentPanel = new Payment(this);
+        this.getContentPane().add(paymentPanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_paymentActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;
     private javax.swing.JButton generateReport;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

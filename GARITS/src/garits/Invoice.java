@@ -1,9 +1,10 @@
 package garits;
 
 public class Invoice extends javax.swing.JPanel {
-
+    
     public Invoice() {
         initComponents();
+        this.repaint();
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -13,6 +14,10 @@ public class Invoice extends javax.swing.JPanel {
         search.setOpaque(false);
         search.setContentAreaFilled(false); 
         search.setBorderPainted(false);
+        searchPanel.setOpaque(false);
+        tablePanel.setOpaque(false);
+        buttons.setOpaque(false);
+        this.setSize(1300, 900);
     }
 
     
@@ -20,11 +25,14 @@ public class Invoice extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        searchPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         customerSearch = new javax.swing.JTextField();
         search = new javax.swing.JButton();
+        tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        buttons = new javax.swing.JPanel();
         invoice = new javax.swing.JButton();
         close = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -33,41 +41,50 @@ public class Invoice extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Customer:");
-        add(jLabel1);
-        jLabel1.setBounds(430, 270, 111, 32);
-        add(customerSearch);
-        customerSearch.setBounds(560, 270, 216, 32);
+        searchPanel.add(jLabel1);
+
+        customerSearch.setPreferredSize(new java.awt.Dimension(200, 30));
+        searchPanel.add(customerSearch);
 
         search.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\searchicon.png")); // NOI18N
-        add(search);
-        search.setBounds(780, 270, 113, 143);
+        search.setPreferredSize(new java.awt.Dimension(120, 155));
+        searchPanel.add(search);
+
+        add(searchPanel);
+        searchPanel.setBounds(560, 220, 450, 170);
 
         jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jList1.setPreferredSize(new java.awt.Dimension(200, 200));
         jScrollPane1.setViewportView(jList1);
 
-        add(jScrollPane1);
-        jScrollPane1.setBounds(430, 370, 167, 139);
+        tablePanel.add(jScrollPane1);
+
+        add(tablePanel);
+        tablePanel.setBounds(430, 390, 230, 160);
 
         invoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
-        add(invoice);
-        invoice.setBounds(430, 560, 116, 146);
+        invoice.setPreferredSize(new java.awt.Dimension(120, 155));
+        buttons.add(invoice);
 
         close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
             }
         });
-        add(close);
-        close.setBounds(550, 560, 116, 146);
+        buttons.add(close);
+
+        add(buttons);
+        buttons.setBounds(420, 560, 260, 160);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(0, 0, 1300, 910);
+        jLabel2.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -75,6 +92,7 @@ public class Invoice extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel buttons;
     private javax.swing.JButton close;
     private javax.swing.JTextField customerSearch;
     private javax.swing.JButton invoice;
@@ -83,5 +101,7 @@ public class Invoice extends javax.swing.JPanel {
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton search;
+    private javax.swing.JPanel searchPanel;
+    private javax.swing.JPanel tablePanel;
     // End of variables declaration//GEN-END:variables
 }

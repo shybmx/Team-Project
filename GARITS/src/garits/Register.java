@@ -1,6 +1,5 @@
 package garits;
 
-import java.awt.Graphics;
 import javax.swing.JFrame;
 
 public class Register extends javax.swing.JPanel {
@@ -96,10 +95,9 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_addUserActionPerformed
 
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
-        EditUser edituser = new EditUser();
-        this.add(edituser);
-        this.invalidate();
-        this.validate();
+        buttons.setVisible(false);
+        EditUser edituserPanel = new EditUser();
+        myFrame.getContentPane().add(edituserPanel);
     }//GEN-LAST:event_editUserActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -82,16 +82,26 @@ public class ForePerson extends javax.swing.JFrame {
         stock.setBounds(590, 10, 120, 150);
 
         payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\payment.png")); // NOI18N
+        payment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentActionPerformed(evt);
+            }
+        });
         getContentPane().add(payment);
         payment.setBounds(710, 10, 120, 150);
 
         jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        jobList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobListActionPerformed(evt);
+            }
+        });
         getContentPane().add(jobList);
         jobList.setBounds(470, 10, 120, 150);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(-510, -30, 1930, 1200);
+        jLabel2.setBounds(0, 0, 1300, 900);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -110,8 +120,8 @@ public class ForePerson extends javax.swing.JFrame {
     }//GEN-LAST:event_createJobActionPerformed
 
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
-        Invoice invoicepanel = new Invoice();
-        this.getContentPane().add(invoicepanel);
+        Invoice invoicePanel = new Invoice();
+        this.getContentPane().add(invoicePanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_invoiceActionPerformed
@@ -122,6 +132,20 @@ public class ForePerson extends javax.swing.JFrame {
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_stockActionPerformed
+
+    private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
+        JobList jobListPanel = new JobList(this);
+        this.getContentPane().add(jobListPanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_jobListActionPerformed
+
+    private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
+        Payment paymentPanel = new Payment(this);
+        this.getContentPane().add(paymentPanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_paymentActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;

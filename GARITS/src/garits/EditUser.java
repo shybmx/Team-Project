@@ -1,7 +1,9 @@
 package garits;
 
-public class EditUser extends javax.swing.JPanel {
+import javax.swing.JFrame;
 
+public class EditUser extends javax.swing.JPanel {
+   
     public EditUser() {
         initComponents();
         close.setOpaque(false);
@@ -10,6 +12,9 @@ public class EditUser extends javax.swing.JPanel {
         editUser.setOpaque(false);
         editUser.setContentAreaFilled(false); 
         editUser.setBorderPainted(false);
+        formPanel1.setOpaque(false);
+        formPanel2.setOpaque(false);
+        buttons.setOpaque(false);
         this.setSize(1300, 900);
     }
 
@@ -17,142 +22,238 @@ public class EditUser extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        formPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         address = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         postCode = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         phone = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         EMail = new javax.swing.JTextField();
+        formPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         userName = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         passWord = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         reTypePassWord = new javax.swing.JTextField();
+        buttons = new javax.swing.JPanel();
         editUser = new javax.swing.JButton();
         close = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Name:");
-        add(jLabel1);
-        jLabel1.setBounds(314, 491, 70, 32);
+
+        name.setPreferredSize(new java.awt.Dimension(200, 30));
+        name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("Address:");
-        add(jLabel2);
-        jLabel2.setBounds(314, 534, 95, 32);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setText("Post Code:");
-        add(jLabel3);
-        jLabel3.setBounds(314, 577, 119, 32);
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setText("Phone:");
-        add(jLabel4);
-        jLabel4.setBounds(314, 620, 77, 32);
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel5.setText("E-Mail:");
-        add(jLabel5);
-        jLabel5.setBounds(314, 663, 74, 32);
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel6.setText("Username:");
-        add(jLabel6);
-        jLabel6.setBounds(733, 491, 117, 32);
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel7.setText("Password:");
-        add(jLabel7);
-        jLabel7.setBounds(735, 534, 112, 32);
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel8.setText("Re-Type Password:");
-        add(jLabel8);
-        jLabel8.setBounds(733, 577, 210, 32);
-        add(name);
-        name.setBounds(443, 496, 272, 32);
-
+        address.setPreferredSize(new java.awt.Dimension(200, 30));
         address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressActionPerformed(evt);
             }
         });
-        add(address);
-        address.setBounds(443, 539, 272, 32);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel3.setText("Post Code:");
+
+        postCode.setPreferredSize(new java.awt.Dimension(200, 30));
         postCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 postCodeActionPerformed(evt);
             }
         });
-        add(postCode);
-        postCode.setBounds(443, 582, 272, 32);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel4.setText("Phone:");
+
+        phone.setPreferredSize(new java.awt.Dimension(200, 30));
         phone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 phoneActionPerformed(evt);
             }
         });
-        add(phone);
-        phone.setBounds(443, 625, 272, 32);
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel5.setText("E-Mail:");
+
+        EMail.setPreferredSize(new java.awt.Dimension(200, 30));
         EMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EMailActionPerformed(evt);
             }
         });
-        add(EMail);
-        EMail.setBounds(443, 668, 272, 32);
 
+        javax.swing.GroupLayout formPanel1Layout = new javax.swing.GroupLayout(formPanel1);
+        formPanel1.setLayout(formPanel1Layout);
+        formPanel1Layout.setHorizontalGroup(
+            formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(formPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(postCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(formPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(formPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(71, 71, 71)
+                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(formPanel1Layout.createSequentialGroup()
+                        .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EMail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        formPanel1Layout.setVerticalGroup(
+            formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formPanel1Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(postCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(EMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(172, 172, 172))
+        );
+
+        add(formPanel1);
+        formPanel1.setBounds(300, 360, 370, 230);
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel6.setText("Username:");
+
+        userName.setMinimumSize(new java.awt.Dimension(200, 30));
+        userName.setPreferredSize(new java.awt.Dimension(200, 30));
         userName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userNameActionPerformed(evt);
             }
         });
-        add(userName);
-        userName.setBounds(965, 496, 272, 32);
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel7.setText("Password:");
+
+        passWord.setPreferredSize(new java.awt.Dimension(200, 30));
         passWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passWordActionPerformed(evt);
             }
         });
-        add(passWord);
-        passWord.setBounds(965, 539, 272, 32);
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel8.setText("Re-Type Password:");
+
+        reTypePassWord.setMinimumSize(new java.awt.Dimension(200, 30));
+        reTypePassWord.setPreferredSize(new java.awt.Dimension(200, 30));
         reTypePassWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reTypePassWordActionPerformed(evt);
             }
         });
-        add(reTypePassWord);
-        reTypePassWord.setBounds(965, 582, 272, 32);
+
+        javax.swing.GroupLayout formPanel2Layout = new javax.swing.GroupLayout(formPanel2);
+        formPanel2.setLayout(formPanel2Layout);
+        formPanel2Layout.setHorizontalGroup(
+            formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(formPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(105, 105, 105)
+                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(formPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(formPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(reTypePassWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        formPanel2Layout.setVerticalGroup(
+            formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formPanel2Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(reTypePassWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(106, 106, 106))
+        );
+
+        add(formPanel2);
+        formPanel2.setBounds(700, 360, 440, 140);
 
         editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
-        add(editUser);
-        editUser.setBounds(965, 632, 116, 140);
+        editUser.setPreferredSize(new java.awt.Dimension(120, 155));
+        buttons.add(editUser);
 
         close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setMinimumSize(new java.awt.Dimension(120, 155));
+        close.setName(""); // NOI18N
+        close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
             }
         });
-        add(close);
-        close.setBounds(1086, 632, 116, 140);
+        buttons.add(close);
+
+        add(buttons);
+        buttons.setBounds(880, 530, 260, 180);
 
         jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel9);
         jLabel9.setBounds(0, 0, 1300, 900);
+        add(jPanel2);
+        jPanel2.setBounds(1100, 290, 10, 10);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
@@ -187,11 +288,18 @@ public class EditUser extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EMail;
     private javax.swing.JTextField address;
+    private javax.swing.JPanel buttons;
     private javax.swing.JButton close;
     private javax.swing.JButton editUser;
+    private javax.swing.JPanel formPanel1;
+    private javax.swing.JPanel formPanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -201,6 +309,7 @@ public class EditUser extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField name;
     private javax.swing.JTextField passWord;
     private javax.swing.JTextField phone;
