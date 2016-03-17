@@ -35,24 +35,24 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="eMailField" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="insertEMail" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="nameField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertName" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="addressField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="insertAddress" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="phoneField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertPhone" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="postCodeField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="insertPostCode" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -61,7 +61,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="makeField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertMake" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -71,28 +71,28 @@
                           <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="discountField" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="regNoField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="insertReg" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="colourField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertColour" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="chassisNumberField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertChass" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                          <Component id="engSerialField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertEng" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="modelField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="insertModel" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -122,22 +122,22 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="regNoField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="insertReg" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="makeField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="insertMake" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="modelField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="insertModel" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="engSerialField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="insertEng" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="add" min="-2" pref="146" max="-2" attributes="0"/>
@@ -145,7 +145,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="chassisNumberField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertChass" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -155,7 +155,7 @@
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="colourField" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="insertColour" min="-2" pref="32" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="discountField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
@@ -167,27 +167,27 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="nameField" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertName" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="addressField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertAddress" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="postCodeField" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertPostCode" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="phoneField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertPhone" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="eMailField" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="insertEMail" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -237,28 +237,28 @@
             <Property name="text" type="java.lang.String" value="Discount:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nameField">
+        <Component class="javax.swing.JTextField" name="insertName">
         </Component>
-        <Component class="javax.swing.JTextField" name="addressField">
+        <Component class="javax.swing.JTextField" name="insertAddress">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addressFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertAddressActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="postCodeField">
+        <Component class="javax.swing.JTextField" name="insertPostCode">
         </Component>
-        <Component class="javax.swing.JTextField" name="phoneField">
+        <Component class="javax.swing.JTextField" name="insertPhone">
         </Component>
-        <Component class="javax.swing.JTextField" name="eMailField">
+        <Component class="javax.swing.JTextField" name="insertEMail">
         </Component>
-        <Component class="javax.swing.JTextField" name="regNoField">
+        <Component class="javax.swing.JTextField" name="insertReg">
         </Component>
-        <Component class="javax.swing.JTextField" name="makeField">
+        <Component class="javax.swing.JTextField" name="insertMake">
         </Component>
-        <Component class="javax.swing.JTextField" name="modelField">
+        <Component class="javax.swing.JTextField" name="insertModel">
         </Component>
-        <Component class="javax.swing.JTextField" name="engSerialField">
+        <Component class="javax.swing.JTextField" name="insertEng">
         </Component>
-        <Component class="javax.swing.JTextField" name="chassisNumberField">
+        <Component class="javax.swing.JTextField" name="insertChass">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -268,9 +268,9 @@
             <Property name="text" type="java.lang.String" value="Address:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="colourField">
+        <Component class="javax.swing.JTextField" name="insertColour">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colourFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertColourActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -297,6 +297,9 @@
               <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\add.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

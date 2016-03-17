@@ -1,5 +1,12 @@
 package garits;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Pin extends javax.swing.JFrame {
@@ -22,8 +29,8 @@ public class Pin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        userName = new javax.swing.JTextField();
-        passWord = new javax.swing.JPasswordField();
+        insertUserName = new javax.swing.JTextField();
+        insertPassWord = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         login = new javax.swing.JButton();
@@ -31,18 +38,17 @@ public class Pin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 900));
         getContentPane().setLayout(null);
 
-        userName.addActionListener(new java.awt.event.ActionListener() {
+        insertUserName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameActionPerformed(evt);
+                insertUserNameActionPerformed(evt);
             }
         });
-        getContentPane().add(userName);
-        userName.setBounds(598, 463, 207, 40);
-        getContentPane().add(passWord);
-        passWord.setBounds(598, 509, 207, 40);
+        getContentPane().add(insertUserName);
+        insertUserName.setBounds(598, 463, 207, 40);
+        getContentPane().add(insertPassWord);
+        insertPassWord.setBounds(598, 509, 207, 40);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel1.setText("Username:");
@@ -75,42 +81,65 @@ public class Pin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       try{
-            String username = userName.getText();
-            char[] pwd = passWord.getPassword();
-            String password = new String (pwd);
-                if((username.equals("fran")) && (password.equals(franpass))){
-                    MainMenu mainmenu = new MainMenu();
-                    mainmenu.setVisible(true);
-                    this.setVisible(false);
-                }else if((username.equals("mech")) && (password.equals(mechpass))){
-                    MechanicMenu mechmenu = new MechanicMenu();
-                    mechmenu.setVisible(true);
-                    this.setVisible(false);
-                }else if((username.equals("rep")) && (password.equals(reppass))){
-                    ReceptionistMenu repmenu = new ReceptionistMenu();
-                    repmenu.setVisible(true);
-                    this.setVisible(false);
-                }else if((username.equals("for")) && (password.equals(forpass))){
-                    ForePerson formenu = new ForePerson();
-                    formenu.setVisible(true);
-                    this.setVisible(false);
-                }else if((username.equals("admin")) && (password.equals(adminpass))){
-                    AdminMenu adminmenu = new AdminMenu();
-                    adminmenu.setVisible(true);
-                    this.setVisible(false);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Username Or PassWord incorrect");
-                }
-       }catch(Exception ex){
-        System.out.println(ex.getMessage());
+       /*
+        Connection conn;
+       PreparedStatement prestate;
+       String userName = insertUserName.getText();
+       String password = insertPassWord.getText();
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("Select From `garits`.`login` where 'Username' = ?"
+                    + "AND  'Loginpassword' = ? ");
+            prestate.setString(1, userName);
+            prestate.setString(2, password);
+            ResultSet result = prestate.executeQuery();
+            if(result.next()){
+                AdminMenu admin = new AdminMenu();
+                this.setVisible(false);
+                admin.setVisible(true);
+            }else{
+                
+            }
+            } catch (SQLException ex) {
+            Logger.getLogger(Pin.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+        */
+            try{
+            String username = insertUserName.getText();
+            char[] pwd = insertPassWord.getPassword();
+            String password = new String (pwd);
+            if((username.equals("fran")) && (password.equals(franpass))){
+            MainMenu mainmenu = new MainMenu();
+            mainmenu.setVisible(true);
+            this.setVisible(false);
+            }else if((username.equals("mech")) && (password.equals(mechpass))){
+            MechanicMenu mechmenu = new MechanicMenu();
+            mechmenu.setVisible(true);
+            this.setVisible(false);
+            }else if((username.equals("rep")) && (password.equals(reppass))){
+            ReceptionistMenu repmenu = new ReceptionistMenu();
+            repmenu.setVisible(true);
+            this.setVisible(false);
+            }else if((username.equals("for")) && (password.equals(forpass))){
+            ForePerson formenu = new ForePerson();
+            formenu.setVisible(true);
+            this.setVisible(false);
+            }else if((username.equals("admin")) && (password.equals(adminpass))){
+            AdminMenu adminmenu = new AdminMenu();
+            adminmenu.setVisible(true);
+            this.setVisible(false);
+            }else{
+            JOptionPane.showMessageDialog(null, "Username Or PassWord incorrect");
+            }
+            }catch(Exception ex){
+            System.out.println(ex.getMessage());
+            }
+        
     }//GEN-LAST:event_loginActionPerformed
 
-    private void userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameActionPerformed
+    private void insertUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertUserNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameActionPerformed
+    }//GEN-LAST:event_insertUserNameActionPerformed
 
     public static void main(String args[]) {
        
@@ -147,12 +176,12 @@ public class Pin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField insertPassWord;
+    private javax.swing.JTextField insertUserName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton login;
-    private javax.swing.JPasswordField passWord;
-    private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
 }
