@@ -9,14 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Pin extends javax.swing.JFrame {
-    private String check;
-    private String franpass = "fran";
-    private String mechpass = "mech";
-    private String reppass = "rep";
-    private String forpass = "for";
-    private String adminpass = "admin";
-    
+public class Pin extends javax.swing.JFrame {  
+   
     public Pin() {
         initComponents();
         login.setOpaque(false);
@@ -81,60 +75,93 @@ public class Pin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       /*
-        Connection conn;
+       
+       Connection conn;
        PreparedStatement prestate;
        String userName = insertUserName.getText();
        String password = insertPassWord.getText();
-        try {
+       try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("Select From `garits`.`login` where 'Username' = ?"
-                    + "AND  'Loginpassword' = ? ");
+            prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                    + "AND `Loginpassword`= ?"
+                    + " AND `Position`= 'admin'");
             prestate.setString(1, userName);
             prestate.setString(2, password);
-            ResultSet result = prestate.executeQuery();
-            if(result.next()){
+            ResultSet resultadmin = prestate.executeQuery();
+            int i = 0;
+            while(resultadmin.next()){
+                i++;
+            }
+            if(i == 1){
                 AdminMenu admin = new AdminMenu();
                 this.setVisible(false);
                 admin.setVisible(true);
             }else{
-                
+               prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                    + "AND `Loginpassword`= ?"
+                    + " AND `Position`= 'foreperson'");
+               prestate.setString(1, userName);
+               prestate.setString(2, password);
+               ResultSet resultfore = prestate.executeQuery();
+               while(resultfore.next()){
+                   i++;
+               }
+               if(i == 1){
+                   ForePerson forepersonmenu = new ForePerson();
+                   this.setVisible(false);
+                   forepersonmenu.setVisible(true);
+               }else{
+                     prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                    + "AND `Loginpassword`= ?"
+                    + " AND `Position`= 'mechanic'");
+               prestate.setString(1, userName);
+               prestate.setString(2, password);
+               ResultSet resultmech = prestate.executeQuery();
+               while(resultmech.next()){
+                   i++;
+               }
+               if(i == 1){
+                   MechanicMenu mechanicmenu = new MechanicMenu();
+                   this.setVisible(false);
+                   mechanicmenu.setVisible(true);
+               }else{
+                   prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                    + "AND `Loginpassword`= ?"
+                    + " AND `Position`= 'franchisee'");
+               prestate.setString(1, userName);
+               prestate.setString(2, password);
+               ResultSet resultfran = prestate.executeQuery();
+               while(resultfran.next()){
+                   i++;
+               }
+               if(i == 1){
+                   MainMenu franmenu = new MainMenu();
+                   this.setVisible(false);
+                   franmenu.setVisible(true);
+               }else{
+                   prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                    + "AND `Loginpassword`= ?"
+                    + " AND `Position`= 'receptionist'");
+                   prestate.setString(1, userName);
+                   prestate.setString(2, password);
+                   ResultSet resultrep = prestate.executeQuery();
+                   while(resultrep.next()){
+                       i++;
+                   }
+                   if(i == 1){
+                       ReceptionistMenu receptionistmenu = new ReceptionistMenu();
+                       this.setVisible(false);
+                       receptionistmenu.setVisible(true);
+                   }else{
+                       JOptionPane.showMessageDialog(null, "Username or Password is incorrect");
+                   }
+               }
+               }
+               }     
             }
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(Pin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-            try{
-            String username = insertUserName.getText();
-            char[] pwd = insertPassWord.getPassword();
-            String password = new String (pwd);
-            if((username.equals("fran")) && (password.equals(franpass))){
-            MainMenu mainmenu = new MainMenu();
-            mainmenu.setVisible(true);
-            this.setVisible(false);
-            }else if((username.equals("mech")) && (password.equals(mechpass))){
-            MechanicMenu mechmenu = new MechanicMenu();
-            mechmenu.setVisible(true);
-            this.setVisible(false);
-            }else if((username.equals("rep")) && (password.equals(reppass))){
-            ReceptionistMenu repmenu = new ReceptionistMenu();
-            repmenu.setVisible(true);
-            this.setVisible(false);
-            }else if((username.equals("for")) && (password.equals(forpass))){
-            ForePerson formenu = new ForePerson();
-            formenu.setVisible(true);
-            this.setVisible(false);
-            }else if((username.equals("admin")) && (password.equals(adminpass))){
-            AdminMenu adminmenu = new AdminMenu();
-            adminmenu.setVisible(true);
-            this.setVisible(false);
-            }else{
-            JOptionPane.showMessageDialog(null, "Username Or PassWord incorrect");
-            }
-            }catch(Exception ex){
-            System.out.println(ex.getMessage());
-            }
-        
+        } 
     }//GEN-LAST:event_loginActionPerformed
 
     private void insertUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertUserNameActionPerformed
