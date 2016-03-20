@@ -159,8 +159,8 @@ public class Pin extends javax.swing.JFrame {
                }
                }     
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Pin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Cannot connect with the database, Please try again later");
         } 
     }//GEN-LAST:event_loginActionPerformed
 
