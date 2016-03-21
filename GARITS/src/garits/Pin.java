@@ -16,6 +16,7 @@ public class Pin extends javax.swing.JFrame {
         login.setOpaque(false);
         login.setContentAreaFilled(false); 
         login.setBorderPainted(false);
+        this.setResizable(false);
         this.setSize(1300, 900);
     }
    

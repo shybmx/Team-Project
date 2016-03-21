@@ -1,5 +1,10 @@
 package garits;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 public class CreateJob extends javax.swing.JPanel {
 
     public CreateJob() {
@@ -36,13 +41,13 @@ public class CreateJob extends javax.swing.JPanel {
         search = new javax.swing.JButton();
         formPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        vehicleRegNo = new javax.swing.JTextField();
+        vehicleRegNoField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        make = new javax.swing.JTextField();
+        makeField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        customerName = new javax.swing.JTextField();
+        customerNameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        estimatedTime = new javax.swing.JTextField();
+        estimatedTimeField = new javax.swing.JTextField();
         workDonePanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
@@ -52,11 +57,11 @@ public class CreateJob extends javax.swing.JPanel {
         add = new javax.swing.JButton();
         formPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        dateBookedIn = new javax.swing.JTextField();
+        dateBookedInField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        model = new javax.swing.JTextField();
+        modelField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        telephone = new javax.swing.JTextField();
+        telephoneField = new javax.swing.JTextField();
         buttons2 = new javax.swing.JPanel();
         create = new javax.swing.JButton();
         close = new javax.swing.JButton();
@@ -76,27 +81,27 @@ public class CreateJob extends javax.swing.JPanel {
         searchPanel.add(search);
 
         add(searchPanel);
-        searchPanel.setBounds(450, 110, 510, 170);
+        searchPanel.setBounds(490, 220, 510, 170);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("Vehicle Reg.No:");
 
-        vehicleRegNo.setPreferredSize(new java.awt.Dimension(200, 30));
+        vehicleRegNoField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Make:");
 
-        make.setPreferredSize(new java.awt.Dimension(200, 30));
+        makeField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel4.setText("Customer Name:");
 
-        customerName.setPreferredSize(new java.awt.Dimension(200, 30));
+        customerNameField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel5.setText("Estimated Time:");
 
-        estimatedTime.setPreferredSize(new java.awt.Dimension(200, 30));
+        estimatedTimeField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         javax.swing.GroupLayout formPanel1Layout = new javax.swing.GroupLayout(formPanel1);
         formPanel1.setLayout(formPanel1Layout);
@@ -111,10 +116,10 @@ public class CreateJob extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(make, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehicleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(estimatedTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(makeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(vehicleRegNoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(estimatedTimeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         formPanel1Layout.setVerticalGroup(
@@ -122,25 +127,25 @@ public class CreateJob extends javax.swing.JPanel {
             .addGroup(formPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(vehicleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(vehicleRegNoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(make, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(makeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(estimatedTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(estimatedTimeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         add(formPanel1);
-        formPanel1.setBounds(210, 300, 420, 190);
+        formPanel1.setBounds(250, 410, 420, 190);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel9.setText("Work Required:");
@@ -161,30 +166,30 @@ public class CreateJob extends javax.swing.JPanel {
         workDonePanel.add(jScrollPane1);
 
         add(workDonePanel);
-        workDonePanel.setBounds(210, 500, 220, 250);
+        workDonePanel.setBounds(250, 610, 220, 250);
 
         add.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
         add.setPreferredSize(new java.awt.Dimension(120, 155));
         addButtonPanel.add(add);
 
         add(addButtonPanel);
-        addButtonPanel.setBounds(400, 560, 220, 170);
+        addButtonPanel.setBounds(440, 670, 220, 170);
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel6.setText("Dated Booked In:");
 
-        dateBookedIn.setPreferredSize(new java.awt.Dimension(200, 30));
+        dateBookedInField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setText("Model:");
 
-        model.setMinimumSize(new java.awt.Dimension(200, 30));
-        model.setPreferredSize(new java.awt.Dimension(200, 30));
+        modelField.setMinimumSize(new java.awt.Dimension(200, 30));
+        modelField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel8.setText("Telephone:");
 
-        telephone.setPreferredSize(new java.awt.Dimension(200, 30));
+        telephoneField.setPreferredSize(new java.awt.Dimension(200, 30));
 
         javax.swing.GroupLayout formPanel2Layout = new javax.swing.GroupLayout(formPanel2);
         formPanel2.setLayout(formPanel2Layout);
@@ -198,9 +203,9 @@ public class CreateJob extends javax.swing.JPanel {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(model, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateBookedIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateBookedInField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formPanel2Layout.setVerticalGroup(
@@ -209,20 +214,20 @@ public class CreateJob extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(dateBookedIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateBookedInField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(model, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(modelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(118, 118, 118))
         );
 
         add(formPanel2);
-        formPanel2.setBounds(650, 300, 420, 140);
+        formPanel2.setBounds(690, 410, 420, 140);
 
         create.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createicon.png")); // NOI18N
         create.setPreferredSize(new java.awt.Dimension(120, 155));
@@ -243,7 +248,7 @@ public class CreateJob extends javax.swing.JPanel {
         buttons2.add(close);
 
         add(buttons2);
-        buttons2.setBounds(770, 570, 290, 170);
+        buttons2.setBounds(810, 680, 290, 170);
 
         jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel10);
@@ -251,7 +256,37 @@ public class CreateJob extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
-        // TODO add your handling code here:
+       String customerName = customerNameField.getText();
+       String vechicleRegNo = vehicleRegNoField.getText();
+       String make = makeField.getText();
+       String estimatedTime = estimatedTimeField.getText();
+       String date = dateBookedInField.getText();
+       String model = modelField.getText();
+       String telephone = telephoneField.getText();
+       Connection conn = null;
+        PreparedStatement prestate = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
+                    + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber)"
+                    + "Values(?,?,?,?,?,?,?)");
+            prestate.setString(1, customerName);
+            prestate.setString(2, vechicleRegNo);
+            prestate.setString(3, make);
+            prestate.setString(4, estimatedTime);
+            prestate.setString(5, date);
+            prestate.setString(6, model);
+            prestate.setString(7, telephone);
+            int i = prestate.executeUpdate();
+            if(i>0){
+                 JOptionPane.showMessageDialog(null, "Job successfully created");
+            }else{
+                 JOptionPane.showMessageDialog(null, "Job has not been created");
+            }
+        }catch(Exception ex){
+             JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_createActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -264,9 +299,9 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JPanel buttons2;
     private javax.swing.JButton close;
     private javax.swing.JButton create;
-    private javax.swing.JTextField customerName;
-    private javax.swing.JTextField dateBookedIn;
-    private javax.swing.JTextField estimatedTime;
+    private javax.swing.JTextField customerNameField;
+    private javax.swing.JTextField dateBookedInField;
+    private javax.swing.JTextField estimatedTimeField;
     private javax.swing.JPanel formPanel1;
     private javax.swing.JPanel formPanel2;
     private javax.swing.JComboBox jComboBox1;
@@ -282,13 +317,13 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField make;
-    private javax.swing.JTextField model;
+    private javax.swing.JTextField makeField;
+    private javax.swing.JTextField modelField;
     private javax.swing.JButton search;
     private javax.swing.JTextField searchCustomer;
     private javax.swing.JPanel searchPanel;
-    private javax.swing.JTextField telephone;
-    private javax.swing.JTextField vehicleRegNo;
+    private javax.swing.JTextField telephoneField;
+    private javax.swing.JTextField vehicleRegNoField;
     private javax.swing.JPanel workDonePanel;
     // End of variables declaration//GEN-END:variables
 }

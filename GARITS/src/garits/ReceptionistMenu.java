@@ -25,6 +25,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         jobList.setOpaque(false);
         jobList.setContentAreaFilled(false); 
         jobList.setBorderPainted(false);
+        this.setResizable(false);
         this.setSize(1300, 900);
     }
 

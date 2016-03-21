@@ -1,9 +1,17 @@
 package garits;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 public class CustomerInfo extends javax.swing.JPanel {
     JFrame myFrame;
+    Connection conn = null;
+    PreparedStatement prestate = null;
     public CustomerInfo(JFrame frame) {
         initComponents();
         myFrame = frame;
@@ -17,16 +25,28 @@ public class CustomerInfo extends javax.swing.JPanel {
         edit.setContentAreaFilled(false); 
         edit.setBorderPainted(false);
         buttons.setOpaque(false);
+        updateTable();
         this.setSize(1300, 900);
     }
-
+    
+    public void updateTable(){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("SELECT * from `garits`.`customers`");
+            ResultSet result = prestate.executeQuery();
+            customerTable.setModel(DbUtils.resultSetToTableModel(result));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to Database");
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttons = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        customerTable = new javax.swing.JTable();
         create = new javax.swing.JButton();
         edit = new javax.swing.JButton();
         close = new javax.swing.JButton();
@@ -34,7 +54,7 @@ public class CustomerInfo extends javax.swing.JPanel {
 
         setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -45,7 +65,7 @@ public class CustomerInfo extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(customerTable);
 
         create.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createcustomer.png")); // NOI18N
         create.addActionListener(new java.awt.event.ActionListener() {
@@ -72,17 +92,17 @@ public class CustomerInfo extends javax.swing.JPanel {
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(buttonsLayout.createSequentialGroup()
-                        .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addContainerGap(452, Short.MAX_VALUE)
+                .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(443, 443, 443))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         buttonsLayout.setVerticalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +118,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         );
 
         add(buttons);
-        buttons.setBounds(540, 252, 409, 577);
+        buttons.setBounds(10, 252, 1280, 596);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel1);
@@ -125,9 +145,9 @@ public class CustomerInfo extends javax.swing.JPanel {
     private javax.swing.JPanel buttons;
     private javax.swing.JButton close;
     private javax.swing.JButton create;
+    private javax.swing.JTable customerTable;
     private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

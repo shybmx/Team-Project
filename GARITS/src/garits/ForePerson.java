@@ -22,6 +22,7 @@ public class ForePerson extends javax.swing.JFrame {
         payment.setOpaque(false);
         payment.setContentAreaFilled(false); 
         payment.setBorderPainted(false);
+        this.setResizable(false);
         this.setSize(1300, 900);
     }
 

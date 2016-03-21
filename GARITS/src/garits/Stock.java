@@ -1,7 +1,15 @@
 package garits;
 
-public class Stock extends javax.swing.JPanel {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
+public class Stock extends javax.swing.JPanel {
+    Connection conn;
+    PreparedStatement prestate = null;
     public Stock() {
         initComponents();
         close.setOpaque(false);
@@ -17,7 +25,20 @@ public class Stock extends javax.swing.JPanel {
         update.setContentAreaFilled(false); 
         update.setBorderPainted(false);
         buttons.setOpaque(false);
+        updateTable();
         this.setSize(1300, 900);
+    }
+    
+    public void updateTable(){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("SELECT * from `garits`.`parts`");
+            ResultSet result = prestate.executeQuery();
+            stockTable.setModel(DbUtils.resultSetToTableModel(result));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to Database");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +51,7 @@ public class Stock extends javax.swing.JPanel {
         editStock = new javax.swing.JButton();
         close = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        stockTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -58,7 +79,7 @@ public class Stock extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        stockTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -69,7 +90,7 @@ public class Stock extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(stockTable);
 
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
@@ -131,8 +152,8 @@ public class Stock extends javax.swing.JPanel {
     private javax.swing.JButton editStock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton order;
+    private javax.swing.JTable stockTable;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

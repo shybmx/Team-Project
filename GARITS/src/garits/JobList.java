@@ -1,9 +1,17 @@
 package garits;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 public class JobList extends javax.swing.JPanel {
     JFrame myFrame;
+    Connection conn;
+    PreparedStatement prestate = null;
     public JobList(JFrame frame) {
         initComponents();
         myFrame = frame;
@@ -18,7 +26,20 @@ public class JobList extends javax.swing.JPanel {
         editStatus.setContentAreaFilled(false); 
         editStatus.setBorderPainted(false);
         buttons.setOpaque(false);
+        updateTable();
         this.setSize(1300, 900);
+    }
+    
+    public void updateTable(){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("SELECT * from `garits`.`jobsheets`");
+            ResultSet result = prestate.executeQuery();
+            jobListTable.setModel(DbUtils.resultSetToTableModel(result));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to Database");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +51,7 @@ public class JobList extends javax.swing.JPanel {
         editStatus = new javax.swing.JButton();
         close = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jobListTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -62,7 +83,7 @@ public class JobList extends javax.swing.JPanel {
         });
         buttons.add(close);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jobListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -73,7 +94,7 @@ public class JobList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jobListTable);
 
         buttons.add(jScrollPane1);
 
@@ -108,6 +129,6 @@ public class JobList extends javax.swing.JPanel {
     private javax.swing.JButton editStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jobListTable;
     // End of variables declaration//GEN-END:variables
 }

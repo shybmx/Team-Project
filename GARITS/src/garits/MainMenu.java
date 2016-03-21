@@ -30,6 +30,7 @@ public class MainMenu extends javax.swing.JFrame {
         invoice.setOpaque(false);
         invoice.setContentAreaFilled(false); 
         invoice.setBorderPainted(false);
+        this.setResizable(false);
         this.setSize(1300, 900);
     }
 
