@@ -1,6 +1,7 @@
 package garits;
 
 import java.sql.*;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 public class AddUser extends javax.swing.JPanel {

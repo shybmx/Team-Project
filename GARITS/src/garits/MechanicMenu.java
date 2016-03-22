@@ -1,7 +1,15 @@
 package garits;
 
-public class MechanicMenu extends javax.swing.JFrame {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
+public class MechanicMenu extends javax.swing.JFrame {
+    Connection conn;
+    PreparedStatement prestate;
     public MechanicMenu() {
         initComponents();
         editStatus.setOpaque(false);
@@ -10,36 +18,40 @@ public class MechanicMenu extends javax.swing.JFrame {
         logout.setOpaque(false);
         logout.setContentAreaFilled(false); 
         logout.setBorderPainted(false);
+        updateTable();
+        this.setResizable(false);
         this.setSize(1300, 900);
     }
-
+    
+    public void updateTable(){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
+            prestate = conn.prepareStatement("SELECT `Job_Number`, `Customer`, `VehicleRegNumber` FROM `jobsheets`");
+            ResultSet result = prestate.executeQuery();
+            pendingJobTable.setModel(DbUtils.resultSetToTableModel(result));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to Database");
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jCheckBox1 = new javax.swing.JCheckBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        pendingList = new javax.swing.JList();
         pendingHeader = new javax.swing.JLabel();
         editStatus = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        pendingJobTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        pendingList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(pendingList);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(6, 267, 327, 166);
 
         pendingHeader.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         pendingHeader.setText("Pending Jobs:");
@@ -68,6 +80,22 @@ public class MechanicMenu extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 202, 205);
 
+        pendingJobTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(pendingJobTable);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(10, 260, 453, 403);
+
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2);
@@ -94,9 +122,9 @@ public class MechanicMenu extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout;
     private javax.swing.JLabel pendingHeader;
-    private javax.swing.JList pendingList;
+    private javax.swing.JTable pendingJobTable;
     // End of variables declaration//GEN-END:variables
 }
