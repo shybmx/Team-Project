@@ -16,6 +16,9 @@ public class Payment extends javax.swing.JPanel {
         chequePayment.setOpaque(false);
         chequePayment.setContentAreaFilled(false); 
         chequePayment.setBorderPainted(false);
+        close.setOpaque(false);
+        close.setContentAreaFilled(false); 
+        close.setBorderPainted(false);
         buttons.setOpaque(false);
         this.setSize(1300, 900);
     }
@@ -28,6 +31,7 @@ public class Payment extends javax.swing.JPanel {
         cashPayment = new javax.swing.JButton();
         cardPayment = new javax.swing.JButton();
         chequePayment = new javax.swing.JButton();
+        close = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -53,6 +57,14 @@ public class Payment extends javax.swing.JPanel {
             }
         });
 
+        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setPreferredSize(new java.awt.Dimension(120, 155));
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
@@ -64,20 +76,24 @@ public class Payment extends javax.swing.JPanel {
                 .addComponent(cardPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(chequePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         buttonsLayout.setVerticalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsLayout.createSequentialGroup()
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cashPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cardPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(chequePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 27, Short.MAX_VALUE))
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cashPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cardPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(chequePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         add(buttons);
-        buttons.setBounds(557, 385, 403, 173);
+        buttons.setBounds(557, 385, 530, 173);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel1);
@@ -102,11 +118,16 @@ public class Payment extends javax.swing.JPanel {
         myFrame.getContentPane().add(chequePaymentPanel);
     }//GEN-LAST:event_chequePaymentActionPerformed
 
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_closeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttons;
     private javax.swing.JButton cardPayment;
     private javax.swing.JButton cashPayment;
     private javax.swing.JButton chequePayment;
+    private javax.swing.JButton close;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
