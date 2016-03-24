@@ -168,7 +168,6 @@ public class Register extends javax.swing.JPanel {
         this.setVisible(false);
          buttons.remove(this);
         this.remove(this);
-       
     }//GEN-LAST:event_closeActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
@@ -200,15 +199,6 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteActionPerformed
 
     private void userNamesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNamesMouseClicked
-        String username = userNames.getValueAt(userNames.getSelectedRow(), 1).toString();
-        String logingpassword = userNames.getValueAt(userNames.getSelectedRow(), 2).toString();
-        String name = userNames.getValueAt(userNames.getSelectedRow(), 3).toString();
-        String address = userNames.getValueAt(userNames.getSelectedRow(), 4).toString();
-        String postcode = userNames.getValueAt(userNames.getSelectedRow(), 5).toString();
-        String phone = userNames.getValueAt(userNames.getSelectedRow(), 6).toString();
-        String email = userNames.getValueAt(userNames.getSelectedRow(), 7).toString();
-        String position = userNames.getValueAt(userNames.getSelectedRow(), 8).toString();
-        String labourrate = userNames.getValueAt(userNames.getSelectedRow(), 9).toString();
     }//GEN-LAST:event_userNamesMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

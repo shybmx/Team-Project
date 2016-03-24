@@ -63,7 +63,6 @@ public class JobList extends javax.swing.JPanel {
                 editJobActionPerformed(evt);
             }
         });
-        buttons.add(editJob);
 
         editStatus.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editstatusicon.png")); // NOI18N
         editStatus.setPreferredSize(new java.awt.Dimension(140, 155));
@@ -72,7 +71,6 @@ public class JobList extends javax.swing.JPanel {
                 editStatusActionPerformed(evt);
             }
         });
-        buttons.add(editStatus);
 
         close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
@@ -81,7 +79,6 @@ public class JobList extends javax.swing.JPanel {
                 closeActionPerformed(evt);
             }
         });
-        buttons.add(close);
 
         jobListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,10 +93,37 @@ public class JobList extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jobListTable);
 
-        buttons.add(jScrollPane1);
+        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
+        buttons.setLayout(buttonsLayout);
+        buttonsLayout.setHorizontalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addContainerGap(488, Short.MAX_VALUE)
+                .addComponent(editJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(editStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(402, 402, 402))
+        );
+        buttonsLayout.setVerticalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         add(buttons);
-        buttons.setBounds(570, 330, 490, 520);
+        buttons.setBounds(10, 330, 1280, 520);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
         add(jLabel1);

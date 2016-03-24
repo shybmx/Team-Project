@@ -1,5 +1,6 @@
 package garits;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.awt.Event.*;
+import java.awt.event.KeyListener;
 
 public class Pin extends javax.swing.JFrame {  
    
@@ -17,6 +20,7 @@ public class Pin extends javax.swing.JFrame {
         login.setContentAreaFilled(false); 
         login.setBorderPainted(false);
         this.setResizable(false);
+        //addKeyListener(this);
         this.setSize(1300, 900);
     }
    
@@ -61,6 +65,11 @@ public class Pin extends javax.swing.JFrame {
                 loginActionPerformed(evt);
             }
         });
+        login.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginKeyPressed(evt);
+            }
+        });
         getContentPane().add(login);
         login.setBounds(690, 555, 115, 155);
 
@@ -76,7 +85,6 @@ public class Pin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       
        Connection conn;
        PreparedStatement prestate;
        String userName = insertUserName.getText();
@@ -168,6 +176,15 @@ public class Pin extends javax.swing.JFrame {
     private void insertUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertUserNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_insertUserNameActionPerformed
+
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            System.out.println("it works");
+        }
+    }
+    
+    private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed
+    }//GEN-LAST:event_loginKeyPressed
 
     public static void main(String args[]) {
        
