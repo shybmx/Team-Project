@@ -36,28 +36,28 @@ public class Payment extends javax.swing.JPanel {
 
         setLayout(null);
 
-        cashPayment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\cashicon.png")); // NOI18N
+        cashPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/cashicon.png"))); // NOI18N
         cashPayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cashPaymentActionPerformed(evt);
             }
         });
 
-        cardPayment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\cardpaymenticon.png")); // NOI18N
+        cardPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/cardpaymenticon.png"))); // NOI18N
         cardPayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cardPaymentActionPerformed(evt);
             }
         });
 
-        chequePayment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\cheque.png")); // NOI18N
+        chequePayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/cheque.png"))); // NOI18N
         chequePayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chequePaymentActionPerformed(evt);
             }
         });
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +95,7 @@ public class Payment extends javax.swing.JPanel {
         add(buttons);
         buttons.setBounds(557, 385, 530, 173);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
         jLabel1.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

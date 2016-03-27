@@ -231,11 +231,11 @@ public class EditUser extends javax.swing.JPanel {
         add(formPanel2);
         formPanel2.setBounds(700, 360, 440, 140);
 
-        editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
+        editUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/editUserIcon.png"))); // NOI18N
         editUser.setPreferredSize(new java.awt.Dimension(120, 155));
         buttons.add(editUser);
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setMinimumSize(new java.awt.Dimension(120, 155));
         close.setName(""); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
@@ -249,7 +249,7 @@ public class EditUser extends javax.swing.JPanel {
         add(buttons);
         buttons.setBounds(880, 530, 260, 180);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel9);
         jLabel9.setBounds(0, 0, 1300, 900);
         add(jPanel2);

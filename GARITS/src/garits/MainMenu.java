@@ -55,7 +55,7 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        viewCustomers.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\customer.png")); // NOI18N
+        viewCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/customer.png"))); // NOI18N
         viewCustomers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewCustomersActionPerformed(evt);
@@ -64,7 +64,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(viewCustomers);
         viewCustomers.setBounds(208, 6, 130, 141);
 
-        logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/logouticon.png"))); // NOI18N
         logout.setToolTipText("");
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,7 +74,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(logout);
         logout.setBounds(1080, 10, 114, 140);
 
-        generateReport.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\reportsicon.png")); // NOI18N
+        generateReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/reportsicon.png"))); // NOI18N
         generateReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generateReportActionPerformed(evt);
@@ -83,7 +83,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(generateReport);
         generateReport.setBounds(480, 10, 120, 142);
 
-        updateStock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
+        updateStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/stockicon.png"))); // NOI18N
         updateStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateStockActionPerformed(evt);
@@ -92,7 +92,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(updateStock);
         updateStock.setBounds(600, 10, 114, 142);
 
-        createJob.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createJob.png")); // NOI18N
+        createJob.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createJob.png"))); // NOI18N
         createJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createJobActionPerformed(evt);
@@ -101,11 +101,11 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(createJob);
         createJob.setBounds(340, 10, 140, 140);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 202, 205);
 
-        jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        jobList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Joblist.png"))); // NOI18N
         jobList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobListActionPerformed(evt);
@@ -114,7 +114,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(jobList);
         jobList.setBounds(720, 10, 120, 140);
 
-        payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\payment.png")); // NOI18N
+        payment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/payment.png"))); // NOI18N
         payment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 paymentActionPerformed(evt);
@@ -123,7 +123,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(payment);
         payment.setBounds(840, 10, 120, 140);
 
-        invoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        invoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/invoiceicon.png"))); // NOI18N
         invoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 invoiceActionPerformed(evt);
@@ -132,7 +132,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(invoice);
         invoice.setBounds(960, 10, 120, 140);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(0, 0, 1300, 950);

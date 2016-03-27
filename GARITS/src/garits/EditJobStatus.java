@@ -61,7 +61,7 @@ public class EditJobStatus extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jList1);
 
-        addWorkDone.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
+        addWorkDone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel4.setText("Select Parts Used:");
@@ -75,10 +75,10 @@ public class EditJobStatus extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jList2);
 
-        addParts.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
+        addParts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
 
         close.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -150,7 +150,7 @@ public class EditJobStatus extends javax.swing.JPanel {
         add(formPanel);
         formPanel.setBounds(303, 313, 954, 543);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel5);
         jLabel5.setBounds(0, 0, 1360, 900);
     }// </editor-fold>//GEN-END:initComponents

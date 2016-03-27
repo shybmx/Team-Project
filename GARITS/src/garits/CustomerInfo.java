@@ -67,21 +67,21 @@ public class CustomerInfo extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(customerTable);
 
-        create.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createcustomer.png")); // NOI18N
+        create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createcustomer.png"))); // NOI18N
         create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createActionPerformed(evt);
             }
         });
 
-        edit.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editCustomer.png")); // NOI18N
+        edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/editCustomer.png"))); // NOI18N
         edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editActionPerformed(evt);
             }
         });
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -118,9 +118,9 @@ public class CustomerInfo extends javax.swing.JPanel {
         );
 
         add(buttons);
-        buttons.setBounds(10, 252, 1280, 596);
+        buttons.setBounds(10, 252, 1280, 577);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
         jLabel1.setBounds(0, 0, 1300, 940);
     }// </editor-fold>//GEN-END:initComponents

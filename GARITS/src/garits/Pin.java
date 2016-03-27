@@ -11,16 +11,20 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.Event.*;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Pin extends javax.swing.JFrame {  
    
-    public Pin() {
+    public Pin(){
         initComponents();
         login.setOpaque(false);
         login.setContentAreaFilled(false); 
         login.setBorderPainted(false);
         this.setResizable(false);
-        //addKeyListener(this);
         this.setSize(1300, 900);
     }
    
@@ -34,7 +38,7 @@ public class Pin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         login = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -59,7 +63,7 @@ public class Pin extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(469, 517, 112, 32);
 
-        login.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\loginicon.png")); // NOI18N
+        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/loginicon.png"))); // NOI18N
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
@@ -73,13 +77,13 @@ public class Pin extends javax.swing.JFrame {
         getContentPane().add(login);
         login.setBounds(690, 555, 115, 155);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel3);
         jLabel3.setBounds(400, 224, 202, 205);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(0, 0, 1740, 1030);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 1300, 900);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -213,7 +217,7 @@ public class Pin extends javax.swing.JFrame {
        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pin().setVisible(true);
+               new Pin().setVisible(true);
                 DBConnect connect = new DBConnect();
                 connect.getData();
             }
@@ -226,7 +230,7 @@ public class Pin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton login;
     // End of variables declaration//GEN-END:variables
 }

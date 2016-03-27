@@ -29,14 +29,14 @@ public class CashPayment extends javax.swing.JPanel {
 
         setLayout(null);
 
-        storePayment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\storeicon.png")); // NOI18N
+        storePayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/storeicon.png"))); // NOI18N
         storePayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 storePaymentActionPerformed(evt);
             }
         });
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -91,7 +91,7 @@ public class CashPayment extends javax.swing.JPanel {
         add(pannel);
         pannel.setBounds(580, 400, 386, 284);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel3);
         jLabel3.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

@@ -290,7 +290,7 @@ public class AddUser extends javax.swing.JPanel {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        addUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
+        addUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
         addUser.setPreferredSize(new java.awt.Dimension(120, 155));
         addUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,7 +299,7 @@ public class AddUser extends javax.swing.JPanel {
         });
         buttons.add(addUser);
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setMinimumSize(new java.awt.Dimension(120, 155));
         close.setName(""); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
@@ -341,7 +341,7 @@ public class AddUser extends javax.swing.JPanel {
         add(fieldsPanel);
         fieldsPanel.setBounds(190, 380, 1050, 470);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel9);
         jLabel9.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

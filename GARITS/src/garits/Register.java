@@ -73,7 +73,7 @@ public class Register extends javax.swing.JPanel {
 
         setLayout(null);
 
-        addUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\addUserIcon.png")); // NOI18N
+        addUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/addUserIcon.png"))); // NOI18N
         addUser.setPreferredSize(new java.awt.Dimension(120, 155));
         addUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +81,7 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
-        editUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\editUserIcon.png")); // NOI18N
+        editUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/editUserIcon.png"))); // NOI18N
         editUser.setPreferredSize(new java.awt.Dimension(120, 155));
         editUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +89,7 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +159,7 @@ public class Register extends javax.swing.JPanel {
         add(buttons);
         buttons.setBounds(20, 200, 1270, 520);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
         jLabel1.setBounds(0, 0, 1310, 920);
     }// </editor-fold>//GEN-END:initComponents

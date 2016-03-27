@@ -46,7 +46,7 @@ public class Invoice extends javax.swing.JPanel {
         customerSearch.setPreferredSize(new java.awt.Dimension(200, 30));
         searchPanel.add(customerSearch);
 
-        search.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\searchicon.png")); // NOI18N
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/searchicon.png"))); // NOI18N
         search.setPreferredSize(new java.awt.Dimension(120, 155));
         searchPanel.add(search);
 
@@ -66,11 +66,11 @@ public class Invoice extends javax.swing.JPanel {
         add(tablePanel);
         tablePanel.setBounds(430, 390, 230, 160);
 
-        invoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        invoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/invoiceicon.png"))); // NOI18N
         invoice.setPreferredSize(new java.awt.Dimension(120, 155));
         buttons.add(invoice);
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +82,7 @@ public class Invoice extends javax.swing.JPanel {
         add(buttons);
         buttons.setBounds(420, 560, 260, 160);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel2);
         jLabel2.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

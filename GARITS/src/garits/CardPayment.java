@@ -65,7 +65,7 @@ public class CardPayment extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel6.setText("Sort Code:");
 
-        storePayment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\storeicon.png")); // NOI18N
+        storePayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/storeicon.png"))); // NOI18N
         storePayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 storePaymentActionPerformed(evt);
@@ -75,7 +75,7 @@ public class CardPayment extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setText("Account Number:");
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -175,7 +175,7 @@ public class CardPayment extends javax.swing.JPanel {
         add(panel);
         panel.setBounds(530, 310, 423, 501);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel9);
         jLabel9.setBounds(0, 0, 1300, 920);
     }// </editor-fold>//GEN-END:initComponents

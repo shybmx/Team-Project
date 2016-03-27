@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javax.swing.*;
 
 public class AdminMenu extends javax.swing.JFrame {
-
+    DBConnect db;
     public AdminMenu() {
          initComponents();
         this.setResizable(false);
@@ -24,6 +24,7 @@ public class AdminMenu extends javax.swing.JFrame {
         manage.setOpaque(false);
         manage.setContentAreaFilled(false); 
         manage.setBorderPainted(false);
+        //db.connect();
         this.setSize(1300, 900);
     }
     
@@ -42,7 +43,7 @@ public class AdminMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        backupDB.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\backupIcon.png")); // NOI18N
+        backupDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/backupIcon.png"))); // NOI18N
         backupDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backupDBActionPerformed(evt);
@@ -51,7 +52,7 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(backupDB);
         backupDB.setBounds(370, 20, 150, 150);
 
-        restoreDB.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\restoreDB.png")); // NOI18N
+        restoreDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/restoreDB.png"))); // NOI18N
         restoreDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 restoreDBActionPerformed(evt);
@@ -60,7 +61,7 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(restoreDB);
         restoreDB.setBounds(520, 20, 120, 150);
 
-        archiveDB.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\archiveicon.png")); // NOI18N
+        archiveDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/archiveicon.png"))); // NOI18N
         archiveDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 archiveDBActionPerformed(evt);
@@ -69,7 +70,7 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(archiveDB);
         archiveDB.setBounds(640, 20, 120, 150);
 
-        logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/logouticon.png"))); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutActionPerformed(evt);
@@ -78,11 +79,11 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(logout);
         logout.setBounds(760, 20, 120, 150);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 200, 200);
 
-        manage.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\manageicon.png")); // NOI18N
+        manage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/manageicon.png"))); // NOI18N
         manage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageActionPerformed(evt);
@@ -91,7 +92,7 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(manage);
         manage.setBounds(250, 20, 120, 150);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 1300, 910);
 

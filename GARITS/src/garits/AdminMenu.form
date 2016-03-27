@@ -28,7 +28,7 @@
     <Component class="javax.swing.JButton" name="backupDB">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\backupIcon.png"/>
+          <Image iconType="3" name="/garits/images/backupIcon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -43,7 +43,7 @@
     <Component class="javax.swing.JButton" name="restoreDB">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\restoreDB.png"/>
+          <Image iconType="3" name="/garits/images/restoreDB.png"/>
         </Property>
       </Properties>
       <Events>
@@ -58,7 +58,7 @@
     <Component class="javax.swing.JButton" name="archiveDB">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\archiveicon.png"/>
+          <Image iconType="3" name="/garits/images/archiveicon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -73,7 +73,7 @@
     <Component class="javax.swing.JButton" name="logout">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\logouticon.png"/>
+          <Image iconType="3" name="/garits/images/logouticon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -88,7 +88,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\imageedit_1_5745129201.gif"/>
+          <Image iconType="3" name="/garits/images/imageedit_1_5745129201.gif"/>
         </Property>
       </Properties>
       <Constraints>
@@ -100,7 +100,7 @@
     <Component class="javax.swing.JButton" name="manage">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\manageicon.png"/>
+          <Image iconType="3" name="/garits/images/manageicon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -115,7 +115,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\background.jpg"/>
+          <Image iconType="3" name="/garits/images/background.jpg"/>
         </Property>
       </Properties>
       <Constraints>

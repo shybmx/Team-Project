@@ -63,7 +63,7 @@
         <Component class="javax.swing.JButton" name="editJob">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\editjob.png"/>
+              <Image iconType="3" name="/garits/images/editjob.png"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[120, 155]"/>
@@ -76,7 +76,7 @@
         <Component class="javax.swing.JButton" name="editStatus">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\editstatusicon.png"/>
+              <Image iconType="3" name="/garits/images/editstatusicon.png"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[140, 155]"/>
@@ -89,7 +89,7 @@
         <Component class="javax.swing.JButton" name="close">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\closeicon.png"/>
+              <Image iconType="3" name="/garits/images/closeicon.png"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[120, 155]"/>
@@ -125,7 +125,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\background.jpg"/>
+          <Image iconType="3" name="/garits/images/background.jpg"/>
         </Property>
       </Properties>
       <Constraints>

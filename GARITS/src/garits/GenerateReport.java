@@ -33,11 +33,11 @@ public class GenerateReport extends javax.swing.JPanel {
 
         setLayout(null);
 
-        view.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\viewicon.png")); // NOI18N
+        view.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/viewicon.png"))); // NOI18N
 
-        print.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\printicon.png")); // NOI18N
+        print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/printicon.png"))); // NOI18N
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -98,7 +98,7 @@ public class GenerateReport extends javax.swing.JPanel {
         add(panel);
         panel.setBounds(545, 397, 399, 335);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel3);
         jLabel3.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

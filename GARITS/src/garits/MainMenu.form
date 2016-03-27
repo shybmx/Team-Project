@@ -35,7 +35,7 @@
     <Component class="javax.swing.JButton" name="viewCustomers">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\customer.png"/>
+          <Image iconType="3" name="/garits/images/customer.png"/>
         </Property>
       </Properties>
       <Events>
@@ -50,7 +50,7 @@
     <Component class="javax.swing.JButton" name="logout">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\logouticon.png"/>
+          <Image iconType="3" name="/garits/images/logouticon.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -66,7 +66,7 @@
     <Component class="javax.swing.JButton" name="generateReport">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\reportsicon.png"/>
+          <Image iconType="3" name="/garits/images/reportsicon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -81,7 +81,7 @@
     <Component class="javax.swing.JButton" name="updateStock">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\stockicon.png"/>
+          <Image iconType="3" name="/garits/images/stockicon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -96,7 +96,7 @@
     <Component class="javax.swing.JButton" name="createJob">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\createJob.png"/>
+          <Image iconType="3" name="/garits/images/createJob.png"/>
         </Property>
       </Properties>
       <Events>
@@ -111,7 +111,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\imageedit_1_5745129201.gif"/>
+          <Image iconType="3" name="/garits/images/imageedit_1_5745129201.gif"/>
         </Property>
       </Properties>
       <Constraints>
@@ -123,7 +123,7 @@
     <Component class="javax.swing.JButton" name="jobList">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\Joblist.png"/>
+          <Image iconType="3" name="/garits/images/Joblist.png"/>
         </Property>
       </Properties>
       <Events>
@@ -138,7 +138,7 @@
     <Component class="javax.swing.JButton" name="payment">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\payment.png"/>
+          <Image iconType="3" name="/garits/images/payment.png"/>
         </Property>
       </Properties>
       <Events>
@@ -153,7 +153,7 @@
     <Component class="javax.swing.JButton" name="invoice">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\invoiceicon.png"/>
+          <Image iconType="3" name="/garits/images/invoiceicon.png"/>
         </Property>
       </Properties>
       <Events>
@@ -168,7 +168,7 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\City univeristy\Year 2\Team Project\Project\GARITS\data\background.jpg"/>
+          <Image iconType="3" name="/garits/images/background.jpg"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel3"/>
       </Properties>

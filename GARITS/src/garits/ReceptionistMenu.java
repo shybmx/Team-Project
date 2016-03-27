@@ -46,7 +46,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        createJobs.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createJob.png")); // NOI18N
+        createJobs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createJob.png"))); // NOI18N
         createJobs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createJobsActionPerformed(evt);
@@ -55,7 +55,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(createJobs);
         createJobs.setBounds(240, 10, 140, 155);
 
-        produceInvoice.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\invoiceicon.png")); // NOI18N
+        produceInvoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/invoiceicon.png"))); // NOI18N
         produceInvoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 produceInvoiceActionPerformed(evt);
@@ -64,7 +64,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(produceInvoice);
         produceInvoice.setBounds(500, 10, 117, 155);
 
-        logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\logouticon.png")); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/logouticon.png"))); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutActionPerformed(evt);
@@ -73,11 +73,11 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(logout);
         logout.setBounds(990, 10, 114, 160);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\imageedit_1_5745129201.gif")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(6, 0, 202, 205);
 
-        payment.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\payment.png")); // NOI18N
+        payment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/payment.png"))); // NOI18N
         payment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 paymentActionPerformed(evt);
@@ -86,7 +86,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(payment);
         payment.setBounds(740, 10, 120, 160);
 
-        stock.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\stockicon.png")); // NOI18N
+        stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/stockicon.png"))); // NOI18N
         stock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stockActionPerformed(evt);
@@ -95,7 +95,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(stock);
         stock.setBounds(620, 10, 120, 160);
 
-        jobList.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\Joblist.png")); // NOI18N
+        jobList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Joblist.png"))); // NOI18N
         jobList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobListActionPerformed(evt);
@@ -104,7 +104,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(jobList);
         jobList.setBounds(380, 10, 120, 150);
 
-        reports.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\reportsicon.png")); // NOI18N
+        reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/reportsicon.png"))); // NOI18N
         reports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reportsActionPerformed(evt);
@@ -113,7 +113,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         getContentPane().add(reports);
         reports.setBounds(860, 10, 130, 160);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\City univeristy\\Year 2\\Team Project\\Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 1300, 990);

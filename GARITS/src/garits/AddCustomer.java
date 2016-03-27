@@ -91,7 +91,7 @@ public class AddCustomer extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("Name:");
 
-        add.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
+        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addActionPerformed(evt);
@@ -101,7 +101,7 @@ public class AddCustomer extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel4.setText("Phone:");
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeActionPerformed(evt);
@@ -253,9 +253,9 @@ public class AddCustomer extends javax.swing.JPanel {
         add(panel);
         panel.setBounds(164, 475, 1086, 336);
 
-        jLabel14.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel14);
-        jLabel14.setBounds(0, 0, 1340, 930);
+        jLabel14.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents
 
     private void insertAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAddressActionPerformed

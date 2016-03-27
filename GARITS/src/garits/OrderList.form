@@ -88,7 +88,7 @@
         <Component class="javax.swing.JButton" name="add">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\add.png"/>
+              <Image iconType="3" name="/garits/images/add.png"/>
             </Property>
           </Properties>
           <Events>
@@ -98,7 +98,7 @@
         <Component class="javax.swing.JButton" name="close">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\closeicon.png"/>
+              <Image iconType="3" name="/garits/images/closeicon.png"/>
             </Property>
           </Properties>
         </Component>
@@ -128,7 +128,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\shahzad\Documents\Team-Project\GARITS\data\background.jpg"/>
+          <Image iconType="3" name="/garits/images/background.jpg"/>
         </Property>
       </Properties>
       <Constraints>

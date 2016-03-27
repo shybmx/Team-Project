@@ -76,7 +76,7 @@ public class CreateJob extends javax.swing.JPanel {
         searchCustomer.setPreferredSize(new java.awt.Dimension(200, 30));
         searchPanel.add(searchCustomer);
 
-        search.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\searchicon.png")); // NOI18N
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/searchicon.png"))); // NOI18N
         search.setPreferredSize(new java.awt.Dimension(120, 155));
         searchPanel.add(search);
 
@@ -168,7 +168,7 @@ public class CreateJob extends javax.swing.JPanel {
         add(workDonePanel);
         workDonePanel.setBounds(250, 610, 220, 250);
 
-        add.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\add.png")); // NOI18N
+        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
         add.setPreferredSize(new java.awt.Dimension(120, 155));
         addButtonPanel.add(add);
 
@@ -229,7 +229,7 @@ public class CreateJob extends javax.swing.JPanel {
         add(formPanel2);
         formPanel2.setBounds(690, 410, 420, 140);
 
-        create.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\createicon.png")); // NOI18N
+        create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createicon.png"))); // NOI18N
         create.setPreferredSize(new java.awt.Dimension(120, 155));
         create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +238,7 @@ public class CreateJob extends javax.swing.JPanel {
         });
         buttons2.add(create);
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +250,7 @@ public class CreateJob extends javax.swing.JPanel {
         add(buttons2);
         buttons2.setBounds(810, 680, 290, 170);
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel10);
         jLabel10.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents

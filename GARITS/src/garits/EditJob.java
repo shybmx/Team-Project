@@ -208,7 +208,7 @@ public class EditJob extends javax.swing.JPanel {
         add(workDonePanel);
         workDonePanel.setBounds(290, 630, 280, 190);
 
-        update.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\update.png")); // NOI18N
+        update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/update.png"))); // NOI18N
         update.setPreferredSize(new java.awt.Dimension(120, 155));
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,7 +217,7 @@ public class EditJob extends javax.swing.JPanel {
         });
         buttons.add(update);
 
-        close.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\closeicon.png")); // NOI18N
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.setPreferredSize(new java.awt.Dimension(120, 155));
         close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,7 +229,7 @@ public class EditJob extends javax.swing.JPanel {
         add(buttons);
         buttons.setBounds(900, 660, 260, 180);
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\shahzad\\Documents\\Team-Project\\GARITS\\data\\background.jpg")); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel10);
         jLabel10.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents
