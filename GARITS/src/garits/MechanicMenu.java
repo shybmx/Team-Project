@@ -18,6 +18,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         logout.setOpaque(false);
         logout.setContentAreaFilled(false); 
         logout.setBorderPainted(false);
+        jobsPanel.setOpaque(false);
         updateTable();
         this.setResizable(false);
         this.setSize(1300, 900);
@@ -40,23 +41,19 @@ public class MechanicMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jCheckBox1 = new javax.swing.JCheckBox();
-        pendingHeader = new javax.swing.JLabel();
         editStatus = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jobsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         pendingJobTable = new javax.swing.JTable();
+        pendingHeader = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        pendingHeader.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        pendingHeader.setText("Pending Jobs:");
-        getContentPane().add(pendingHeader);
-        pendingHeader.setBounds(6, 229, 155, 32);
 
         editStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/editstatusicon.png"))); // NOI18N
         editStatus.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +90,34 @@ public class MechanicMenu extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(pendingJobTable);
 
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 260, 453, 403);
+        pendingHeader.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        pendingHeader.setText("Pending Jobs:");
+
+        javax.swing.GroupLayout jobsPanelLayout = new javax.swing.GroupLayout(jobsPanel);
+        jobsPanel.setLayout(jobsPanelLayout);
+        jobsPanelLayout.setHorizontalGroup(
+            jobsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jobsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jobsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pendingHeader)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        jobsPanelLayout.setVerticalGroup(
+            jobsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jobsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jobsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pendingHeader)
+                    .addGroup(jobsPanelLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jobsPanel);
+        jobsPanel.setBounds(10, 290, 510, 480);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -106,6 +129,7 @@ public class MechanicMenu extends javax.swing.JFrame {
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
         EditJobStatus editJobStatusPanel = new EditJobStatus();
+        jobsPanel.setVisible(false);
         this.getContentPane().add(editJobStatusPanel);
         this.invalidate();
         this.validate();
@@ -123,6 +147,7 @@ public class MechanicMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jobsPanel;
     private javax.swing.JButton logout;
     private javax.swing.JLabel pendingHeader;
     private javax.swing.JTable pendingJobTable;

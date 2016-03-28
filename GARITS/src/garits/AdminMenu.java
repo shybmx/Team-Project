@@ -6,6 +6,8 @@ import javax.swing.*;
 
 public class AdminMenu extends javax.swing.JFrame {
     DBConnect db;
+
+    
     public AdminMenu() {
          initComponents();
         this.setResizable(false);
@@ -38,6 +40,8 @@ public class AdminMenu extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         manage = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        alerts = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -92,6 +96,22 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(manage);
         manage.setBounds(250, 20, 120, 150);
 
+        alerts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(alerts);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(940, 20, 300, 150);
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 1300, 910);
@@ -106,15 +126,24 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void backupDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupDBActionPerformed
-        // TODO add your handling code here:
+       BackupDB backupdbpanel = new BackupDB();
+       this.getContentPane().add(backupdbpanel);
+       this.invalidate();
+       this.validate();
     }//GEN-LAST:event_backupDBActionPerformed
 
     private void restoreDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreDBActionPerformed
-        // TODO add your handling code here:
+        RestoreDB restoredbpanel = new RestoreDB();
+        this.getContentPane().add(restoredbpanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_restoreDBActionPerformed
 
     private void archiveDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveDBActionPerformed
-        // TODO add your handling code here:
+        ArchiveDB archivedbpanel = new ArchiveDB();
+        this.getContentPane().add(archivedbpanel);
+        this.invalidate();
+        this.validate();
     }//GEN-LAST:event_archiveDBActionPerformed
 
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
@@ -125,10 +154,12 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_manageActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable alerts;
     private javax.swing.JButton archiveDB;
     private javax.swing.JButton backupDB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton manage;
     private javax.swing.JButton restoreDB;

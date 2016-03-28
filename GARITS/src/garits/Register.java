@@ -66,9 +66,10 @@ public class Register extends javax.swing.JPanel {
         addUser = new javax.swing.JButton();
         editUser = new javax.swing.JButton();
         close = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userNames = new javax.swing.JTable();
-        delete = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -97,6 +98,44 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
+        delete.setText("Remove user");
+        delete.setPreferredSize(new java.awt.Dimension(120, 155));
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
+        buttons.setLayout(buttonsLayout);
+        buttonsLayout.setHorizontalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsLayout.createSequentialGroup()
+                .addGap(356, 356, 356)
+                .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        buttonsLayout.setVerticalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(buttons);
+        buttons.setBounds(30, 280, 860, 170);
+
         userNames.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -115,53 +154,29 @@ public class Register extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(userNames);
 
-        delete.setText("Delete");
-        delete.setPreferredSize(new java.awt.Dimension(120, 155));
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
-        buttons.setLayout(buttonsLayout);
-        buttonsLayout.setHorizontalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsLayout.createSequentialGroup()
+        javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
+        tablePanel.setLayout(tablePanelLayout);
+        tablePanelLayout.setHorizontalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1286, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(buttonsLayout.createSequentialGroup()
-                .addGap(356, 356, 356)
-                .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(413, Short.MAX_VALUE))
         );
-        buttonsLayout.setVerticalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+        tablePanelLayout.setVerticalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tablePanelLayout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        add(buttons);
-        buttons.setBounds(20, 200, 1270, 520);
+        add(tablePanel);
+        tablePanel.setBounds(40, 470, 1310, 319);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(0, 0, 1310, 920);
+        jLabel1.setBounds(0, 0, 1380, 920);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -171,9 +186,60 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
-        buttons.setVisible(false);
-        AddUser addUserPanel = new AddUser();
+        //this.buttons.setVisible(false);
+        //this.tablePanel.setVisible(false);
+    
+       // this.buttons.removeAll();
+        //this.tablePanel.removeAll();
+       // this.removeAll();
+        //this.buttons.setVisible(false);
+        //myFrame.repaint();
+        //myFrame.repaint();
+        //this.buttons.removeAll();
+       // this.setVisible(false);
+       // this.invalidate();
+       //this.buttons.
+       //myFrame.remove(this);
+        //myFrame.getContentPane().remove(buttons);
+        // myFrame.revalidate();
+         //this.setVisible(false);
+        //AddUser addUserPanel = new AddUser();
+        
+        /*
+       myFrame.
         myFrame.getContentPane().add(addUserPanel);
+        */
+
+        AddUser addUserPanel = new AddUser();
+        AdminMenu newMenu = new AdminMenu();
+        myFrame.getContentPane().removeAll();
+        //myFrame.getContentPane().remove(tablePanel);
+       ///myFrame.getContentPane().remove(this);
+        //myFrame.getContentPane().add(adduserPanel);
+        //myFrame.getContentPane().add(myFrame);
+
+          
+       
+        myFrame.getContentPane().validate();
+       myFrame.getContentPane().repaint();
+ 
+               //myFrame.validate();
+       // myFrame.repaint();
+       // buttons.setVisible(false);
+
+        //this.invalidate();
+        //this.validate();
+        //tablePanel.setVisible(false);
+        //myFrame.getContentPane().add(adduserPanel);
+        //addUserPanel.invalidate();
+       // addUserPanel.validate();
+       
+        //this.removeAll();
+     
+        //this.buttons.add(addUserPanel);
+        //this.buttons.repaint();
+        //addUserPanel.setVisible(true);
+       // addUserPanel.validate();
     }//GEN-LAST:event_addUserActionPerformed
 
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
@@ -209,6 +275,7 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JButton editUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel tablePanel;
     private javax.swing.JTable userNames;
     // End of variables declaration//GEN-END:variables
 }

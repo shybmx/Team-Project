@@ -22,6 +22,9 @@ public class ForePerson extends javax.swing.JFrame {
         payment.setOpaque(false);
         payment.setContentAreaFilled(false); 
         payment.setBorderPainted(false);
+        reports.setOpaque(false);
+        reports.setContentAreaFilled(false); 
+        reports.setBorderPainted(false);
         this.setResizable(false);
         this.setSize(1300, 900);
     }
@@ -37,6 +40,7 @@ public class ForePerson extends javax.swing.JFrame {
         stock = new javax.swing.JButton();
         payment = new javax.swing.JButton();
         jobList = new javax.swing.JButton();
+        reports = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,7 +53,7 @@ public class ForePerson extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(840, 10, 114, 150);
+        logout.setBounds(950, 10, 114, 150);
 
         createJob.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createJob.png"))); // NOI18N
         createJob.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +104,15 @@ public class ForePerson extends javax.swing.JFrame {
         getContentPane().add(jobList);
         jobList.setBounds(470, 10, 120, 150);
 
+        reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/reportsicon.png"))); // NOI18N
+        reports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(reports);
+        reports.setBounds(830, 10, 110, 150);
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 1300, 900);
@@ -148,6 +161,13 @@ public class ForePerson extends javax.swing.JFrame {
         this.validate();
     }//GEN-LAST:event_paymentActionPerformed
 
+    private void reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsActionPerformed
+        SparePartReport generatereportpanel = new SparePartReport();
+        this.getContentPane().add(generatereportpanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_reportsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;
     private javax.swing.JButton invoice;
@@ -156,6 +176,7 @@ public class ForePerson extends javax.swing.JFrame {
     private javax.swing.JButton jobList;
     private javax.swing.JButton logout;
     private javax.swing.JButton payment;
+    private javax.swing.JButton reports;
     private javax.swing.JButton stock;
     // End of variables declaration//GEN-END:variables
 }

@@ -163,8 +163,8 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_stockActionPerformed
 
     private void reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsActionPerformed
-        GenerateReport generateReportPanel = new GenerateReport();
-        this.getContentPane().add(generateReportPanel);
+        SparePartReport sparepartreportpanel = new SparePartReport();
+        this.getContentPane().add(sparepartreportpanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_reportsActionPerformed
