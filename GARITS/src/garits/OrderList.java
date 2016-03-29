@@ -8,10 +8,11 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class OrderList extends javax.swing.JPanel {
-    Connection conn;
+    DBConnect db;
     PreparedStatement prestate;
-    public OrderList() {
+    public OrderList(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -25,9 +26,7 @@ public class OrderList extends javax.swing.JPanel {
 
     public void updateTable(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT `PartNo`, `PartName`, `UnitCost`, `Quantity` FROM `parts`");
+            prestate = db.conn.prepareStatement("SELECT `PartNo`, `PartName`, `UnitCost`, `Quantity` FROM `parts`");
             ResultSet result = prestate.executeQuery();
             partsTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){

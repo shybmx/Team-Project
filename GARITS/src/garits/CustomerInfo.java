@@ -10,10 +10,11 @@ import net.proteanit.sql.DbUtils;
 
 public class CustomerInfo extends javax.swing.JPanel {
     JFrame myFrame;
-    Connection conn = null;
+    DBConnect db;
     PreparedStatement prestate = null;
-    public CustomerInfo(JFrame frame) {
+    public CustomerInfo(JFrame frame, DBConnect db) {
         initComponents();
+        this.db = db;
         myFrame = frame;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
@@ -31,9 +32,7 @@ public class CustomerInfo extends javax.swing.JPanel {
     
     public void updateTable(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT * from `garits`.`customers`");
+            prestate = db.conn.prepareStatement("SELECT * from `garits`.`customers`");
             ResultSet result = prestate.executeQuery();
             customerTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){

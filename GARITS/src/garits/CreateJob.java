@@ -6,9 +6,10 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class CreateJob extends javax.swing.JPanel {
-
-    public CreateJob() {
+    DBConnect db;
+    public CreateJob(DBConnect db) {
         initComponents();
+        this.db = db;
         this.repaint();
         add.setOpaque(false);
         add.setContentAreaFilled(false); 
@@ -256,19 +257,16 @@ public class CreateJob extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
-       String customerName = customerNameField.getText();
-       String vechicleRegNo = vehicleRegNoField.getText();
-       String make = makeField.getText();
-       String estimatedTime = estimatedTimeField.getText();
-       String date = dateBookedInField.getText();
-       String model = modelField.getText();
-       String telephone = telephoneField.getText();
-       Connection conn = null;
+        String customerName = customerNameField.getText();
+        String vechicleRegNo = vehicleRegNoField.getText();
+        String make = makeField.getText();
+        String estimatedTime = estimatedTimeField.getText();
+        String date = dateBookedInField.getText();
+        String model = modelField.getText();
+        String telephone = telephoneField.getText();
         PreparedStatement prestate = null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
                     + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber)"
                     + "Values(?,?,?,?,?,?,?)");
             prestate.setString(1, customerName);

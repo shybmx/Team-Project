@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/EditStock.java</file>
             <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/OrderList.java</file>
-            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/Invoice.java</file>
+            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/MainMenu.java</file>
             <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/Stock.java</file>
-            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/EditCustomer.java</file>
+            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/ReceptionistMenu.java</file>
+            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/DBConnect.java</file>
             <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/Pin.java</file>
-            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/AdminMenu.java</file>
+            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/EditUser.java</file>
+            <file>file:/C:/Users/shahzad/Documents/Team-Project/GARITS/src/garits/Register.java</file>
         </group>
     </open-files>
 </project-private>

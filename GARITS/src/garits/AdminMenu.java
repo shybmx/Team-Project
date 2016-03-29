@@ -1,15 +1,17 @@
 package garits;
 
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.*;
 
 public class AdminMenu extends javax.swing.JFrame {
     DBConnect db;
-
-    
-    public AdminMenu() {
-         initComponents();
+    public AdminMenu(DBConnect db) {
+        initComponents();
+        this.db = db;
         this.setResizable(false);
         backupDB.setOpaque(false);
         backupDB.setContentAreaFilled(false); 
@@ -26,7 +28,6 @@ public class AdminMenu extends javax.swing.JFrame {
         manage.setOpaque(false);
         manage.setContentAreaFilled(false); 
         manage.setBorderPainted(false);
-        //db.connect();
         this.setSize(1300, 900);
     }
     
@@ -121,33 +122,38 @@ public class AdminMenu extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         Pin logout = new Pin();
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void backupDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupDBActionPerformed
-       BackupDB backupdbpanel = new BackupDB();
+       BackupDB backupdbpanel = new BackupDB(db);
        this.getContentPane().add(backupdbpanel);
        this.invalidate();
        this.validate();
     }//GEN-LAST:event_backupDBActionPerformed
 
     private void restoreDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreDBActionPerformed
-        RestoreDB restoredbpanel = new RestoreDB();
+        RestoreDB restoredbpanel = new RestoreDB(db);
         this.getContentPane().add(restoredbpanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_restoreDBActionPerformed
 
     private void archiveDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveDBActionPerformed
-        ArchiveDB archivedbpanel = new ArchiveDB();
+        ArchiveDB archivedbpanel = new ArchiveDB(db);
         this.getContentPane().add(archivedbpanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_archiveDBActionPerformed
 
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
-       Register register = new Register(this);
+       Register register = new Register(this, db);
         this.getContentPane().add(register);
         this.invalidate();
         this.validate();

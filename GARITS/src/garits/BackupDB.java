@@ -1,9 +1,10 @@
 package garits;
 
 public class BackupDB extends javax.swing.JPanel {
-
-    public BackupDB() {
+    DBConnect db;
+    public BackupDB(DBConnect db) {
         initComponents();
+        this.db = db;
         addButton.setOpaque(false);
         addButton.setContentAreaFilled(false); 
         addButton.setBorderPainted(false);

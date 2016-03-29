@@ -1,9 +1,10 @@
 package garits;
 
 public class RestoreDB extends javax.swing.JPanel {
-
-    public RestoreDB() {
+    DBConnect db;
+    public RestoreDB(DBConnect db) {
         initComponents();
+        this.db = db;
         addButton.setOpaque(false);
         addButton.setContentAreaFilled(false); 
         addButton.setBorderPainted(false);

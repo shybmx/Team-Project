@@ -1,9 +1,10 @@
 package garits;
 
 public class GenerateReport extends javax.swing.JPanel {
-
-    public GenerateReport() {
+    DBConnect db;
+    public GenerateReport(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);

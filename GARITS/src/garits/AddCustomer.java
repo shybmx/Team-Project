@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class AddCustomer extends javax.swing.JPanel {
-
+    DBConnect db = new DBConnect();
     public AddCustomer() {
         initComponents();
         add.setOpaque(false);
@@ -16,6 +16,7 @@ public class AddCustomer extends javax.swing.JPanel {
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
         panel.setOpaque(false);
+        customerTypeField.setEditable(false);
         this.setSize(1300, 900);
     }
 
@@ -51,7 +52,11 @@ public class AddCustomer extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         discountBox = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        customerTypeBox = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        customerTypeField = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        discountTextField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -123,7 +128,25 @@ public class AddCustomer extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel13.setText("Customer:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Regular", "Casual", " " }));
+        customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Regular", "Casual", " " }));
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel15.setText("Customer:");
+
+        customerTypeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerTypeFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel16.setText("Discount:");
+
+        discountTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discountTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -138,11 +161,7 @@ public class AddCustomer extends javax.swing.JPanel {
                                 .addGap(54, 54, 54)
                                 .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3))
                         .addComponent(insertName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                             .addComponent(jLabel1)
@@ -153,7 +172,15 @@ public class AddCustomer extends javax.swing.JPanel {
                         .addGroup(panelLayout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelLayout.createSequentialGroup()
@@ -163,11 +190,17 @@ public class AddCustomer extends javax.swing.JPanel {
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel12))
-                        .addGap(128, 128, 128)
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(insertReg, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(discountBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel16))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(128, 128, 128)
+                                .addComponent(insertReg))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(discountBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(discountTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -224,14 +257,15 @@ public class AddCustomer extends javax.swing.JPanel {
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel12))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(insertColour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(discountBox, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))
+                                .addComponent(discountBox)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(discountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -251,12 +285,20 @@ public class AddCustomer extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                            .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         add(panel);
-        panel.setBounds(164, 475, 1086, 336);
+        panel.setBounds(164, 475, 1086, 410);
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel14);
@@ -291,9 +333,7 @@ public class AddCustomer extends javax.swing.JPanel {
         Connection conn = null;
         PreparedStatement prestate = null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
                     + "TelephoneNumber, EMail, RegNum, Make, Model, EngSerial, ChassieNumber, Colour, Discount) "
                     + "Values (?,?,?,?,?,?,?,?,?,?,?,?)");
             prestate.setString(1, name);
@@ -319,10 +359,21 @@ public class AddCustomer extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addActionPerformed
 
+    private void customerTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTypeFieldActionPerformed
+        customerTypeField.setText(customerTypeBox.getSelectedItem().toString());
+    }//GEN-LAST:event_customerTypeFieldActionPerformed
+
+    private void discountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountTextFieldActionPerformed
+        discountTextField.setText(discountBox.getSelectedItem().toString());
+    }//GEN-LAST:event_discountTextFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton close;
+    private javax.swing.JComboBox customerTypeBox;
+    private javax.swing.JTextField customerTypeField;
     private javax.swing.JComboBox discountBox;
+    private javax.swing.JTextField discountTextField;
     private javax.swing.JTextField insertAddress;
     private javax.swing.JTextField insertChass;
     private javax.swing.JTextField insertColour;
@@ -334,13 +385,14 @@ public class AddCustomer extends javax.swing.JPanel {
     private javax.swing.JTextField insertPhone;
     private javax.swing.JTextField insertPostCode;
     private javax.swing.JTextField insertReg;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

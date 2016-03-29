@@ -1,9 +1,10 @@
 package garits;
 
 public class CashPayment extends javax.swing.JPanel {
-
-    public CashPayment() {
+    DBConnect db;
+    public CashPayment(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);

@@ -11,11 +11,11 @@ import net.proteanit.sql.DbUtils;
 
 public class Register extends javax.swing.JPanel {
     JFrame myFrame;
-    Connection conn = null;
-    PreparedStatement prestate = null;
-    
-    public Register(JFrame frame) {
+    PreparedStatement prestate;
+    DBConnect db;
+    public Register(JFrame frame, DBConnect db) {
         initComponents();
+        this.db = db;
         myFrame = frame;
         addUser.setOpaque(false);
         addUser.setContentAreaFilled(false); 
@@ -33,9 +33,7 @@ public class Register extends javax.swing.JPanel {
     
     public void updateTable(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT * from `garits`.`login`");
+            prestate = db.conn.prepareStatement("SELECT * from `garits`.`login`");
             ResultSet result = prestate.executeQuery();
             userNames.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
@@ -160,8 +158,8 @@ public class Register extends javax.swing.JPanel {
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1286, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,11 +170,11 @@ public class Register extends javax.swing.JPanel {
         );
 
         add(tablePanel);
-        tablePanel.setBounds(40, 470, 1310, 319);
+        tablePanel.setBounds(0, 470, 1310, 319);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(0, 0, 1380, 920);
+        jLabel1.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -211,7 +209,7 @@ public class Register extends javax.swing.JPanel {
         */
 
         AddUser addUserPanel = new AddUser();
-        AdminMenu newMenu = new AdminMenu();
+        AdminMenu newMenu = new AdminMenu(db);
         myFrame.getContentPane().removeAll();
         //myFrame.getContentPane().remove(tablePanel);
        ///myFrame.getContentPane().remove(this);

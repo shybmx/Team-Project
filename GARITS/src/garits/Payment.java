@@ -4,8 +4,10 @@ import javax.swing.JFrame;
 
 public class Payment extends javax.swing.JPanel {
     JFrame myFrame;
-    public Payment(JFrame frame) {
+    DBConnect db;
+    public Payment(JFrame frame, DBConnect db) {
         initComponents();
+        this.db = db;
         myFrame = frame;
         cardPayment.setOpaque(false);
         cardPayment.setContentAreaFilled(false); 
@@ -102,19 +104,19 @@ public class Payment extends javax.swing.JPanel {
 
     private void cashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashPaymentActionPerformed
        buttons.setVisible(false);
-       CashPayment cashPaymentPanel = new CashPayment();
+       CashPayment cashPaymentPanel = new CashPayment(db);
        myFrame.getContentPane().add(cashPaymentPanel);
     }//GEN-LAST:event_cashPaymentActionPerformed
 
     private void cardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardPaymentActionPerformed
         buttons.setVisible(false);
-        CardPayment cardPaymentPanel = new CardPayment();
+        CardPayment cardPaymentPanel = new CardPayment(db);
         myFrame.getContentPane().add(cardPaymentPanel);
     }//GEN-LAST:event_cardPaymentActionPerformed
 
     private void chequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chequePaymentActionPerformed
         buttons.setVisible(false);
-        ChequePayment chequePaymentPanel = new ChequePayment();
+        ChequePayment chequePaymentPanel = new ChequePayment(db);
         myFrame.getContentPane().add(chequePaymentPanel);
     }//GEN-LAST:event_chequePaymentActionPerformed
 

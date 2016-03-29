@@ -1,9 +1,10 @@
 package garits;
 
 public class ReceptionistMenu extends javax.swing.JFrame {
-    
-    public ReceptionistMenu() {
+    DBConnect db;
+    public ReceptionistMenu(DBConnect db) {
         initComponents();
+        this.db = db;
         createJobs.setOpaque(false);
         createJobs.setContentAreaFilled(false); 
         createJobs.setBorderPainted(false);
@@ -122,14 +123,14 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobsActionPerformed
-        CreateJob createJobPanel = new CreateJob();
+        CreateJob createJobPanel = new CreateJob(db);
         this.getContentPane().add(createJobPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_createJobsActionPerformed
 
     private void produceInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produceInvoiceActionPerformed
-        Invoice invoicePanel = new Invoice();
+        Invoice invoicePanel = new Invoice(db);
         this.getContentPane().add(invoicePanel);
         this.invalidate();
         this.validate();
@@ -142,28 +143,28 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
-        Payment paymentPanel = new Payment(this);
+        Payment paymentPanel = new Payment(this, db);
         this.getContentPane().add(paymentPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_paymentActionPerformed
 
     private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
-        JobList jobListPanel = new JobList(this);
+        JobList jobListPanel = new JobList(this, db);
         this.getContentPane().add(jobListPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_jobListActionPerformed
 
     private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
-        Stock stockPanel = new Stock();
+        Stock stockPanel = new Stock(db);
         this.getContentPane().add(stockPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_stockActionPerformed
 
     private void reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsActionPerformed
-        SparePartReport sparepartreportpanel = new SparePartReport();
+        SparePartReport sparepartreportpanel = new SparePartReport(db);
         this.getContentPane().add(sparepartreportpanel);
         this.invalidate();
         this.validate();

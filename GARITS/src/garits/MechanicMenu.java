@@ -8,10 +8,11 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class MechanicMenu extends javax.swing.JFrame {
-    Connection conn;
     PreparedStatement prestate;
-    public MechanicMenu() {
+    DBConnect db;
+    public MechanicMenu(DBConnect db) {
         initComponents();
+        this.db = db;
         editStatus.setOpaque(false);
         editStatus.setContentAreaFilled(false); 
         editStatus.setBorderPainted(false);
@@ -26,9 +27,7 @@ public class MechanicMenu extends javax.swing.JFrame {
     
     public void updateTable(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT `Job_Number`, `Customer`, `VehicleRegNumber` FROM `jobsheets`");
+            prestate = db.conn.prepareStatement("SELECT `Job_Number`, `Customer`, `VehicleRegNumber` FROM `jobsheets`");
             ResultSet result = prestate.executeQuery();
             pendingJobTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){

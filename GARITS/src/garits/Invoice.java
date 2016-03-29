@@ -1,9 +1,10 @@
 package garits;
 
 public class Invoice extends javax.swing.JPanel {
-    
-    public Invoice() {
+    DBConnect db;
+    public Invoice(DBConnect db) {
         initComponents();
+        this.db = db;
         this.repaint();
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
@@ -19,7 +20,6 @@ public class Invoice extends javax.swing.JPanel {
         buttons.setOpaque(false);
         this.setSize(1300, 900);
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

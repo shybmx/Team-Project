@@ -1,9 +1,14 @@
 package garits;
 
-public class ForePerson extends javax.swing.JFrame {
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    public ForePerson() {
+public class ForePerson extends javax.swing.JFrame {
+    DBConnect db;
+    public ForePerson(DBConnect db) {
         initComponents();
+        this.db = db;
         logout.setOpaque(false);
         logout.setContentAreaFilled(false); 
         logout.setBorderPainted(false);
@@ -122,47 +127,52 @@ public class ForePerson extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         Pin pin = new Pin();
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ForePerson.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void createJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobActionPerformed
-        CreateJob createjob = new CreateJob();
+        CreateJob createjob = new CreateJob(db);
         this.getContentPane().add(createjob);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_createJobActionPerformed
 
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
-        Invoice invoicePanel = new Invoice();
+        Invoice invoicePanel = new Invoice(db);
         this.getContentPane().add(invoicePanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_invoiceActionPerformed
 
     private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
-        Stock stockpanel = new Stock();
+        Stock stockpanel = new Stock(db);
         this.getContentPane().add(stockpanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_stockActionPerformed
 
     private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
-        JobList jobListPanel = new JobList(this);
+        JobList jobListPanel = new JobList(this, db);
         this.getContentPane().add(jobListPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_jobListActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
-        Payment paymentPanel = new Payment(this);
+        Payment paymentPanel = new Payment(this, db);
         this.getContentPane().add(paymentPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_paymentActionPerformed
 
     private void reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsActionPerformed
-        SparePartReport generatereportpanel = new SparePartReport();
+        SparePartReport generatereportpanel = new SparePartReport(db);
         this.getContentPane().add(generatereportpanel);
         this.invalidate();
         this.validate();

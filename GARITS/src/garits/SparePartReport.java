@@ -1,9 +1,10 @@
 package garits;
 
 public class SparePartReport extends javax.swing.JPanel {
-
-    public SparePartReport() {
+    DBConnect db;
+    public SparePartReport(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);

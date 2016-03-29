@@ -8,10 +8,11 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class Stock extends javax.swing.JPanel {
-    Connection conn;
+    DBConnect db;
     PreparedStatement prestate = null;
-    public Stock() {
+    public Stock(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -31,9 +32,7 @@ public class Stock extends javax.swing.JPanel {
     
     public void updateTable(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT * from `garits`.`parts`");
+            prestate = db.conn.prepareStatement("SELECT * from `garits`.`parts`");
             ResultSet result = prestate.executeQuery();
             stockTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
@@ -164,7 +163,7 @@ public class Stock extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
-        OrderList orderListPanel = new OrderList();
+        OrderList orderListPanel = new OrderList(db);
         //this.getContentPane().add();
         this.invalidate();
         this.validate();

@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 public class Pin extends javax.swing.JFrame {  
-   
+    DBConnect db = new DBConnect();
     public Pin(){
         initComponents();
         login.setOpaque(false);
@@ -79,13 +79,11 @@ public class Pin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       Connection conn;
        PreparedStatement prestate;
        String userName = insertUserName.getText();
        String password = insertPassWord.getText();
        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+            prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'admin'");
             prestate.setString(1, userName);
@@ -96,11 +94,11 @@ public class Pin extends javax.swing.JFrame {
                 i++;
             }
             if(i == 1){
-                AdminMenu admin = new AdminMenu();
+                AdminMenu admin = new AdminMenu(db);
                 this.setVisible(false);
                 admin.setVisible(true);
             }else{
-               prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+               prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'foreperson'");
                prestate.setString(1, userName);
@@ -110,11 +108,11 @@ public class Pin extends javax.swing.JFrame {
                    i++;
                }
                if(i == 1){
-                   ForePerson forepersonmenu = new ForePerson();
+                   ForePerson forepersonmenu = new ForePerson(db);
                    this.setVisible(false);
                    forepersonmenu.setVisible(true);
                }else{
-                     prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                     prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'mechanic'");
                prestate.setString(1, userName);
@@ -124,11 +122,11 @@ public class Pin extends javax.swing.JFrame {
                    i++;
                }
                if(i == 1){
-                   MechanicMenu mechanicmenu = new MechanicMenu();
+                   MechanicMenu mechanicmenu = new MechanicMenu(db);
                    this.setVisible(false);
                    mechanicmenu.setVisible(true);
                }else{
-                   prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                   prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'franchisee'");
                prestate.setString(1, userName);
@@ -142,7 +140,7 @@ public class Pin extends javax.swing.JFrame {
                    this.setVisible(false);
                    franmenu.setVisible(true);
                }else{
-                   prestate = conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
+                   prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'receptionist'");
                    prestate.setString(1, userName);
@@ -152,7 +150,7 @@ public class Pin extends javax.swing.JFrame {
                        i++;
                    }
                    if(i == 1){
-                       ReceptionistMenu receptionistmenu = new ReceptionistMenu();
+                       ReceptionistMenu receptionistmenu = new ReceptionistMenu(db);
                        this.setVisible(false);
                        receptionistmenu.setVisible(true);
                    }else{
@@ -207,9 +205,7 @@ public class Pin extends javax.swing.JFrame {
        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new Pin().setVisible(true);
-                DBConnect connect = new DBConnect();
-                connect.getData();
+                new Pin().setVisible(true);
             }
         });
     }

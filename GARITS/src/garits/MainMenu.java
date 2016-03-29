@@ -1,5 +1,9 @@
 package garits;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MainMenu extends javax.swing.JFrame {
 
     DBConnect db;
@@ -141,7 +145,7 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomersActionPerformed
-        CustomerInfo customerInfoPanel = new CustomerInfo(this);
+        CustomerInfo customerInfoPanel = new CustomerInfo(this, db);
         this.getContentPane().add(customerInfoPanel);
         this.invalidate();
         this.validate();
@@ -149,47 +153,52 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         Pin pin = new Pin();
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pin.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void updateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockActionPerformed
-        Stock stockPanel = new Stock();
+        Stock stockPanel = new Stock(db);
         this.getContentPane().add(stockPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_updateStockActionPerformed
 
     private void createJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobActionPerformed
-        CreateJob createJobPanel = new CreateJob();
+        CreateJob createJobPanel = new CreateJob(db);
         this.getContentPane().add(createJobPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_createJobActionPerformed
 
     private void generateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportActionPerformed
-        GenerateReport reportPanel = new GenerateReport();
+        GenerateReport reportPanel = new GenerateReport(db);
         this.getContentPane().add(reportPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_generateReportActionPerformed
 
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
-        Invoice invoicePanel = new Invoice();
+        Invoice invoicePanel = new Invoice(db);
         this.getContentPane().add(invoicePanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_invoiceActionPerformed
 
     private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
-        JobList jobListPanel = new JobList(this);
+        JobList jobListPanel = new JobList(this, db);
         this.getContentPane().add(jobListPanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_jobListActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
-        Payment paymentPanel = new Payment(this);
+        Payment paymentPanel = new Payment(this, db);
         this.getContentPane().add(paymentPanel);
         this.invalidate();
         this.validate();

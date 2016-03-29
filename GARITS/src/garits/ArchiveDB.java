@@ -1,9 +1,10 @@
 package garits;
 
 public class ArchiveDB extends javax.swing.JPanel {
-
-    public ArchiveDB() {
+    DBConnect db;
+    public ArchiveDB(DBConnect db) {
         initComponents();
+        this.db = db;
         addButton.setContentAreaFilled(false); 
         addButton.setBorderPainted(false);
         addButton.setOpaque(false);

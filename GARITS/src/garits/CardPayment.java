@@ -6,10 +6,11 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class CardPayment extends javax.swing.JPanel {
-    Connection conn;
+    DBConnect db;
     PreparedStatement prestate;
-    public CardPayment() {
+    public CardPayment(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -43,6 +44,7 @@ public class CardPayment extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         customerNameField = new javax.swing.JTextField();
         nameOnCardField = new javax.swing.JTextField();
+        paymentTypeField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -85,12 +87,14 @@ public class CardPayment extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel8.setText("Security Number:");
 
+        paymentTypeField.setText("Cash Payment");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(storePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -101,10 +105,6 @@ public class CardPayment extends javax.swing.JPanel {
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nameOnCardField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -124,16 +124,25 @@ public class CardPayment extends javax.swing.JPanel {
                         .addGroup(panelLayout.createSequentialGroup()
                             .addComponent(jLabel7)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(accountNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(accountNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(paymentTypeField)
+                                .addComponent(customerNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(securityNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(paymentTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,11 +178,11 @@ public class CardPayment extends javax.swing.JPanel {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(storePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(panel);
-        panel.setBounds(530, 310, 423, 501);
+        panel.setBounds(530, 270, 423, 580);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel9);
@@ -194,26 +203,40 @@ public class CardPayment extends javax.swing.JPanel {
         String sortCode = sortCodeField.getText();
         String accountNumber = accountNumberField.getText();
         String securityNumber = securityNumberField.getText();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("INSERT INTO  `garits`.`cardpayment` (CustomerName, CardOwnerName, "
-                    + "Amount, CardNumber, ExpiryDate, SortCode, AccountNumber, SecuirtyNumber) "
-                    + "Values(?,?,?,?,?,?,?,?)");
-            prestate.setString(1, name);
-            prestate.setString(2, nameOnCard);
-            prestate.setString(3, amount);
-            prestate.setString(4, cardNumber);
-            prestate.setString(5, expiryDate);
-            prestate.setString(6, sortCode);
-            prestate.setString(7, accountNumber);
-            prestate.setString(8, securityNumber);
-            int i = prestate.executeUpdate();
-            if(i > 0){
-                JOptionPane.showMessageDialog(null, "Payment successfully saved");
-                this.setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Payment has not been saved");
+        String paymentType = paymentTypeField.getText();
+        try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){
+            try{
+                prestate = conn.prepareStatement("INSERT INTO `garits`.`cardpayment` (CustomerName, CardOwnerName, " 
+                        + "Amount, CardNumber, ExpiryDate, SortCode, AccountNumber, SecuirtyNumber) " 
+                        + "Values(?,?,?,?,?,?,?,?)");
+                prestate.setString(1, name);
+                prestate.setString(2, nameOnCard);
+                prestate.setString(3, amount);
+                prestate.setString(4, cardNumber);
+                prestate.setString(5, expiryDate);
+                prestate.setString(6, sortCode);
+                prestate.setString(7, accountNumber);
+                prestate.setString(8, securityNumber);
+                int i = prestate.executeUpdate();
+                if(i > 0){
+                    JOptionPane.showMessageDialog(null, "Payment successfully saved");
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Payment has not been saved");
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+            }           
+            try{
+                prestate = conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
+                        + "Amount, CustomerName)"
+                        + "Values (?,?,?) ");
+                prestate.setString(1, paymentType);
+                prestate.setString(2, amount);
+                prestate.setString(3, name);
+                prestate.executeUpdate();
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Cannot connect to database");
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
@@ -238,6 +261,7 @@ public class CardPayment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nameOnCardField;
     private javax.swing.JPanel panel;
+    private javax.swing.JTextField paymentTypeField;
     private javax.swing.JTextField securityNumberField;
     private javax.swing.JTextField sortCodeField;
     private javax.swing.JButton storePayment;

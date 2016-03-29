@@ -6,10 +6,11 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class ChequePayment extends javax.swing.JPanel {
-    Connection conn;
     PreparedStatement prestate;
-    public ChequePayment() {
+    DBConnect db;
+    public ChequePayment(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -17,6 +18,7 @@ public class ChequePayment extends javax.swing.JPanel {
         storePayment.setContentAreaFilled(false); 
         storePayment.setBorderPainted(false);
         panel.setOpaque(false);
+        chequePaymentField.setEditable(false);
         this.setSize(1300, 900);
     }
 
@@ -39,6 +41,7 @@ public class ChequePayment extends javax.swing.JPanel {
         memoField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         amountField = new javax.swing.JTextField();
+        chequePaymentField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -75,6 +78,8 @@ public class ChequePayment extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setText("Amount:");
 
+        chequePaymentField.setText("Cheque Payment");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -96,7 +101,7 @@ public class ChequePayment extends javax.swing.JPanel {
                         .addComponent(chequeDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(chequeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -106,18 +111,23 @@ public class ChequePayment extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(117, 117, 117)
-                                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                 .addComponent(storePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(117, 117, 117)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(chequePaymentField)
+                                    .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chequePaymentField, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -147,11 +157,11 @@ public class ChequePayment extends javax.swing.JPanel {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(storePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(panel);
-        panel.setBounds(580, 360, 411, 420);
+        panel.setBounds(580, 310, 411, 470);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel6);
@@ -170,24 +180,38 @@ public class ChequePayment extends javax.swing.JPanel {
         String payToName = payToNameField.getText();
         String chequeName = chequeNameField.getText();
         String memo = memoField.getText();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
-                    + "PayToName, ChequeName, Memo) "
-                    + "Values(?,?,?,?,?,?)");
-            prestate.setString(1, name);
-            prestate.setString(2, amount);
-            prestate.setString(3, chequeDate);
-            prestate.setString(4, payToName);
-            prestate.setString(5, chequeName);
-            prestate.setString(6, memo);
-            int i = prestate.executeUpdate();
-            if(i > 0){
-                JOptionPane.showMessageDialog(null, "Payment successfully saved");
-                this.setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Payment has not been saved");
+        String paymentType = chequePaymentField.getText();
+        try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){
+            try{
+                prestate = conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
+                        + "PayToName, ChequeName, Memo) "
+                        + "Values(?,?,?,?,?,?);");
+                prestate.setString(1, name);
+                prestate.setString(2, amount);
+                prestate.setString(3, chequeDate);
+                prestate.setString(4, payToName);
+                prestate.setString(5, chequeName);
+                prestate.setString(6, memo);   
+                int i = prestate.executeUpdate();
+                if(i > 0){
+                    JOptionPane.showMessageDialog(null, "Payment successfully saved");
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Payment has not been saved");
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+            }           
+            try{
+                prestate = conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
+                        + "Amount, CustomerName)"
+                        + "Values (?,?,?) ");
+                prestate.setString(1, paymentType);
+                prestate.setString(2, amount);
+                prestate.setString(3, name);
+                prestate.executeUpdate();
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Cannot connect to database");
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
@@ -198,6 +222,7 @@ public class ChequePayment extends javax.swing.JPanel {
     private javax.swing.JTextField amountField;
     private javax.swing.JTextField chequeDateField;
     private javax.swing.JTextField chequeNameField;
+    private javax.swing.JTextField chequePaymentField;
     private javax.swing.JButton close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
