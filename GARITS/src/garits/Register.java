@@ -33,7 +33,7 @@ public class Register extends javax.swing.JPanel {
     
     public void updateTable(){
         try{
-            prestate = db.conn.prepareStatement("SELECT * from `garits`.`login`");
+            prestate = db.conn.prepareStatement("SELECT * from `login`");
             ResultSet result = prestate.executeQuery();
             userNames.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
@@ -43,12 +43,10 @@ public class Register extends javax.swing.JPanel {
     
     public boolean delete(String id){
         try{ 
-            Connection con;
-            String sql = "DELETE  FROM `login` WHERE 'Username' =  ' " + id + " ' ";
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            Statement state = con.prepareStatement(sql);
-            state.execute(sql);
+            String sql = "DELETE FROM `login` WHERE `Username` = '" + id + "'";
+            prestate = db.conn.prepareStatement(sql);
+            prestate.execute();
+            System.out.println(sql);
             return true;
         }catch(Exception ex){
             JOptionPane.showMessageDialog(close, ex);
@@ -184,9 +182,12 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
+        buttons.setVisible(false);
+        AddUser adduser = new AddUser();
+        myFrame.getContentPane().add(adduser);
         //this.buttons.setVisible(false);
         //this.tablePanel.setVisible(false);
-    
+        
        // this.buttons.removeAll();
         //this.tablePanel.removeAll();
        // this.removeAll();
@@ -207,7 +208,7 @@ public class Register extends javax.swing.JPanel {
        myFrame.
         myFrame.getContentPane().add(addUserPanel);
         */
-
+        /*
         AddUser addUserPanel = new AddUser();
         AdminMenu newMenu = new AdminMenu(db);
         myFrame.getContentPane().removeAll();
@@ -220,7 +221,7 @@ public class Register extends javax.swing.JPanel {
        
         myFrame.getContentPane().validate();
        myFrame.getContentPane().repaint();
- 
+ */
                //myFrame.validate();
        // myFrame.repaint();
        // buttons.setVisible(false);
@@ -255,11 +256,12 @@ public class Register extends javax.swing.JPanel {
             int index = userNames.getSelectedRow();
             String id = userNames.getValueAt(index, 0).toString();
             if(delete(id)){
+                updateTable();
                 JOptionPane.showMessageDialog(null, id + " has been deleted");
             }else{
                 JOptionPane.showMessageDialog(null, id + " has not been deleted");
             }
-        }
+        }       
     }//GEN-LAST:event_deleteActionPerformed
 
     private void userNamesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNamesMouseClicked
@@ -277,4 +279,3 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JTable userNames;
     // End of variables declaration//GEN-END:variables
 }
-

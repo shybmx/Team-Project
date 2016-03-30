@@ -183,7 +183,7 @@ public class ChequePayment extends javax.swing.JPanel {
         String paymentType = chequePaymentField.getText();
         try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){
             try{
-                prestate = conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
+                prestate = db.conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
                         + "PayToName, ChequeName, Memo) "
                         + "Values(?,?,?,?,?,?);");
                 prestate.setString(1, name);
@@ -203,7 +203,7 @@ public class ChequePayment extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cannot connect to the database");
             }           
             try{
-                prestate = conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
+                prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                         + "Amount, CustomerName)"
                         + "Values (?,?,?) ");
                 prestate.setString(1, paymentType);

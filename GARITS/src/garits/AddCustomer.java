@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class AddCustomer extends javax.swing.JPanel {
     DBConnect db = new DBConnect();
+    PreparedStatement prestate;
     public AddCustomer() {
         initComponents();
         add.setOpaque(false);
@@ -17,6 +18,7 @@ public class AddCustomer extends javax.swing.JPanel {
         close.setBorderPainted(false);
         panel.setOpaque(false);
         customerTypeField.setEditable(false);
+        discountTextField.setEditable(false);
         this.setSize(1300, 900);
     }
 
@@ -317,37 +319,38 @@ public class AddCustomer extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
+    //need to add a way for mulitple vechiles
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         String name = insertName.getText();
         String address = insertAddress.getText();
         String postcode = insertPostCode.getText();
         String phone = insertPhone.getText();
         String email = insertEMail.getText();
+        String customerType = customerTypeField.getText();
         String regno = insertReg.getText();
         String make = insertMake.getText();
         String model = insertModel.getText();
         String eng = insertEng.getText();
         String chass = insertChass.getText();
         String colour = insertColour.getText();
-
-        Connection conn = null;
-        PreparedStatement prestate = null;
+        String discount = discountTextField.getText();
         try{
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
-                    + "TelephoneNumber, EMail, RegNum, Make, Model, EngSerial, ChassieNumber, Colour, Discount) "
+                    + "TelephoneNumber, EMail, CustomerType , RegNum, Make, Model, EngSerial, ChassieNumber, Colour, Discount) "
                     + "Values (?,?,?,?,?,?,?,?,?,?,?,?)");
             prestate.setString(1, name);
             prestate.setString(2, address);
             prestate.setString(3, postcode);
             prestate.setString(4, phone);
             prestate.setString(5, email);
-            prestate.setString(6, regno);
-            prestate.setString(7, make);
-            prestate.setString(8, model);
-            prestate.setString(9, eng);
-            prestate.setString(10, chass);
-            prestate.setString(11, colour);
-
+            prestate.setString(6, customerType);
+            prestate.setString(7, regno);
+            prestate.setString(8, make);
+            prestate.setString(9, model);
+            prestate.setString(10, eng);
+            prestate.setString(11, chass);
+            prestate.setString(12, colour);
+            prestate.setString(13, discount);
             int i= prestate.executeUpdate();
             if (i>0){
                 JOptionPane.showMessageDialog(null, "Customer has been added");

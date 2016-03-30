@@ -5,11 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainMenu extends javax.swing.JFrame {
-
     DBConnect db;
-    
-    public MainMenu() {
+    public MainMenu(DBConnect db) {
         initComponents();
+        this.db = db;
         viewCustomers.setOpaque(false);
         viewCustomers.setContentAreaFilled(false); 
         viewCustomers.setBorderPainted(false);

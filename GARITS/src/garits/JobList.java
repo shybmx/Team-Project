@@ -33,7 +33,7 @@ public class JobList extends javax.swing.JPanel {
     
     public void updateTable(){
         try{
-            prestate = db.conn.prepareStatement("SELECT * from `garits`.`jobsheets`");
+            prestate = db.conn.prepareStatement("SELECT * from `jobsheets` ");
             ResultSet result = prestate.executeQuery();
             jobListTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){

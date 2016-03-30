@@ -136,7 +136,7 @@ public class Pin extends javax.swing.JFrame {
                    i++;
                }
                if(i == 1){
-                   MainMenu franmenu = new MainMenu();
+                   MainMenu franmenu = new MainMenu(db);
                    this.setVisible(false);
                    franmenu.setVisible(true);
                }else{

@@ -206,7 +206,7 @@ public class CardPayment extends javax.swing.JPanel {
         String paymentType = paymentTypeField.getText();
         try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){
             try{
-                prestate = conn.prepareStatement("INSERT INTO `garits`.`cardpayment` (CustomerName, CardOwnerName, " 
+                prestate = db.conn.prepareStatement("INSERT INTO `garits`.`cardpayment` (CustomerName, CardOwnerName, " 
                         + "Amount, CardNumber, ExpiryDate, SortCode, AccountNumber, SecuirtyNumber) " 
                         + "Values(?,?,?,?,?,?,?,?)");
                 prestate.setString(1, name);
@@ -228,7 +228,7 @@ public class CardPayment extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cannot connect to the database");
             }           
             try{
-                prestate = conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
+                prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                         + "Amount, CustomerName)"
                         + "Values (?,?,?) ");
                 prestate.setString(1, paymentType);

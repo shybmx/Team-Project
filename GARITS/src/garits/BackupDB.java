@@ -1,7 +1,10 @@
 package garits;
 
+import java.sql.PreparedStatement;
+
 public class BackupDB extends javax.swing.JPanel {
     DBConnect db;
+    PreparedStatement prestate;
     public BackupDB(DBConnect db) {
         initComponents();
         this.db = db;
@@ -35,6 +38,11 @@ public class BackupDB extends javax.swing.JPanel {
         setLayout(null);
 
         backUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/backupIcon.png"))); // NOI18N
+        backUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backUpButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +127,14 @@ public class BackupDB extends javax.swing.JPanel {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void backUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backUpButtonActionPerformed
+        try{
+            prestate = db.conn.prepareStatement("");
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_backUpButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

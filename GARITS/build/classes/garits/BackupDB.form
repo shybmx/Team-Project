@@ -85,6 +85,9 @@
               <Image iconType="3" name="/garits/images/backupIcon.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backUpButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="closeButton">
           <Properties>
