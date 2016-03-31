@@ -5,9 +5,10 @@ import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 public class AddUser extends javax.swing.JPanel {
-   
-    public AddUser() {
+   DBConnect db;
+    public AddUser(DBConnect db) {
         initComponents();
+        this.db = db;
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);

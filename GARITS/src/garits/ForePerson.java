@@ -3,6 +3,7 @@ package garits;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 public class ForePerson extends javax.swing.JFrame {
     DBConnect db;
@@ -31,6 +32,7 @@ public class ForePerson extends javax.swing.JFrame {
         reports.setContentAreaFilled(false); 
         reports.setBorderPainted(false);
         this.setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1300, 900);
     }
 

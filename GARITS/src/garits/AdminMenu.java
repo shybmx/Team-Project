@@ -1,10 +1,8 @@
 package garits;
 
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.paint.Color;
 import javax.swing.*;
 
 public class AdminMenu extends javax.swing.JFrame {
@@ -28,6 +26,7 @@ public class AdminMenu extends javax.swing.JFrame {
         manage.setOpaque(false);
         manage.setContentAreaFilled(false); 
         manage.setBorderPainted(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1300, 900);
     }
     

@@ -3,6 +3,7 @@ package garits;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 public class MainMenu extends javax.swing.JFrame {
     DBConnect db;
@@ -34,6 +35,7 @@ public class MainMenu extends javax.swing.JFrame {
         invoice.setContentAreaFilled(false); 
         invoice.setBorderPainted(false);
         this.setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1300, 900);
     }
 

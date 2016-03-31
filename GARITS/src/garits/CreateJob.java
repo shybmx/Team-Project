@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class CreateJob extends javax.swing.JPanel {
     DBConnect db;
+    PreparedStatement prestate;
     public CreateJob(DBConnect db) {
         initComponents();
         this.db = db;
@@ -79,6 +80,11 @@ public class CreateJob extends javax.swing.JPanel {
 
         search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/searchicon.png"))); // NOI18N
         search.setPreferredSize(new java.awt.Dimension(120, 155));
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
         searchPanel.add(search);
 
         add(searchPanel);
@@ -290,6 +296,10 @@ public class CreateJob extends javax.swing.JPanel {
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        //prestate = db.conn.prepareStatement(" ");
+    }//GEN-LAST:event_searchActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;

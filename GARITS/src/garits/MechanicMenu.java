@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -22,6 +23,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         jobsPanel.setOpaque(false);
         updateTable();
         this.setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1300, 900);
     }
     

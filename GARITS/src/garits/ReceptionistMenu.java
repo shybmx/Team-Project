@@ -1,5 +1,7 @@
 package garits;
 
+import javax.swing.JFrame;
+
 public class ReceptionistMenu extends javax.swing.JFrame {
     DBConnect db;
     public ReceptionistMenu(DBConnect db) {
@@ -27,6 +29,7 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         jobList.setContentAreaFilled(false); 
         jobList.setBorderPainted(false);
         this.setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1300, 900);
     }
 
