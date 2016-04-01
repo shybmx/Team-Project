@@ -1,5 +1,7 @@
 package garits;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JFrame;
@@ -24,6 +26,14 @@ public class CustomerInfo extends javax.swing.JPanel {
         editButton.setContentAreaFilled(false); 
         editButton.setBorderPainted(false);
         buttons.setOpaque(false);
+        mulitpleAdd.setOpaque(false);
+        mulitpleAdd.setContentAreaFilled(false); 
+        mulitpleAdd.setBorderPainted(false);
+        mulitpleClose.setOpaque(false);
+        mulitpleClose.setContentAreaFilled(false); 
+        mulitpleClose.setBorderPainted(false);
+        buttons.setOpaque(false);
+        buttons.setOpaque(false);
         updateTable();
         editUserButton.setOpaque(false);
         editUserButton.setContentAreaFilled(false); 
@@ -44,25 +54,41 @@ public class CustomerInfo extends javax.swing.JPanel {
         editUserPanel.setOpaque(false);
         editUserPanel.setVisible(false);
         customerID.setEditable(false);
+        addingExtraVeh.setOpaque(false);
+        addingExtraVeh.setVisible(false);
+        mulitpleCustomerID.setEditable(false);
+        mulitpleName.setEditable(false);
         this.setSize(1300, 900);
     }
-    
+    //need to fix from mulitple tables
     public boolean delete(String id){
-        try{ 
-            String sql = "DELETE FROM `customers` WHERE `CustomerID` = '" + id + "'";
-            prestate = db.conn.prepareStatement(sql);
-            prestate.execute();
-            System.out.println(sql);
-            return true;
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(closeButton, ex);
-            return false;
-        }
+            try{ 
+                String sql = "DELETE FROM `customers` WHERE `CustomerID` = '" + id + " ' ";     
+                prestate = db.conn.prepareStatement(sql);
+                prestate.execute();
+                try{
+                    String sql2 = " DELETE FROM `vehicle` WHERE `CustomerID` = '" + id + " '    ";
+                    prestate = db.conn.prepareStatement(sql2);
+                    prestate.execute();
+                    return true;
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(closeButton, ex);
+                return false;
+            }
+        return false;
     }
     
     public void updateTable(){
         try{
-            prestate = db.conn.prepareStatement("SELECT * FROM `customers`");
+            prestate = db.conn.prepareStatement("SELECT customers.CustomerID, "
+                    + "customers.name, customers.address, customers.PostCode, "
+                    + "customers.TelephoneNumber, customers.EMail, customers.CustomerType, "
+                    + "customers.Discount, vehicle.regNum, vehicle.Make, vehicle.Model,"
+                    + " vehicle.EngSerial, vehicle.ChassieNumber, vehicle.Colour FROM "
+                    + "customers INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID");
             ResultSet result = prestate.executeQuery();
             customerTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
@@ -80,6 +106,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         editButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
         deleteCustomerButton = new javax.swing.JButton();
+        addMulitpleVech = new javax.swing.JButton();
         addPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -151,6 +178,25 @@ public class CustomerInfo extends javax.swing.JPanel {
         editDiscount = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         customerID = new javax.swing.JTextField();
+        addingExtraVeh = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        mulitpleRegNo = new javax.swing.JTextField();
+        mulitpleMake = new javax.swing.JTextField();
+        mulitpleModel = new javax.swing.JTextField();
+        mulitpleEngSerial = new javax.swing.JTextField();
+        mulitpleChassNumber = new javax.swing.JTextField();
+        mulitpleColour = new javax.swing.JTextField();
+        mulitpleAdd = new javax.swing.JButton();
+        mulitpleClose = new javax.swing.JButton();
+        jLabel42 = new javax.swing.JLabel();
+        mulitpleCustomerID = new javax.swing.JTextField();
+        mulitpleName = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -197,20 +243,30 @@ public class CustomerInfo extends javax.swing.JPanel {
             }
         });
 
+        addMulitpleVech.setText("multple Vech");
+        addMulitpleVech.setPreferredSize(new java.awt.Dimension(120, 155));
+        addMulitpleVech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMulitpleVechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
+                .addContainerGap(350, Short.MAX_VALUE)
                 .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addMulitpleVech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(421, 421, 421))
+                .addGap(302, 302, 302))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -220,14 +276,19 @@ public class CustomerInfo extends javax.swing.JPanel {
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(buttonsLayout.createSequentialGroup()
+                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(addMulitpleVech, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(buttonsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         add(buttons);
@@ -769,6 +830,138 @@ public class CustomerInfo extends javax.swing.JPanel {
         add(editUserPanel);
         editUserPanel.setBounds(170, 410, 1086, 410);
 
+        jLabel36.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel36.setText("Reg.No:");
+
+        jLabel37.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel37.setText("Make:");
+
+        jLabel38.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel38.setText("Model:");
+
+        jLabel39.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel39.setText("Eng.Serial:");
+
+        jLabel40.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel40.setText("Chassis Number:");
+
+        jLabel41.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel41.setText("Colour:");
+
+        mulitpleAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
+        mulitpleAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mulitpleAddActionPerformed(evt);
+            }
+        });
+
+        mulitpleClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
+        mulitpleClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mulitpleCloseActionPerformed(evt);
+            }
+        });
+
+        jLabel42.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel42.setText("CustomerID:");
+
+        jLabel43.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel43.setText("Name:");
+
+        javax.swing.GroupLayout addingExtraVehLayout = new javax.swing.GroupLayout(addingExtraVeh);
+        addingExtraVeh.setLayout(addingExtraVehLayout);
+        addingExtraVehLayout.setHorizontalGroup(
+            addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addingExtraVehLayout.createSequentialGroup()
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel40)
+                                .addGap(55, 55, 55)
+                                .addComponent(mulitpleChassNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel41)
+                                .addGap(162, 162, 162)
+                                .addComponent(mulitpleColour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel39)
+                                .addGap(121, 121, 121)
+                                .addComponent(mulitpleEngSerial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel38)
+                                .addGap(168, 168, 168)
+                                .addComponent(mulitpleModel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel37)
+                                .addGap(176, 176, 176)
+                                .addComponent(mulitpleMake, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addComponent(jLabel36)
+                                .addGap(152, 152, 152)
+                                .addComponent(mulitpleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(119, 119, 119)
+                        .addComponent(mulitpleAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(mulitpleClose, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel43)
+                    .addGroup(addingExtraVehLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mulitpleCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mulitpleName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 67, Short.MAX_VALUE))
+        );
+        addingExtraVehLayout.setVerticalGroup(
+            addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(mulitpleCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(mulitpleName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addingExtraVehLayout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mulitpleAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mulitpleClose, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(addingExtraVehLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel36)
+                            .addComponent(mulitpleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mulitpleMake, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel37))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mulitpleModel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel38))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mulitpleEngSerial, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mulitpleChassNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel40))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mulitpleColour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel41))))
+                .addContainerGap(139, Short.MAX_VALUE))
+        );
+
+        add(addingExtraVeh);
+        addingExtraVeh.setBounds(390, 250, 880, 520);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
         jLabel1.setBounds(0, 0, 1300, 900);
@@ -787,22 +980,23 @@ public class CustomerInfo extends javax.swing.JPanel {
         try{
             int index = customerTable.getSelectedRow();
             customerID.setText(customerTable.getValueAt(index, 0).toString());
-            editName.setText(customerTable.getValueAt(index, 2).toString());
-            editAddress.setText(customerTable.getValueAt(index, 3).toString());
-            editPostCode.setText(customerTable.getValueAt(index, 4).toString());
-            editPhone.setText(customerTable.getValueAt(index, 5).toString());
-            editEMail.setText(customerTable.getValueAt(index, 6).toString());
-            editCustomerType.setText(customerTable.getValueAt(index, 7).toString());
+            editName.setText(customerTable.getValueAt(index, 1).toString());
+            editAddress.setText(customerTable.getValueAt(index, 2).toString());
+            editPostCode.setText(customerTable.getValueAt(index, 3).toString());
+            editPhone.setText(customerTable.getValueAt(index, 4).toString());
+            editEMail.setText(customerTable.getValueAt(index, 5).toString());
+            editCustomerType.setText(customerTable.getValueAt(index, 6).toString());
+            editDiscount.setText(customerTable.getValueAt(index, 7).toString());
             editReg.setText(customerTable.getValueAt(index, 8).toString());
             editMake.setText(customerTable.getValueAt(index, 9).toString());
             editModel.setText(customerTable.getValueAt(index, 10).toString());
             editEng.setText(customerTable.getValueAt(index, 11).toString());
             editChass.setText(customerTable.getValueAt(index, 12).toString());
             editColour.setText(customerTable.getValueAt(index, 13).toString());
-            editDiscount.setText(customerTable.getValueAt(index, 14).toString());
             buttons.setVisible(false);
             editUserPanel.setVisible(true);
         }catch(Exception ex){
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "You must select a customer to edit");
         }
     }//GEN-LAST:event_editButtonActionPerformed
@@ -846,31 +1040,48 @@ public class CustomerInfo extends javax.swing.JPanel {
         String chass = insertChass.getText();
         String colour = insertColour.getText();
         String discount = discountTextField.getText();
+        int id = 0;
         try{
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
-                + "TelephoneNumber, EMail, CustomerType , RegNum, Make, Model, EngSerial, ChassieNumber, Colour, Discount) "
-                + "Values (?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "TelephoneNumber, EMail, CustomerType,  Discount) "
+                    + "Values (?,?,?,?,?,?,?)");
             prestate.setString(1, name);
             prestate.setString(2, address);
             prestate.setString(3, postcode);
             prestate.setString(4, phone);
             prestate.setString(5, email);
             prestate.setString(6, customerType);
-            prestate.setString(7, regno);
-            prestate.setString(8, make);
-            prestate.setString(9, model);
-            prestate.setString(10, eng);
-            prestate.setString(11, chass);
-            prestate.setString(12, colour);
-            prestate.setString(13, discount);
-            int i= prestate.executeUpdate();
+            prestate.setString(7, discount);
+            int i = prestate.executeUpdate();
+            prestate = db.conn.prepareStatement("Select customers.customerID From Customers Where customers.name = "
+               + "'"+name+"'");
+            ResultSet result = prestate.executeQuery();
+            result.next();
+            id = result.getInt("CustomerID");
             if (i>0){
                 JOptionPane.showMessageDialog(null, "Customer has been added");
+                this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, "Customer has not been added");
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
+        }
+        try{
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`vehicle`(CustomerID ,CustomerName, "
+                    + "regNum,"
+                    + "Make, Model, EngSerial, ChassieNumber, Colour) "
+                    + "Values( " + id + ", ?,?,?,?,?,?,? )" );
+            prestate.setString(1, name);
+            prestate.setString(2, regno);
+            prestate.setString(3, make);
+            prestate.setString(4, model);
+            prestate.setString(5, eng);
+            prestate.setString(6, chass);
+            prestate.setString(7, colour);
+            prestate.executeUpdate();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Customer vehicle cannot be added");
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 
@@ -907,22 +1118,36 @@ public class CustomerInfo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_editColourActionPerformed
 
+    
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
-        try {
-            prestate = db.conn.prepareStatement("UPDATE `customers` SET `name` = '"+ editName.getText()+"',"
-                + "`address` = '"+ editAddress.getText()+"', `PostCode` = '"+ editPostCode.getText()+"',"
-                + "`TelephoneNumber` = '"+ editPhone.getText()+"', `EMail` = '"+ editEMail.getText()+"',"
-                + "`CustomerType` = '"+editCustomerType.getText() +"', `RegNum` = '"+editReg.getText() +"',"
-                + "`Make` = '"+editMake.getText()+"', `Model` = '"+editModel.getText()+"', `EngSerial` = '"+editEng.getText()+"', "
-                + "`ChassieNumber` = '"+editChass.getText()+"', `Colour` = '"+editColour.getText()+"',"
-                + "`Discount` = '"+editDiscount.getText()+"' WHERE `CustomerID` = '"+customerID.getText()+"'  ");
-            prestate.execute();
-            editUserPanel.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText()+ " has been updated");
-        }catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText() + " Cannot be updated");
-            System.out.println(prestate);
-        }
+         try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){   
+            try {
+                prestate = db.conn.prepareStatement("UPDATE `customers` SET `name` = '"+ editName.getText()+"',"
+                    + "`address` = '"+ editAddress.getText()+"', `PostCode` = '"+ editPostCode.getText()+"',"
+                    + "`TelephoneNumber` = '"+ editPhone.getText()+"', `EMail` = '"+ editEMail.getText()+"',"
+                    + "`CustomerType` = '"+editCustomerType.getText() +"', `Discount` = '"+editDiscount.getText()+"' WHERE "
+                        + "`CustomerID` = '"+customerID.getText()+"' ");
+                prestate.execute();
+                JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText()+ " has been updated");
+            }catch(Exception ex) {
+                JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText() + " Cannot be updated");
+                ex.printStackTrace();
+            }
+            
+            try{
+                prestate = db.conn.prepareStatement("UPDATE `vehicle` SET `RegNum` = '"+editReg.getText()+"',"
+                        + "`Make` = '"+editMake.getText()+"', `Model` = '"+editModel.getText()+"', "
+                        + "`EngSerial` = '"+editEng.getText()+"', `ChassieNumber` = '"+editChass.getText()+"', "
+                        + "`Colour` = '"+editColour.getText()+"' WHERE `CustomerID` = '"+customerID.getText()+"' AND `RegNum` = '"+editReg.getText()+"' " );
+                prestate.execute();
+                editUserPanel.setVisible(false);
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Cannot update vehicle");
+                
+            }
+         }catch(Exception ex){
+             JOptionPane.showMessageDialog(null, ex);
+         }
     }//GEN-LAST:event_editUserButtonActionPerformed
 
     private void closeButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonEditActionPerformed
@@ -941,10 +1166,61 @@ public class CustomerInfo extends javax.swing.JPanel {
 
     }//GEN-LAST:event_customerIDActionPerformed
 
+    private void mulitpleCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulitpleCloseActionPerformed
+        addingExtraVeh.setVisible(false);
+    }//GEN-LAST:event_mulitpleCloseActionPerformed
+
+    private void addMulitpleVechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMulitpleVechActionPerformed
+        try{
+            int index = customerTable.getSelectedRow();
+            mulitpleCustomerID.setText(customerTable.getValueAt(index, 0).toString());
+            mulitpleName.setText(customerTable.getValueAt(index, 1).toString());
+            buttons.setVisible(false);
+            addingExtraVeh.setVisible(true);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Please select a customer you wish to add mulitple vehicle");
+        }
+    }//GEN-LAST:event_addMulitpleVechActionPerformed
+
+    private void mulitpleAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulitpleAddActionPerformed
+        try{
+            String customerIDString = mulitpleCustomerID.getText();
+            String nameString = mulitpleName.getText();
+            String regNoString = mulitpleRegNo.getText();
+            String makeString = mulitpleMake.getText();
+            String modelString = mulitpleModel.getText();
+            String engString = mulitpleEngSerial.getText();
+            String chassString = mulitpleChassNumber.getText();
+            String colourString = mulitpleColour.getText();
+            prestate = db.conn.prepareStatement("INSERT INTO `vehicle` (CustomerID, CustomerName,"
+                    + "regNum, Make, Model, EngSerial, ChassieNumber, Colour) "
+                    + "Value(?,?,?,?,?,?,?,?) ");
+            prestate.setString(1, customerIDString);
+            prestate.setString(2, nameString);
+            prestate.setString(3, regNoString);
+            prestate.setString(4, makeString);
+            prestate.setString(5, modelString);
+            prestate.setString(6, engString);
+            prestate.setString(7, chassString);
+            prestate.setString(8, colourString);
+            int i = prestate.executeUpdate();
+            if(i > 0){
+               JOptionPane.showMessageDialog(null, "Customer: " + nameString + " has added another vehicle");
+               addingExtraVeh.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Customer: " + nameString + " has not added another vehicle");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_mulitpleAddActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCustomer;
     private javax.swing.JButton addExtraVehicles;
+    private javax.swing.JButton addMulitpleVech;
     private javax.swing.JPanel addPanel;
+    private javax.swing.JPanel addingExtraVeh;
     private javax.swing.JPanel buttons;
     private javax.swing.JButton closeAddingCustomer;
     private javax.swing.JButton closeButton;
@@ -1014,12 +1290,30 @@ public class CustomerInfo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton mulitpleAdd;
+    private javax.swing.JTextField mulitpleChassNumber;
+    private javax.swing.JButton mulitpleClose;
+    private javax.swing.JTextField mulitpleColour;
+    private javax.swing.JTextField mulitpleCustomerID;
+    private javax.swing.JTextField mulitpleEngSerial;
+    private javax.swing.JTextField mulitpleMake;
+    private javax.swing.JTextField mulitpleModel;
+    private javax.swing.JTextField mulitpleName;
+    private javax.swing.JTextField mulitpleRegNo;
     // End of variables declaration//GEN-END:variables
 }

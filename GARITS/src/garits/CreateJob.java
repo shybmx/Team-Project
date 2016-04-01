@@ -3,11 +3,14 @@ package garits;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class CreateJob extends javax.swing.JPanel {
     DBConnect db;
     PreparedStatement prestate;
+    Vector<String> vec = new Vector<>();
     public CreateJob(DBConnect db) {
         initComponents();
         this.db = db;
@@ -30,9 +33,23 @@ public class CreateJob extends javax.swing.JPanel {
         formPanel2.setOpaque(false);
         searchPanel.setOpaque(false);
         workDonePanel.setOpaque(false);
+   
         this.setSize(1300, 900);
     }
 
+   public void setFields(String name, String regNo, String make, String model, String phone ){
+        customerNameField.setText(name);
+        vehicleRegNoField.setText(regNo);
+        makeField.setText(make);
+        modelField.setText(model);
+        telephoneField.setText(phone);
+        
+
+        
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,9 +69,9 @@ public class CreateJob extends javax.swing.JPanel {
         estimatedTimeField = new javax.swing.JTextField();
         workDonePanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        workRequiredDropDown = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        workRequired = new javax.swing.JList();
         addButtonPanel = new javax.swing.JPanel();
         add = new javax.swing.JButton();
         formPanel2 = new javax.swing.JPanel();
@@ -104,6 +121,11 @@ public class CreateJob extends javax.swing.JPanel {
         jLabel4.setText("Customer Name:");
 
         customerNameField.setPreferredSize(new java.awt.Dimension(200, 30));
+        customerNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerNameFieldActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel5.setText("Estimated Time:");
@@ -158,17 +180,17 @@ public class CreateJob extends javax.swing.JPanel {
         jLabel9.setText("Work Required:");
         workDonePanel.add(jLabel9);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(150, 30));
-        workDonePanel.add(jComboBox1);
+        workRequiredDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Break repair", "Replace exhaust", "Strip head and replace worn valves", "Replace grommet seal" }));
+        workRequiredDropDown.setPreferredSize(new java.awt.Dimension(150, 30));
+        workDonePanel.add(workRequiredDropDown);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        workRequired.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.setPreferredSize(new java.awt.Dimension(200, 85));
-        jScrollPane1.setViewportView(jList1);
+        workRequired.setPreferredSize(new java.awt.Dimension(200, 85));
+        jScrollPane1.setViewportView(workRequired);
 
         workDonePanel.add(jScrollPane1);
 
@@ -177,6 +199,11 @@ public class CreateJob extends javax.swing.JPanel {
 
         add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
         add.setPreferredSize(new java.awt.Dimension(120, 155));
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
         addButtonPanel.add(add);
 
         add(addButtonPanel);
@@ -270,27 +297,44 @@ public class CreateJob extends javax.swing.JPanel {
         String date = dateBookedInField.getText();
         String model = modelField.getText();
         String telephone = telephoneField.getText();
-        PreparedStatement prestate = null;
-        try{
-            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
-                    + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber)"
-                    + "Values(?,?,?,?,?,?,?)");
-            prestate.setString(1, customerName);
-            prestate.setString(2, vechicleRegNo);
-            prestate.setString(3, make);
-            prestate.setString(4, estimatedTime);
-            prestate.setString(5, date);
-            prestate.setString(6, model);
-            prestate.setString(7, telephone);
-            int i = prestate.executeUpdate();
-            if(i>0){
-                 JOptionPane.showMessageDialog(null, "Job successfully created");
-            }else{
-                 JOptionPane.showMessageDialog(null, "Job has not been created");
+        int jobNo = 0;
+            try{
+                prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
+                        + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber)"
+                        + "Values(?,?,?,?,?,?,?)");
+                prestate.setString(1, customerName);
+                prestate.setString(2, vechicleRegNo);
+                prestate.setString(3, make);
+                prestate.setString(4, estimatedTime);
+                prestate.setString(5, date);
+                prestate.setString(6, model);
+                prestate.setString(7, telephone);
+                int i = prestate.executeUpdate();
+                prestate = db.conn.prepareStatement("Select jobsheets.Job_Number From jobsheets Where jobsheets.VehicleRegNumber  = "
+               + "'"+ vechicleRegNo + "'" );
+                ResultSet result = prestate.executeQuery();
+                result.next();
+                jobNo = result.getInt("Job_Number");
+                if(i>0){
+                     JOptionPane.showMessageDialog(null, "Job successfully created");
+                }else{
+                     JOptionPane.showMessageDialog(null, "Job has not been created");
+                }
+            }catch(Exception ex){
+                 JOptionPane.showMessageDialog(null, ex);
             }
-        }catch(Exception ex){
-             JOptionPane.showMessageDialog(null, ex);
-        }
+            
+            try{
+                for(String t: vec){
+                    prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
+                        + "Values( '"+jobNo+"', ?  ) ");
+                    prestate.setString(1, t);
+                    prestate.executeUpdate();
+                    
+                }
+            }catch(Exception ex){
+                
+            }
     }//GEN-LAST:event_createActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -298,8 +342,28 @@ public class CreateJob extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        //prestate = db.conn.prepareStatement(" ");
+       //String name = searchCustomer.getText();
+       /* try{
+           prestate = db.conn.prepareStatement("SELECT * FROM `customers` =  '"+name+"' ");
+           ResultSet result = prestate.executeQuery();
+           result.next();
+           
+       }catch(Exception ex){
+           
+       }*/
+        
+       SearchCustomer searchCustomerTableFrame = new SearchCustomer(db,this);
+       searchCustomerTableFrame.setVisible(true);
     }//GEN-LAST:event_searchActionPerformed
+
+    private void customerNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerNameFieldActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        vec.add(workRequiredDropDown.getSelectedItem().toString());
+        workRequired.setListData(vec);
+    }//GEN-LAST:event_addActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
@@ -312,7 +376,6 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JTextField estimatedTimeField;
     private javax.swing.JPanel formPanel1;
     private javax.swing.JPanel formPanel2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -323,7 +386,6 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField makeField;
     private javax.swing.JTextField modelField;
@@ -333,5 +395,7 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JTextField telephoneField;
     private javax.swing.JTextField vehicleRegNoField;
     private javax.swing.JPanel workDonePanel;
+    private javax.swing.JList workRequired;
+    private javax.swing.JComboBox workRequiredDropDown;
     // End of variables declaration//GEN-END:variables
 }
