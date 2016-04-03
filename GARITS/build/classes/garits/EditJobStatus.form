@@ -25,10 +25,10 @@
     <Property name="useNullLayout" type="boolean" value="true"/>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="formPanel">
+    <Container class="javax.swing.JPanel" name="editJobStatusPanel">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="303" y="313" width="-1" height="-1"/>
+          <AbsoluteConstraints x="230" y="300" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
 
@@ -38,14 +38,14 @@
               <Group type="102" alignment="1" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="473" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="addParts" min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="editJobStatusAddParts" min="-2" pref="113" max="-2" attributes="0"/>
                   <EmptySpace pref="247" max="32767" attributes="0"/>
-                  <Component id="close" min="-2" pref="115" max="-2" attributes="0"/>
+                  <Component id="editJobStatusClose" min="-2" pref="115" max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="partList" alignment="0" max="32767" attributes="0"/>
+                          <Component id="editJobStatusPartsDrop" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -60,7 +60,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel2" max="32767" attributes="0"/>
-                              <Component id="taskList" min="-2" pref="201" max="-2" attributes="0"/>
+                              <Component id="editJobStatusWorkDrop" min="-2" pref="201" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -73,7 +73,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="addWorkDone" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="editJobStatusAddWorkDone" min="-2" pref="112" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
@@ -102,7 +102,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="taskList" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="editJobStatusWorkDrop" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="duration" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
@@ -112,16 +112,16 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <Component id="addWorkDone" min="-2" pref="144" max="-2" attributes="0"/>
+                      <Component id="editJobStatusAddWorkDone" min="-2" pref="144" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="partList" min="-2" max="-2" attributes="0"/>
+                  <Component id="editJobStatusPartsDrop" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="close" pref="0" max="32767" attributes="0"/>
-                      <Component id="addParts" pref="0" max="32767" attributes="0"/>
+                      <Component id="editJobStatusClose" pref="0" max="32767" attributes="0"/>
+                      <Component id="editJobStatusAddParts" pref="0" max="32767" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -146,7 +146,7 @@
             <Property name="text" type="java.lang.String" value="Select Work Done:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="taskList">
+        <Component class="javax.swing.JComboBox" name="editJobStatusWorkDrop">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Break repair&quot;, &quot;Item 2&quot;, &quot;Item 3&quot;, &quot;Item 4&quot; })" type="code"/>
@@ -170,7 +170,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="jList1">
+            <Component class="javax.swing.JList" name="editWorkStatusWorkList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="5">
@@ -185,7 +185,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="addWorkDone">
+        <Component class="javax.swing.JButton" name="editJobStatusAddWorkDone">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/garits/images/add.png"/>
@@ -200,7 +200,7 @@
             <Property name="text" type="java.lang.String" value="Select Parts Used:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="partList">
+        <Component class="javax.swing.JComboBox" name="editJobStatusPartsDrop">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -219,7 +219,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="jList2">
+            <Component class="javax.swing.JList" name="editJobStatusPartsList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="5">
@@ -234,14 +234,14 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="addParts">
+        <Component class="javax.swing.JButton" name="editJobStatusAddParts">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/garits/images/add.png"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="close">
+        <Component class="javax.swing.JButton" name="editJobStatusClose">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="24" style="0"/>
@@ -251,7 +251,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editJobStatusCloseActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

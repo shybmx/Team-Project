@@ -14,7 +14,6 @@ public class SearchCustomer extends javax.swing.JFrame {
         initComponents();
         this.db = db;
         this.cj = cj;
-        this.setSize(500, 500);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         updateTable();
         this.setSize(1100, 500);

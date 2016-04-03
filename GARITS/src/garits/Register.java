@@ -867,9 +867,7 @@ public class Register extends javax.swing.JPanel {
         Connection conn = null;
         PreparedStatement prestate = null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");
-            prestate = conn.prepareStatement("INSERT INTO `garits`.`login`(Username, Loginpassword, "
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`login`(Username, Loginpassword, "
                 + "Name, Address, PostCode, Telephone, EMail, Position, LabourRate)"
                 + "Values(?,?,?,?,?,?,?,?,?)");
             prestate.setString(1, username);

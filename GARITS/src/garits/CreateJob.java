@@ -33,23 +33,17 @@ public class CreateJob extends javax.swing.JPanel {
         formPanel2.setOpaque(false);
         searchPanel.setOpaque(false);
         workDonePanel.setOpaque(false);
-   
         this.setSize(1300, 900);
     }
 
-   public void setFields(String name, String regNo, String make, String model, String phone ){
+   public void setFields(String name, String regNo, String make, String model, String phone){
         customerNameField.setText(name);
         vehicleRegNoField.setText(regNo);
         makeField.setText(make);
         modelField.setText(model);
         telephoneField.setText(phone);
-        
-
-        
     }
-    
-    
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -330,7 +324,6 @@ public class CreateJob extends javax.swing.JPanel {
                         + "Values( '"+jobNo+"', ?  ) ");
                     prestate.setString(1, t);
                     prestate.executeUpdate();
-                    
                 }
             }catch(Exception ex){
                 
@@ -342,16 +335,6 @@ public class CreateJob extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-       //String name = searchCustomer.getText();
-       /* try{
-           prestate = db.conn.prepareStatement("SELECT * FROM `customers` =  '"+name+"' ");
-           ResultSet result = prestate.executeQuery();
-           result.next();
-           
-       }catch(Exception ex){
-           
-       }*/
-        
        SearchCustomer searchCustomerTableFrame = new SearchCustomer(db,this);
        searchCustomerTableFrame.setVisible(true);
     }//GEN-LAST:event_searchActionPerformed
