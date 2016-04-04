@@ -28,6 +28,7 @@ public class SelectParts extends javax.swing.JFrame {
          descText.setEditable(false);
          partNo.setEditable(false);
          totalPrice.setEditable(false);
+         unitCostField.setEditable(false);
     }
     
     public void updateTable(){
@@ -58,6 +59,8 @@ public class SelectParts extends javax.swing.JFrame {
         putInBox = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         totalPrice = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        unitCostField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,7 +139,7 @@ public class SelectParts extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel4.setText("Total Price:");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(1140, 290, 130, 30);
+        jLabel4.setBounds(1140, 330, 130, 30);
 
         totalPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,7 +147,20 @@ public class SelectParts extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalPrice);
-        totalPrice.setBounds(1280, 290, 110, 30);
+        totalPrice.setBounds(1280, 330, 110, 30);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel5.setText("Unit Cost:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(1140, 290, 130, 30);
+
+        unitCostField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unitCostFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(unitCostField);
+        unitCostField.setBounds(1280, 290, 110, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -166,18 +182,17 @@ public class SelectParts extends javax.swing.JFrame {
             double tPrice = qty * unitCost;
             String sTotal = format.format(tPrice);
             totalPrice.setText(sTotal);
-            prestate = db.conn.prepareStatement("INSERT INTO `temp parts`(`Job_Number` `Description`, `Part No`, `Qty`, `Total Price`) "
-                    + "VALUES ( '"+men.getNo()+"',  "+descText.getText()+"' , '"+partNo.getText()+"', '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
+            prestate = db.conn.prepareStatement("INSERT INTO `temp parts`(`Job_Number`, `Description`, `Part No`,  `Unit Cost`, `Qty`, `Total Price`) "
+                    + "VALUES ( "+men.getNo()+", ' "+descText.getText()+"' , '"+partNo.getText()+"',    '"+unitCostField.getText() +"'    ,  '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
             prestate.executeUpdate();
             men.updatePartsTable();
             int newQty = tableQty - qty;
             prestate = db.conn.prepareStatement("UPDATE `parts` SET Quantity = '"+newQty+"' WHERE  `PartNo` = '"+partNo.getText()+"'  ");
             prestate.execute();
             updateTable();
-            this.setVisible(true);
           }
         }catch(Exception ex){
-            
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_selectToOrderActionPerformed
 
@@ -194,11 +209,16 @@ public class SelectParts extends javax.swing.JFrame {
         tableQty = Integer.parseInt(partsTable.getValueAt(index, 6).toString());
         descText.setText(partsTable.getValueAt(index, 1).toString());
         partNo.setText(partsTable.getValueAt(index, 0).toString());
+        unitCostField.setText(partsTable.getValueAt(index, 5).toString());
     }//GEN-LAST:event_putInBoxActionPerformed
 
     private void totalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalPriceActionPerformed
+
+    private void unitCostFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitCostFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_unitCostFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeFrame;
@@ -208,6 +228,7 @@ public class SelectParts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField partNo;
     private javax.swing.JTable partsTable;
@@ -215,5 +236,6 @@ public class SelectParts extends javax.swing.JFrame {
     private javax.swing.JTextField quantity;
     private javax.swing.JButton selectToOrder;
     private javax.swing.JTextField totalPrice;
+    private javax.swing.JTextField unitCostField;
     // End of variables declaration//GEN-END:variables
 }

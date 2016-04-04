@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,18 +13,19 @@ import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
 
 public class MechanicMenu extends javax.swing.JFrame {
+
     PreparedStatement prestate;
     int jobNo1;
     DBConnect db;
     Vector<String> work = new Vector<>();
     double rate;
-    final static int vat = 15;
-   
+    double vat = 15;
+    
     public MechanicMenu(DBConnect db) {
         initComponents();
         this.db = db;
         editStatus.setOpaque(false);
-        editStatus.setContentAreaFilled(false); 
+        editStatus.setContentAreaFilled(false);        
         editStatus.setBorderPainted(false);
         editJobStatusAddWorkDone.setOpaque(false);
         editJobStatusAddWorkDone.setContentAreaFilled(false);
@@ -35,7 +37,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         editJobStatusClose.setContentAreaFilled(false);
         editJobStatusClose.setBorderPainted(false);
         logout.setOpaque(false);
-        logout.setContentAreaFilled(false); 
+        logout.setContentAreaFilled(false);        
         logout.setBorderPainted(false);
         jobsPanel.setOpaque(false);
         editJobStatusPanel.setVisible(false);
@@ -50,17 +52,19 @@ public class MechanicMenu extends javax.swing.JFrame {
         updatePartsTable();
         getRate();
         hourlyRate.setEditable(false);
-        hourlyRate.setText( String.valueOf(rate));
-      
+        hourlyRate.setText(String.valueOf(rate));
+        
     }
-    public int getNo(){
-              jobNo1  = Integer.parseInt(jobNumber.getText());
-    return jobNo1;
+
+    public int getNo() {
+        jobNo1 = Integer.parseInt(jobNumber.getText());
+        return jobNo1;
     }
+
     public void insertCombo() {
-    
+        
         try {
-            prestate = db.conn.prepareStatement("SELECT * FROM jobs");
+            prestate = db.conn.prepareStatement("SELECT `Job Name` FROM jobs");
             ResultSet result = prestate.executeQuery();
             result.next();
             PreparedStatement prestate2 = db.conn.prepareStatement("Select Count(*) FROM jobs ");
@@ -68,7 +72,7 @@ public class MechanicMenu extends javax.swing.JFrame {
             result2.next();
             int it = result2.getInt("Count(*)");
             for (int i = it; i != 0; i--) {
-                editJobStatusWorkDrop.addItem(result.getString("jobs"));
+                editJobStatusWorkDrop.addItem(result.getString("Job Name"));
                 result.next();
             }
         } catch (SQLException ex) {
@@ -76,18 +80,17 @@ public class MechanicMenu extends javax.swing.JFrame {
         }
     }
     
-    public void getRate(){
-       String user =  Pin.loggedUser;
-       
-       try{
+    public void getRate() {
+        String user = Pin.loggedUser;
+        try {
             prestate = db.conn.prepareStatement("SELECT LabourRate From login Where Username = " + "'" + user + "'");
             ResultSet result = prestate.executeQuery();
             result.next();
             rate = result.getDouble("LabourRate");
-            System.out.println(rate);
-       }catch(Exception ex){
-           
-       }
+            
+        } catch (Exception ex) {
+            
+        }
     }
     
     public void insertComboParts() {
@@ -108,24 +111,24 @@ public class MechanicMenu extends javax.swing.JFrame {
         }
     }
     
-    public void updateTable(){
-        try{
+    public void updateTable() {
+        try {
             prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'Pending'");
             ResultSet result = prestate.executeQuery();
             pendingJobTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             pendingJobTable.setModel(DbUtils.resultSetToTableModel(result));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
     
-    public void updatePartsTable(){
-        try{
+    public void updatePartsTable() {
+        try {
             prestate = db.conn.prepareStatement("SELECT * FROM `temp parts`");
             ResultSet result = prestate.executeQuery();
             partsUsed.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             partsUsed.setModel(DbUtils.resultSetToTableModel(result));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -197,6 +200,11 @@ public class MechanicMenu extends javax.swing.JFrame {
         jLabel4.setText("Select Work Done:");
 
         editJobStatusWorkDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
+        editJobStatusWorkDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editJobStatusWorkDropActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel5.setText("Duration:");
@@ -343,7 +351,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         );
 
         getContentPane().add(editJobStatusPanel);
-        editJobStatusPanel.setBounds(80, 250, 1090, 600);
+        editJobStatusPanel.setBounds(80, 230, 1090, 600);
 
         pendingJobTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -396,30 +404,30 @@ public class MechanicMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
-         try{
+        try {
             int index = pendingJobTable.getSelectedRow();
             jobNumber.setText(pendingJobTable.getValueAt(index, 0).toString());
             jobsPanel.setVisible(false);
             editJobStatusPanel.setVisible(true);
-         }catch(Exception ex){
-             JOptionPane.showMessageDialog(null, "Please select a job you wish to start on");
-         }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Please select a job you wish to start on");
+        }
     }//GEN-LAST:event_editStatusActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        Pin logout = new  Pin();
+        Pin logout = new Pin();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void editJobStatusCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusCloseActionPerformed
-        try{
+        try {
             prestate = db.conn.prepareStatement("DELETE FROM `temp parts`");
             prestate.execute();
             editJobStatusPanel.setVisible(false);
             jobsPanel.setVisible(true);
             updatePartsTable();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_editJobStatusCloseActionPerformed
@@ -435,9 +443,9 @@ public class MechanicMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_editJobStatusAddWorkDoneActionPerformed
 
     private void completeJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeJobActionPerformed
-      PreparedStatement prestate2 = null;
+        PreparedStatement prestate2 = null;
         
-        try{
+        try {
             prestate = db.conn.prepareStatement("SELECT `Total Price` FROM `temp parts`  ");
             ResultSet result1 = prestate.executeQuery();
             
@@ -445,49 +453,81 @@ public class MechanicMenu extends javax.swing.JFrame {
             ResultSet result2 = prestate2.executeQuery();
             result2.next();
             int it = result2.getInt("count(*)");
-            double total = 0;
+            double partsTotal = 0;
             result1.next();
-            for(int i = it; i != 0; i-- ){
-                total = total + result1.getDouble("Total Price");
+            for (int i = it; i != 0; i--) {
+                partsTotal = partsTotal + result1.getDouble("Total Price");
                 result1.next();
             }
-            double costOfLabour = 0;
-            double totalCost = 0;
-            double durationAmount = Double.parseDouble(duration.getText());
-            costOfLabour = durationAmount * rate;
-            totalCost = costOfLabour + totalCost;
-            double vatAmount;
-            double grandTotal;
-            vatAmount = (vat/100) * totalCost;
-            grandTotal = totalCost + vatAmount;
+            
+            DecimalFormat format = new DecimalFormat("0.00");
+            
+            
+            
+            double labourTotal = rate * (Double.parseDouble(duration.getText()));
+            
+            double subTotal = labourTotal + partsTotal;
+            
+            double subVat = vat / 100 * subTotal;
+            
+            double grandTotal = subTotal + subVat;
+            
+             String sVat = format.format(subVat);
+            
+            
+            
+            
+            
             PreparedStatement prestate3;
-             PreparedStatement prestate4;
-            // HERE
-            prestate3 = db.conn.prepareStatement("SELECT 'Qty' FROM `temp parts`");
+            PreparedStatement prestate4;
+            prestate3 = db.conn.prepareStatement("SELECT `Qty` FROM `temp parts`");
             ResultSet result3 = prestate3.executeQuery();
             result3.next();
             
-             prestate3 = db.conn.prepareStatement("SELECT `Description` FROM `temp parts` ");
+            prestate3 = db.conn.prepareStatement("SELECT `Description` FROM `temp parts` ");
             ResultSet result4 = prestate3.executeQuery();
             result4.next();
-           
-            for(int i = it; i != 0; i--){
-                System.out.println(1);
-            prestate3 = db.conn.prepareStatement("INSERT INTO `job completed`(Job_Number, "
-                    + " Description, Qty, Total Price, Labour Rate, VAT, Grand Total) "
-                    + "VALUES ( '"+jobNumber+"', '" + result4.getString("Description") +"', '" + result3.getInt("Qty")+",'" + totalCost +"','" + rate + "','" + vatAmount+"','" +totalCost+"' )" );
-          
-                    result3.next();
-                    result4.next();
-                    prestate3.executeUpdate();
-                      prestate2 = prestate3;
+            
+            prestate4 = db.conn.prepareStatement("SELECT * FROM `temp parts` ");
+            ResultSet result5 = prestate4.executeQuery();
+            result5.next();
+            
+            for (int i = it; i != 0; i--) {
+                
+                prestate3 = db.conn.prepareStatement("INSERT INTO `job completed` (`Job_Number`, "
+                        + " `Description`,  `Part No`,`Unit Cost`,`Qty`, `Total Price`, `Labour Rate`,  `Duration`  ,`VAT`, `Grand Total`) "
+                        + "VALUES ( '" + jobNumber.getText() + "', '" + result4.getString("Description") + "',     '"+result5.getString("Part No")+"',  '"+ result5.getFloat("Unit Cost")+"' ,  " + result3.getInt("Qty") + ",'" + partsTotal + "','" + rate + "',    '"+duration.getText()+"'    ,'" + sVat + "','" + grandTotal + "' )");
+                System.out.println(prestate3);
+                result3.next();
+                result4.next();
+                result5.next();
+                prestate3.executeUpdate();
+                
             }
-        }catch(Exception ex){
-            //JOptionPane.showMessageDialog(null, "Duration cannot be null");
-            System.out.println(prestate2);
+            
+            for (int i = 0; i < work.size(); i++) {
+                prestate3 = db.conn.prepareStatement("INSERT INTO `work done`(`Job_Number` , `work done`)   VALUES (  '" + jobNumber.getText() + "', '" + work.get(i) + "'   )  ");
+                prestate3.executeUpdate();
+            }
+            
+            prestate4 = db.conn.prepareStatement("UPDATE `jobsheets` SET `Status` = 'Complete' WHERE"
+                    + " `Job_Number` = '" + jobNumber.getText() + "'  ");
+            prestate4.execute();
+            updateTable();
+            
+            prestate4 = db.conn.prepareStatement("DELETE FROM `temp parts`");
+            prestate4.execute();
+            editJobStatusPanel.setVisible(false);
+            jobsPanel.setVisible(true);
+        } catch (Exception ex) {
             ex.printStackTrace();
+            
         }
     }//GEN-LAST:event_completeJobActionPerformed
+
+    private void editJobStatusWorkDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusWorkDropActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editJobStatusWorkDropActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton completeJob;

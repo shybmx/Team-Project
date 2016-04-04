@@ -95,7 +95,7 @@ public class SupplierParts extends javax.swing.JFrame {
             String partName = partsTable.getValueAt(index, 1).toString();
             stock.setTextFields(unitCost, partName, supplierName);
         }catch(Exception ex){
-            
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_selectToOrderActionPerformed
 

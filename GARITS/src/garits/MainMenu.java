@@ -53,6 +53,7 @@ public class MainMenu extends javax.swing.JFrame {
         jobList = new javax.swing.JButton();
         payment = new javax.swing.JButton();
         invoice = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -77,7 +78,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(1080, 10, 114, 140);
+        logout.setBounds(1180, 10, 114, 140);
 
         generateReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/reportsicon.png"))); // NOI18N
         generateReport.addActionListener(new java.awt.event.ActionListener() {
@@ -136,6 +137,15 @@ public class MainMenu extends javax.swing.JFrame {
         });
         getContentPane().add(invoice);
         invoice.setBounds(960, 10, 120, 140);
+
+        jButton1.setText("Change Suppliers");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(1080, 10, 100, 140);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
@@ -204,11 +214,19 @@ public class MainMenu extends javax.swing.JFrame {
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_paymentActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       AlterSupplier alterSupplierPanel = new AlterSupplier(db);
+       this.getContentPane().add(alterSupplierPanel);
+       this.invalidate();
+       this.validate();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createJob;
     private javax.swing.JButton generateReport;
     private javax.swing.JButton invoice;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

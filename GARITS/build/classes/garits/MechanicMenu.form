@@ -77,7 +77,7 @@
     <Container class="javax.swing.JPanel" name="editJobStatusPanel">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="80" y="250" width="1090" height="600"/>
+          <AbsoluteConstraints x="80" y="230" width="1090" height="600"/>
         </Constraint>
       </Constraints>
 
@@ -213,6 +213,9 @@
               <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {  })" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editJobStatusWorkDropActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="duration">
         </Component>
