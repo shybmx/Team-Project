@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 public class Pin extends javax.swing.JFrame {  
     DBConnect db = new DBConnect();
+     static String loggedUser;
     public Pin(){
         initComponents();
         login.setOpaque(false);
@@ -82,6 +83,7 @@ public class Pin extends javax.swing.JFrame {
        PreparedStatement prestate;
        String userName = insertUserName.getText();
        String password = insertPassWord.getText();
+       loggedUser = userName;
        try {
             prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"

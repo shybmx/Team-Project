@@ -4,42 +4,56 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class Stock extends javax.swing.JPanel {
+    
     DBConnect db;
     PreparedStatement prestate;
+    Vector<String> vec = new Vector<>();
+     Vector<String> orderVec = new Vector<>();
+     double total;
+     double grandTotal;
     public Stock(DBConnect db) {
         initComponents();
         this.db = db;
         close.setOpaque(false);
-        close.setContentAreaFilled(false); 
+        close.setContentAreaFilled(false);
         close.setBorderPainted(false);
         editStock.setOpaque(false);
-        editStock.setContentAreaFilled(false); 
+        editStock.setContentAreaFilled(false);
         editStock.setBorderPainted(false);
         order.setOpaque(false);
-        order.setContentAreaFilled(false); 
+        order.setContentAreaFilled(false);
         order.setBorderPainted(false);
         update.setOpaque(false);
-        update.setContentAreaFilled(false); 
+        update.setContentAreaFilled(false);
         update.setBorderPainted(false);
         editClose.setOpaque(false);
-        editClose.setContentAreaFilled(false); 
+        editClose.setContentAreaFilled(false);
         editClose.setBorderPainted(false);
         buttons.setOpaque(false);
         editStockToDB.setOpaque(false);
-        editStockToDB.setContentAreaFilled(false); 
+        editStockToDB.setContentAreaFilled(false);
         editStockToDB.setBorderPainted(false);
+        placeOrder.setOpaque(false);
+        placeOrder.setContentAreaFilled(false);
+        placeOrder.setBorderPainted(false);
         updateTable();
+        insertCombo();
         addStockPanel.setVisible(false);
         addStockPanel.setOpaque(false);
         addStockToDB.setOpaque(false);
-        addStockToDB.setContentAreaFilled(false); 
+        addStockToDB.setContentAreaFilled(false);
         addStockToDB.setBorderPainted(false);
         addClose.setOpaque(false);
-        addClose.setContentAreaFilled(false); 
+        addClose.setContentAreaFilled(false);
         addClose.setBorderPainted(false);
         editPartNumber.setEditable(false);
         editStockPanel.setVisible(false);
@@ -47,22 +61,63 @@ public class Stock extends javax.swing.JPanel {
         orderStockPanel.setVisible(false);
         orderStockPanel.setOpaque(false);
         addToOrderList.setOpaque(false);
-        addToOrderList.setContentAreaFilled(false); 
+        addToOrderList.setContentAreaFilled(false);
         addToOrderList.setBorderPainted(false);
         orderListClose.setOpaque(false);
-        orderListClose.setContentAreaFilled(false); 
+        orderListClose.setContentAreaFilled(false);
         orderListClose.setBorderPainted(false);
+        orderPriceOfUnit.setEditable(false);
+        orderTotal.setEditable(false);
+        orderSupplier.setEditable(false);
         this.setSize(1300, 900);
+        orderGrandTotal.setEditable(false);
+        total = 0;
+        grandTotal = 0;
     }
-    
-    public void updateTable(){
-        try{
+
+    public void updateTable() {
+        try {
             prestate = db.conn.prepareStatement("SELECT * from `garits`.`parts`");
             ResultSet result = prestate.executeQuery();
             stockTable.setModel(DbUtils.resultSetToTableModel(result));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Cannot connect to Database");
+        }
+    }
+    
+    public void updateTempTable(){
+        try{
+            prestate = db.conn.prepareStatement("SELECT * from `temp part order` ");
+            ResultSet result = prestate.executeQuery();
+            orderList.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
+    }
+
+    public void insertCombo() {
+        try {
+            prestate = db.conn.prepareStatement("SELECT * FROM suppliers");
+            ResultSet result = prestate.executeQuery();
+            result.next();
+            PreparedStatement prestate2 = db.conn.prepareStatement("Select Count(*) FROM suppliers ");
+            ResultSet result2 = prestate2.executeQuery();
+            result2.next();
+            int it = result2.getInt("Count(*)");
+            for (int i = it; i != 0; i--) {
+                supplierCombo.addItem(result.getString("Supplier"));
+                result.next();
+            }
+        } catch (SQLException ex) {
+            System.out.println("");
+        }
+    }
+
+    public void setTextFields(String cost, String partName, String suppName) {
+        orderPriceOfUnit.setText(cost);
+        orderSupplier.setText(suppName);
+        orderDescription.setText(partName);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -115,14 +170,34 @@ public class Stock extends javax.swing.JPanel {
         editStockToDB = new javax.swing.JButton();
         editClose = new javax.swing.JButton();
         orderStockPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        orderStockList = new javax.swing.JList();
         addToOrderList = new javax.swing.JButton();
         orderListClose = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        orderStockTable = new javax.swing.JTable();
         orderFromList = new javax.swing.JButton();
         invoice = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        orderNumber = new javax.swing.JTextField();
+        supplierCombo = new javax.swing.JComboBox();
+        selectSupplier = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        orderDescription = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        orderQuantity = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        orderPriceOfUnit = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        orderSupplier = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        orderTotal = new javax.swing.JTextField();
+        calculate = new javax.swing.JButton();
+        placeOrder = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        orderGrandTotal = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        orderList = new javax.swing.JTable();
+        jLabel24 = new javax.swing.JLabel();
+        orderDate = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        orderDate1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -242,7 +317,7 @@ public class Stock extends javax.swing.JPanel {
         );
 
         add(buttons);
-        buttons.setBounds(5, 247, 1290, 641);
+        buttons.setBounds(5, 247, 1290, 622);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("Part Number:");
@@ -480,13 +555,6 @@ public class Stock extends javax.swing.JPanel {
         add(editStockPanel);
         editStockPanel.setBounds(150, 210, 820, 420);
 
-        orderStockList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(orderStockList);
-
         addToOrderList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
         addToOrderList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -495,19 +563,11 @@ public class Stock extends javax.swing.JPanel {
         });
 
         orderListClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
-
-        orderStockTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        orderListClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderListCloseActionPerformed(evt);
             }
-        ));
-        jScrollPane3.setViewportView(orderStockTable);
+        });
 
         orderFromList.setText("ORDER");
         orderFromList.addActionListener(new java.awt.event.ActionListener() {
@@ -523,46 +583,206 @@ public class Stock extends javax.swing.JPanel {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel17.setText("Order Number:");
+
+        supplierCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierComboActionPerformed(evt);
+            }
+        });
+
+        selectSupplier.setText("select");
+        selectSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectSupplierActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel18.setText("Description:");
+
+        jLabel19.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel19.setText("Quantity:");
+
+        jLabel20.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel20.setText("Price of Unit:");
+
+        jLabel21.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel21.setText("Supplier:");
+
+        jLabel22.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel22.setText("Total:");
+
+        calculate.setText("Calculate");
+        calculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateActionPerformed(evt);
+            }
+        });
+
+        placeOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/order.png"))); // NOI18N
+        placeOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placeOrderActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel23.setText("Grand total:");
+
+        orderList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(orderList);
+
+        jLabel24.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel24.setText("Date:");
+
+        jLabel25.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel25.setText("Order ID:");
+
         javax.swing.GroupLayout orderStockPanelLayout = new javax.swing.GroupLayout(orderStockPanel);
         orderStockPanel.setLayout(orderStockPanelLayout);
         orderStockPanelLayout.setHorizontalGroup(
             orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(orderStockPanelLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addContainerGap()
                 .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderStockPanelLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(addToOrderList, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderFromList, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(invoice)
-                .addGap(18, 18, 18)
-                .addComponent(orderListClose, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderPriceOfUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel23)
+                    .addComponent(orderGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderDate, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orderDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(orderStockPanelLayout.createSequentialGroup()
+                                .addGap(326, 326, 326)
+                                .addComponent(orderFromList, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(orderStockPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(calculate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderStockPanelLayout.createSequentialGroup()
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(orderStockPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(addToOrderList, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invoice))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(placeOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(orderListClose, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(orderStockPanelLayout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(supplierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(selectSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(125, 125, 125))))
         );
         orderStockPanelLayout.setVerticalGroup(
             orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(orderStockPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderStockPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(orderListClose, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addToOrderList, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(invoice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                        .addComponent(orderFromList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(369, 369, 369))
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(orderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(supplierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(selectSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(orderDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(orderQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                            .addComponent(orderPriceOfUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                            .addComponent(orderSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                            .addComponent(orderTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calculate, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                            .addComponent(orderDate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                            .addComponent(orderDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(orderGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(685, 685, 685))
+                    .addGroup(orderStockPanelLayout.createSequentialGroup()
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(addToOrderList, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(placeOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(orderStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(orderListClose, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invoice, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(orderFromList, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         add(orderStockPanel);
-        orderStockPanel.setBounds(120, 150, 580, 730);
+        orderStockPanel.setBounds(190, 940, 870, 730);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
@@ -594,7 +814,7 @@ public class Stock extends javax.swing.JPanel {
         String year = addYear.getText();
         String unitCost = addUnitCost.getText();
         String quantity = addQuantity.getText();
-        try{
+        try {
             prestate = db.conn.prepareStatement("INSERT INTO `parts`(`PartNo`, `PartName`, "
                     + "`Manufacturer`, `VehicleType`, `Years`, `UnitCost`, `Quantity`) "
                     + "VALUES (?,?,?,?,?,?,?)");
@@ -606,40 +826,39 @@ public class Stock extends javax.swing.JPanel {
             prestate.setString(6, unitCost);
             prestate.setString(7, quantity);
             int i = prestate.executeUpdate();
-            if(i>0){
+            if (i > 0) {
                 JOptionPane.showMessageDialog(null, "Part has been added");
                 addStockPanel.setVisible(false);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Part has not been added");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_addStockToDBActionPerformed
 
     private void addCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCloseActionPerformed
-       addStockPanel.setVisible(false);
+        addStockPanel.setVisible(false);
     }//GEN-LAST:event_addCloseActionPerformed
 
     private void addStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStockActionPerformed
-       buttons.setVisible(false);
-       addStockPanel.setVisible(true);
+        buttons.setVisible(false);
+        addStockPanel.setVisible(true);
     }//GEN-LAST:event_addStockActionPerformed
 
     private void editStockToDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStockToDBActionPerformed
-       try{
-           prestate = db.conn.prepareStatement("UPDATE `parts` SET `PartName`= '"+editPartName.getText()+"' ,"
-                   + "`Manufacturer`= '"+editManufacturer.getText()+"',`VehicleType`='"+editVehicleType.getText()+"',"
-                   + "`Years`='"+editYear.getText()+"' ,`UnitCost`='"+editUnitCost.getText()+"' ,"
-                   + "`Quantity`= '"+editQuantity.getText()+"' "
-                   + "WHERE `PartNo` = '"+editPartNumber.getText()+"'  ");
-           prestate.execute();
-           editStockPanel.setVisible(false);
-           JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has been updated");
-       }catch(Exception ex){
-           JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has not been updated");
-           ex.printStackTrace();
-       }
+        try {
+            prestate = db.conn.prepareStatement("UPDATE `parts` SET `PartName`= '" + editPartName.getText() + "' ,"
+                    + "`Manufacturer`= '" + editManufacturer.getText() + "',`VehicleType`='" + editVehicleType.getText() + "',"
+                    + "`Years`='" + editYear.getText() + "' ,`UnitCost`='" + editUnitCost.getText() + "' ,"
+                    + "`Quantity`= '" + editQuantity.getText() + "' "
+                    + "WHERE `PartNo` = '" + editPartNumber.getText() + "'  ");
+            prestate.execute();
+            editStockPanel.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has been updated");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has not been updated");
+        }
     }//GEN-LAST:event_editStockToDBActionPerformed
 
     private void editCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCloseActionPerformed
@@ -647,7 +866,7 @@ public class Stock extends javax.swing.JPanel {
     }//GEN-LAST:event_editCloseActionPerformed
 
     private void editStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStockActionPerformed
-        try{
+        try {
             int index = stockTable.getSelectedRow();
             editPartNumber.setText(stockTable.getValueAt(index, 0).toString());
             editPartName.setText(stockTable.getValueAt(index, 1).toString());
@@ -658,13 +877,40 @@ public class Stock extends javax.swing.JPanel {
             editQuantity.setText(stockTable.getValueAt(index, 6).toString());
             editStockPanel.setVisible(true);
             buttons.setVisible(false);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "You must select a part you wish to edit");
         }
     }//GEN-LAST:event_editStockActionPerformed
 
     private void addToOrderListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToOrderListActionPerformed
-        // TODO add your handling code here:
+        DecimalFormat format = new DecimalFormat("0.00");
+        total = Double.parseDouble(orderTotal.getText().replace('£', '\0'));
+        String sTotal = format.format(total);
+        grandTotal = grandTotal + total;
+        String sTotal2 = format.format(grandTotal);
+        
+        orderGrandTotal.setText(String.valueOf(sTotal2));
+        String orderNumberString = orderNumber.getText();
+        String orderDescriptionString = orderDescription.getText();
+        String orderQuantityString = orderQuantity.getText();
+        String orderSupplierString = orderSupplier.getText();
+        String orderTotalString = String.valueOf(total);
+        String orderDateString = orderDate.getText();
+        try{
+            prestate = db.conn.prepareStatement("INSERT INTO `temp part order` (`Order No`, `Description`, "
+                    + "`Qty`, `Price`, `Supplier`, `Date`) Values (?,?,?,?,?,?) ");
+            prestate.setString(1, orderNumberString);
+            prestate.setString(2, orderDescriptionString);
+            prestate.setString(3, orderQuantityString);
+            prestate.setString(4, orderTotalString);
+            prestate.setString(5, orderSupplierString);
+            prestate.setString(6, orderDateString);
+            prestate.executeUpdate();
+            updateTempTable();
+        }catch(Exception ex){
+            System.out.println(prestate);
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_addToOrderListActionPerformed
 
     private void orderFromListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderFromListActionPerformed
@@ -674,6 +920,52 @@ public class Stock extends javax.swing.JPanel {
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_invoiceActionPerformed
+
+    private void supplierComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierComboActionPerformed
+
+    }//GEN-LAST:event_supplierComboActionPerformed
+
+    private void selectSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectSupplierActionPerformed
+        String x = supplierCombo.getSelectedItem().toString();
+        SupplierParts supplierFrame = new SupplierParts(x, db, this);
+        supplierFrame.setVisible(true);
+    }//GEN-LAST:event_selectSupplierActionPerformed
+
+    private void calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateActionPerformed
+        int quantity = Integer.parseInt(orderQuantity.getText());
+        double price = Float.parseFloat(orderPriceOfUnit.getText());
+        double total = quantity * price;
+        DecimalFormat format = new DecimalFormat("0.00");
+        String sTotal = format.format(total);
+        orderTotal.setText("£ " + sTotal);
+    }//GEN-LAST:event_calculateActionPerformed
+
+    private void orderListCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderListCloseActionPerformed
+        try{
+            prestate = db.conn.prepareStatement("delete from `temp part order`");
+            prestate.execute();
+            orderStockPanel.setVisible(false);
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_orderListCloseActionPerformed
+
+    private void placeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderActionPerformed
+        String orderNumberString = orderNumber.getText();
+        String orderDescriptionString = orderDescription.getText();
+        String orderQuantityString = orderQuantity.getText();
+        String orderPriceOfUnitString = orderPriceOfUnit.getText();
+        String orderSupplierString = orderSupplier.getText();
+        //String orderTotalString = orderTotal.getText();
+        try{
+            prestate = db.conn.prepareStatement("INSERT INTO `part order` (Order Number ,Description, Quantity,"
+                    + "Price, Supplier) Values (?,?,?,?,?) ");
+            
+            prestate.executeUpdate();
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_placeOrderActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClose;
@@ -689,6 +981,7 @@ public class Stock extends javax.swing.JPanel {
     private javax.swing.JTextField addVehicleType;
     private javax.swing.JTextField addYear;
     private javax.swing.JPanel buttons;
+    private javax.swing.JButton calculate;
     private javax.swing.JButton close;
     private javax.swing.JButton editClose;
     private javax.swing.JTextField editManufacturer;
@@ -710,7 +1003,16 @@ public class Stock extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -719,17 +1021,27 @@ public class Stock extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton order;
+    private javax.swing.JTextField orderDate;
+    private javax.swing.JTextField orderDate1;
+    private javax.swing.JTextField orderDescription;
     private javax.swing.JButton orderFromList;
+    private javax.swing.JTextField orderGrandTotal;
+    private javax.swing.JTable orderList;
     private javax.swing.JButton orderListClose;
-    private javax.swing.JList orderStockList;
+    private javax.swing.JTextField orderNumber;
+    private javax.swing.JTextField orderPriceOfUnit;
+    private javax.swing.JTextField orderQuantity;
     private javax.swing.JPanel orderStockPanel;
-    private javax.swing.JTable orderStockTable;
+    private javax.swing.JTextField orderSupplier;
+    private javax.swing.JTextField orderTotal;
+    private javax.swing.JButton placeOrder;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchStock;
+    private javax.swing.JButton selectSupplier;
     private javax.swing.JTable stockTable;
+    private javax.swing.JComboBox supplierCombo;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

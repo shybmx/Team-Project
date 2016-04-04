@@ -509,8 +509,8 @@ public class JobList extends javax.swing.JPanel {
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
         buttons.setVisible(false);
-        EditJobStatus editJobStatusPanel = new EditJobStatus();
-        myFrame.getContentPane().add(editJobStatusPanel);
+        //EditJobStatus editJobStatusPanel = new EditJobStatus();
+        //myFrame.getContentPane().add(editJobStatusPanel);
     }//GEN-LAST:event_editStatusActionPerformed
 
     private void editJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobActionPerformed
