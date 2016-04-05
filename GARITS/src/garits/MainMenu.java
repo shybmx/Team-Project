@@ -156,7 +156,7 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomersActionPerformed
-        CustomerInfo customerInfoPanel = new CustomerInfo(this, db);
+        CustomerInfo customerInfoPanel = new CustomerInfo(db);
         this.getContentPane().add(customerInfoPanel);
         this.invalidate();
         this.validate();
@@ -209,7 +209,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jobListActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
-        Payment paymentPanel = new Payment(this, db);
+        Payment paymentPanel = new Payment(db);
         this.getContentPane().add(paymentPanel);
         this.invalidate();
         this.validate();

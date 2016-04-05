@@ -251,11 +251,11 @@ public class CreateJob extends javax.swing.JPanel {
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(telephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(118, 118, 118))
+                .addGap(156, 156, 156))
         );
 
         add(formPanel2);
-        formPanel2.setBounds(690, 410, 420, 140);
+        formPanel2.setBounds(690, 410, 420, 190);
 
         create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createicon.png"))); // NOI18N
         create.setPreferredSize(new java.awt.Dimension(120, 155));

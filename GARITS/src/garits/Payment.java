@@ -5,13 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Payment extends javax.swing.JPanel {
-    JFrame myFrame;
     DBConnect db;
     PreparedStatement prestate;
-    public Payment(JFrame frame, DBConnect db) {
+    public Payment(DBConnect db) {
         initComponents();
         this.db = db;
-        myFrame = frame;
         cardPayment.setOpaque(false);
         cardPayment.setContentAreaFilled(false); 
         cardPayment.setBorderPainted(false);
@@ -300,7 +298,7 @@ public class Payment extends javax.swing.JPanel {
         );
 
         add(cardPaymentPanel);
-        cardPaymentPanel.setBounds(780, 250, 423, 580);
+        cardPaymentPanel.setBounds(340, 250, 423, 580);
 
         storeChequePayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/storeicon.png"))); // NOI18N
         storeChequePayment.addActionListener(new java.awt.event.ActionListener() {

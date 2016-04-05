@@ -35,6 +35,11 @@ public class RestoreDB extends javax.swing.JPanel {
         setLayout(null);
 
         restoreButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/restoreDB.png"))); // NOI18N
+        restoreButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restoreButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +124,16 @@ public class RestoreDB extends javax.swing.JPanel {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void restoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreButtonActionPerformed
+        try{
+           String str = "C:/xampp/mysql/bin/mysql -u root garits < C:/Users/shahzad/Desktop/test.sql";
+           Process process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c",str});
+           System.out.println(str);
+       }catch(Exception ex){
+           ex.printStackTrace();
+       }
+    }//GEN-LAST:event_restoreButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

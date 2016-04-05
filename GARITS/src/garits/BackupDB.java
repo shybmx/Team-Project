@@ -1,6 +1,8 @@
 package garits;
 
+import static java.lang.Compiler.command;
 import java.sql.PreparedStatement;
+import java.util.Scanner;
 
 public class BackupDB extends javax.swing.JPanel {
     DBConnect db;
@@ -130,9 +132,11 @@ public class BackupDB extends javax.swing.JPanel {
 
     private void backUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backUpButtonActionPerformed
         try{
-            prestate = db.conn.prepareStatement("");
+            String str ="C:/xampp/mysql/bin/mysqldump -u root garits > C:/Users/shahzad/Desktop/test.sql";
+            Process process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c",str});
+            System.out.println(str);
         }catch(Exception ex){
-            
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_backUpButtonActionPerformed
 

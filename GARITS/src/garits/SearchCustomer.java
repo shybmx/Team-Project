@@ -91,7 +91,7 @@ public class SearchCustomer extends javax.swing.JFrame {
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         try{
             int index = searchCustomerTable.getSelectedRow();
-            cj.setFields(searchCustomerTable.getValueAt(index, 2).toString(),    searchCustomerTable.getValueAt(index, 8).toString(),searchCustomerTable.getValueAt(index, 9).toString(), searchCustomerTable.getValueAt(index, 10).toString(), searchCustomerTable.getValueAt(index, 4).toString() );
+            cj.setFields(searchCustomerTable.getValueAt(index, 1).toString(),    searchCustomerTable.getValueAt(index, 7).toString(),searchCustomerTable.getValueAt(index, 8).toString(), searchCustomerTable.getValueAt(index, 9).toString(), searchCustomerTable.getValueAt(index, 3).toString() );
             this.setVisible(false);
         }catch(Exception ex){
             

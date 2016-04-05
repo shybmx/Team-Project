@@ -45,6 +45,11 @@ public class ArchiveDB extends javax.swing.JPanel {
         jScrollPane1.setViewportView(fileList);
 
         archiveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/archiveicon.png"))); // NOI18N
+        archiveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                archiveButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +118,10 @@ public class ArchiveDB extends javax.swing.JPanel {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
        this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void archiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveButtonActionPerformed
+       
+    }//GEN-LAST:event_archiveButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -18,6 +18,12 @@ public class JobList extends javax.swing.JPanel {
         myFrame = frame;
         this.db = db;
         this.repaint();
+        refreshTable.setOpaque(false);
+        refreshTable.setContentAreaFilled(false);
+        refreshTable.setBorderPainted(false);
+        searchButton.setOpaque(false);
+        searchButton.setContentAreaFilled(false);
+        searchButton.setBorderPainted(false);
         editJobAddNewWorkDone.setOpaque(false);
         editJobAddNewWorkDone.setContentAreaFilled(false);
         editJobAddNewWorkDone.setBorderPainted(false);
@@ -75,11 +81,9 @@ public class JobList extends javax.swing.JPanel {
         close = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jobListTable = new javax.swing.JTable();
-        searchCustomerName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        searchCarNumber = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        searchCustomer = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        refreshTable = new javax.swing.JButton();
         editJobPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         editJobForm1 = new javax.swing.JPanel();
@@ -155,23 +159,24 @@ public class JobList extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jobListTable);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setText("Customer Name:");
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setText("Car Number:");
-
-        jButton1.setText("SEARCH");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/searchicon.png"))); // NOI18N
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchButtonActionPerformed(evt);
+            }
+        });
+
+        refreshTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/update.png"))); // NOI18N
+        refreshTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshTableActionPerformed(evt);
             }
         });
 
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(buttonsLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1250, Short.MAX_VALUE)
@@ -181,47 +186,34 @@ public class JobList extends javax.swing.JPanel {
                 .addComponent(editJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(editStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refreshTable, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(buttonsLayout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(searchCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(searchCarNumber))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(170, 170, 170))))
+                .addGap(278, 278, 278)
+                .addComponent(searchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsLayout.setVerticalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                        .addComponent(searchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))
                     .addGroup(buttonsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(editJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(buttonsLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
                         .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(searchCustomerName))
-                        .addGap(2, 2, 2)
-                        .addComponent(jButton1)
-                        .addGap(4, 4, 4)
-                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(searchCarNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editJob, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(close, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(refreshTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         add(buttons);
@@ -509,8 +501,6 @@ public class JobList extends javax.swing.JPanel {
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
         buttons.setVisible(false);
-        //EditJobStatus editJobStatusPanel = new EditJobStatus();
-        //myFrame.getContentPane().add(editJobStatusPanel);
     }//GEN-LAST:event_editStatusActionPerformed
 
     private void editJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobActionPerformed
@@ -551,9 +541,39 @@ public class JobList extends javax.swing.JPanel {
        this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        try{
+            prestate = db.conn.prepareStatement("SELECT * FROM `jobsheets` WHERE  `customer` LIKE '"+searchCustomer.getText()+"' ");
+            ResultSet result = prestate.executeQuery();
+            prestate = db.conn.prepareStatement("Select Count(*) FROM `jobsheets` WHERE `customer` LIKE  '"+searchCustomer.getText()+"' ");
+            ResultSet result2 = prestate.executeQuery();
+            result2.next();
+            int it = result2.getInt("Count(*)");
+            if(it > 0){
+            jobListTable.setModel(DbUtils.resultSetToTableModel(result));
+            }else{
+                
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+        }
+        
+        try{
+            prestate = db.conn.prepareStatement("SELECT * FROM `jobsheets` WHERE  `VehicleRegNumber` =  '"+searchCustomer.getText()+"' ");
+            ResultSet result = prestate.executeQuery();
+            prestate = db.conn.prepareStatement("Select Count(*) FROM `jobsheets` WHERE `VehicleRegNumber` =  '"+searchCustomer.getText()+"' ");
+            ResultSet result2 = prestate.executeQuery();
+            result2.next();
+            int it = result2.getInt("Count(*)");
+            if(it > 0){
+            jobListTable.setModel(DbUtils.resultSetToTableModel(result));
+            }else{
+                
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     private void editJobUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobUpdateActionPerformed
        String jobnum = editJobCustomerID.getText();
@@ -605,6 +625,10 @@ public class JobList extends javax.swing.JPanel {
          }
     }//GEN-LAST:event_editStatusRemoveCurrentActionPerformed
 
+    private void refreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableActionPerformed
+        updateTable();
+    }//GEN-LAST:event_refreshTableActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttons;
     private javax.swing.JButton close;
@@ -630,7 +654,6 @@ public class JobList extends javax.swing.JPanel {
     private javax.swing.JList editJobWorkDoneListNew;
     private javax.swing.JButton editStatus;
     private javax.swing.JButton editStatusRemoveCurrent;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -638,8 +661,6 @@ public class JobList extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -650,7 +671,8 @@ public class JobList extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jobListTable;
-    private javax.swing.JTextField searchCarNumber;
-    private javax.swing.JTextField searchCustomerName;
+    private javax.swing.JButton refreshTable;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchCustomer;
     // End of variables declaration//GEN-END:variables
 }

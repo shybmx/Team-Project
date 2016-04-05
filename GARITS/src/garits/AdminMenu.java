@@ -42,6 +42,7 @@ public class AdminMenu extends javax.swing.JFrame {
         manage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         alerts = new javax.swing.JTable();
+        systemConfig = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,7 +82,7 @@ public class AdminMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(760, 20, 120, 150);
+        logout.setBounds(850, 20, 120, 150);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -110,7 +111,16 @@ public class AdminMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(alerts);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(940, 20, 300, 150);
+        jScrollPane1.setBounds(980, 20, 300, 150);
+
+        systemConfig.setText("System config");
+        systemConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                systemConfigActionPerformed(evt);
+            }
+        });
+        getContentPane().add(systemConfig);
+        systemConfig.setBounds(760, 15, 90, 160);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -158,6 +168,13 @@ public class AdminMenu extends javax.swing.JFrame {
         this.validate();
     }//GEN-LAST:event_manageActionPerformed
 
+    private void systemConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemConfigActionPerformed
+        SystemConfig systemConfigPanel = new SystemConfig(db);
+        this.getContentPane().add(systemConfigPanel);
+        this.invalidate();
+        this.validate();
+    }//GEN-LAST:event_systemConfigActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable alerts;
     private javax.swing.JButton archiveDB;
@@ -168,6 +185,7 @@ public class AdminMenu extends javax.swing.JFrame {
     private javax.swing.JButton logout;
     private javax.swing.JButton manage;
     private javax.swing.JButton restoreDB;
+    private javax.swing.JButton systemConfig;
     // End of variables declaration//GEN-END:variables
 
 }

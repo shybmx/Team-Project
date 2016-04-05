@@ -496,7 +496,7 @@ public class MechanicMenu extends javax.swing.JFrame {
                 
                 prestate3 = db.conn.prepareStatement("INSERT INTO `job completed` (`Job_Number`, "
                         + " `Description`,  `Part No`,`Unit Cost`,`Qty`, `Total Price`, `Labour Rate`,  `Duration`  ,`VAT`, `Grand Total`) "
-                        + "VALUES ( '" + jobNumber.getText() + "', '" + result4.getString("Description") + "',     '"+result5.getString("Part No")+"',  '"+ result5.getFloat("Unit Cost")+"' ,  " + result3.getInt("Qty") + ",'" + partsTotal + "','" + rate + "',    '"+duration.getText()+"'    ,'" + sVat + "','" + grandTotal + "' )");
+                        + "VALUES ( '" + jobNumber.getText() + "', '" + result4.getString("Description") + "',     '"+result5.getString("Part No")+"',  '"+ result5.getFloat("Unit Cost")+"' ,  " + result3.getInt("Qty") + ",'" + (result3.getInt("Qty")* result5.getDouble("Unit Cost")) + "','" + rate + "',    '"+duration.getText()+"'    ,'" + sVat + "','" + grandTotal + "' )");
                 System.out.println(prestate3);
                 result3.next();
                 result4.next();

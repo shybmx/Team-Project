@@ -167,7 +167,7 @@ public class ForePerson extends javax.swing.JFrame {
     }//GEN-LAST:event_jobListActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
-        Payment paymentPanel = new Payment(this, db);
+        Payment paymentPanel = new Payment(db);
         this.getContentPane().add(paymentPanel);
         this.invalidate();
         this.validate();

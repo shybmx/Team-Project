@@ -51,6 +51,12 @@ public class Register extends javax.swing.JPanel {
         editUserName.setEditable(false);
         updateTable();
         fieldsPanel.setVisible(false);
+        search.setOpaque(false);
+        search.setContentAreaFilled(false); 
+        search.setBorderPainted(false);
+        refreshTable.setOpaque(false);
+        refreshTable.setContentAreaFilled(false); 
+        refreshTable.setBorderPainted(false);
         this.setSize(1300, 900);
     }
     
@@ -85,6 +91,9 @@ public class Register extends javax.swing.JPanel {
         editUser = new javax.swing.JButton();
         close = new javax.swing.JButton();
         delete = new javax.swing.JButton();
+        searchUser = new javax.swing.JTextField();
+        search = new javax.swing.JButton();
+        refreshTable = new javax.swing.JButton();
         editingUser = new javax.swing.JPanel();
         formPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -174,35 +183,66 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/searchicon.png"))); // NOI18N
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+
+        refreshTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/update.png"))); // NOI18N
+        refreshTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshTableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsLayout.createSequentialGroup()
-                .addGap(356, 356, 356)
+                .addContainerGap()
                 .addComponent(addUserOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refreshTable, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addComponent(searchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
         buttonsLayout.setVerticalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addUserOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(buttonsLayout.createSequentialGroup()
+                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(refreshTable, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addUserOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         add(buttons);
-        buttons.setBounds(30, 280, 860, 170);
+        buttons.setBounds(30, 280, 1100, 170);
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel13.setText("Name:");
@@ -945,6 +985,36 @@ public class Register extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_closeEditUserActionPerformed
 
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        try{
+            prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE  `Username` = '"+searchUser.getText()+"' ");
+            ResultSet result = prestate.executeQuery();
+            userNames.setModel(DbUtils.resultSetToTableModel(result));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+        }
+        
+        try{
+            prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE  `name` LIKE '"+searchUser.getText()+"' ");
+            ResultSet result = prestate.executeQuery();
+            prestate = db.conn.prepareStatement("Select Count(*) FROM `login` WHERE `name` LIKE  '"+searchUser.getText()+"' ");
+            ResultSet result2 = prestate.executeQuery();
+            result2.next();
+            int it = result2.getInt("Count(*)");
+            if(it > 0){
+            userNames.setModel(DbUtils.resultSetToTableModel(result));
+            }else{
+                
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Cannot connect to the database");
+        }
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void refreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableActionPerformed
+       updateTable();
+    }//GEN-LAST:event_refreshTableActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addUser;
     private javax.swing.JButton addUserOption;
@@ -1003,6 +1073,9 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField reTypePassWord;
+    private javax.swing.JButton refreshTable;
+    private javax.swing.JButton search;
+    private javax.swing.JTextField searchUser;
     private javax.swing.JPanel tablePanel;
     private javax.swing.JTable userNames;
     // End of variables declaration//GEN-END:variables
