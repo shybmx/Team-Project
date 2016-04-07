@@ -196,7 +196,7 @@
     <Container class="javax.swing.JPanel" name="addPanel">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="110" y="230" width="-1" height="410"/>
+          <AbsoluteConstraints x="100" y="230" width="-1" height="410"/>
         </Constraint>
       </Constraints>
 
@@ -570,10 +570,9 @@
         <Component class="javax.swing.JComboBox" name="customerTypeBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Regular"/>
-                <StringItem index="1" value="Casual"/>
-                <StringItem index="2" value=" "/>
+              <StringArray count="2">
+                <StringItem index="0" value="Account"/>
+                <StringItem index="1" value="Non-Account"/>
               </StringArray>
             </Property>
           </Properties>
@@ -612,7 +611,7 @@
     <Container class="javax.swing.JPanel" name="editUserPanel">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="70" y="220" width="-1" height="410"/>
+          <AbsoluteConstraints x="150" y="230" width="-1" height="410"/>
         </Constraint>
       </Constraints>
 
@@ -1007,10 +1006,9 @@
         <Component class="javax.swing.JComboBox" name="customerTypeBoxEdit">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Regular"/>
-                <StringItem index="1" value="Casual"/>
-                <StringItem index="2" value=" "/>
+              <StringArray count="2">
+                <StringItem index="0" value="Account"/>
+                <StringItem index="1" value="Non-Account"/>
               </StringArray>
             </Property>
           </Properties>

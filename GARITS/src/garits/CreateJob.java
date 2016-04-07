@@ -75,6 +75,8 @@ public class CreateJob extends javax.swing.JPanel {
         modelField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         telephoneField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        typeOfJob = new javax.swing.JComboBox();
         buttons2 = new javax.swing.JPanel();
         create = new javax.swing.JButton();
         close = new javax.swing.JButton();
@@ -219,6 +221,11 @@ public class CreateJob extends javax.swing.JPanel {
 
         telephoneField.setPreferredSize(new java.awt.Dimension(200, 30));
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel11.setText("Type of Job:");
+
+        typeOfJob.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Annual service", "MOT", "Repairs" }));
+
         javax.swing.GroupLayout formPanel2Layout = new javax.swing.GroupLayout(formPanel2);
         formPanel2.setLayout(formPanel2Layout);
         formPanel2Layout.setHorizontalGroup(
@@ -228,12 +235,14 @@ public class CreateJob extends javax.swing.JPanel {
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(telephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateBookedInField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(telephoneField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(modelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateBookedInField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(typeOfJob, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formPanel2Layout.setVerticalGroup(
@@ -251,7 +260,11 @@ public class CreateJob extends javax.swing.JPanel {
                 .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(telephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(156, 156, 156))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel11)
+                    .addComponent(typeOfJob))
+                .addGap(160, 160, 160))
         );
 
         add(formPanel2);
@@ -291,11 +304,12 @@ public class CreateJob extends javax.swing.JPanel {
         String date = dateBookedInField.getText();
         String model = modelField.getText();
         String telephone = telephoneField.getText();
+        String typeOfJobString = typeOfJob.getSelectedItem().toString();
         int jobNo = 0;
             try{
                 prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
-                        + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber)"
-                        + "Values(?,?,?,?,?,?,?)");
+                        + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber, TypeOfJob)"
+                        + "Values(?,?,?,?,?,?,?,?)");
                 prestate.setString(1, customerName);
                 prestate.setString(2, vechicleRegNo);
                 prestate.setString(3, make);
@@ -303,30 +317,29 @@ public class CreateJob extends javax.swing.JPanel {
                 prestate.setString(5, date);
                 prestate.setString(6, model);
                 prestate.setString(7, telephone);
+                prestate.setString(8, typeOfJobString);
                 int i = prestate.executeUpdate();
                 prestate = db.conn.prepareStatement("Select jobsheets.Job_Number From jobsheets Where jobsheets.VehicleRegNumber  = "
                + "'"+ vechicleRegNo + "'" );
                 ResultSet result = prestate.executeQuery();
                 result.next();
                 jobNo = result.getInt("Job_Number");
-                if(i>0){
-                     JOptionPane.showMessageDialog(null, "Job successfully created");
-                }else{
-                     JOptionPane.showMessageDialog(null, "Job has not been created");
-                }
-            }catch(Exception ex){
-                 JOptionPane.showMessageDialog(null, ex);
-            }
-            
-            try{
                 for(String t: vec){
                     prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
                         + "Values( '"+jobNo+"', ?  ) ");
                     prestate.setString(1, t);
                     prestate.executeUpdate();
                 }
+                prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Due' Where `name` = '"+customerName+"' ");
+                prestate.execute();
+                formPanel1.setVisible(false);
+                workDonePanel.setVisible(false);
+                addButtonPanel.setVisible(false);
+                buttons2.setVisible(false);
+                formPanel2.setVisible(false);
+                searchPanel.setVisible(false);
             }catch(Exception ex){
-                
+                 JOptionPane.showMessageDialog(null, ex);
             }
     }//GEN-LAST:event_createActionPerformed
 
@@ -361,6 +374,7 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JPanel formPanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -376,6 +390,7 @@ public class CreateJob extends javax.swing.JPanel {
     private javax.swing.JTextField searchCustomer;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField telephoneField;
+    private javax.swing.JComboBox typeOfJob;
     private javax.swing.JTextField vehicleRegNoField;
     private javax.swing.JPanel workDonePanel;
     private javax.swing.JList workRequired;

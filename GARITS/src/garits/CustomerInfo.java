@@ -404,7 +404,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel14.setText("Customer:");
 
-        customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Regular", "Casual", " " }));
+        customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Account", "Non-Account" }));
         customerTypeBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerTypeBoxActionPerformed(evt);
@@ -581,7 +581,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         );
 
         add(addPanel);
-        addPanel.setBounds(110, 230, 1086, 410);
+        addPanel.setBounds(100, 230, 1086, 410);
 
         jLabel18.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel18.setText("Model:");
@@ -655,7 +655,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel30.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel30.setText("Customer:");
 
-        customerTypeBoxEdit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Regular", "Casual", " " }));
+        customerTypeBoxEdit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Account", "Non-Account" }));
         customerTypeBoxEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerTypeBoxEditActionPerformed(evt);
@@ -855,7 +855,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         );
 
         add(editUserPanel);
-        editUserPanel.setBounds(70, 220, 1086, 410);
+        editUserPanel.setBounds(150, 230, 1086, 410);
 
         jLabel36.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel36.setText("Reg.No:");

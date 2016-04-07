@@ -22,11 +22,10 @@ public class SearchCustomer extends javax.swing.JFrame {
     public void updateTable(){
         try{
             prestate = db.conn.prepareStatement("SELECT customers.CustomerID, "
-                    + "customers.name, customers.address, customers.PostCode, "
-                    + "customers.TelephoneNumber, customers.EMail, customers.CustomerType, "
-                    + "customers.Discount, vehicle.regNum, vehicle.Make, vehicle.Model,"
-                    + " vehicle.EngSerial, vehicle.ChassieNumber, vehicle.Colour FROM "
-                    + "customers INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID");
+                    + "customers.name, customers.address, customers.PostCode, customers.TelephoneNumber, "
+                    + "customers.EMail, customers.CustomerType, customers.Discount, vehicle.regNum, vehicle.Make, "
+                    + "vehicle.Model, vehicle.EngSerial, vehicle.ChassieNumber, vehicle.Colour FROM customers "
+                    + "INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID WHERE `Status` = 'clear'");
             ResultSet result = prestate.executeQuery();
             searchCustomerTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){

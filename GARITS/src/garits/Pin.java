@@ -177,6 +177,11 @@ public class Pin extends javax.swing.JFrame {
         }
     }
     
+    public void startThread(){
+                Thread t = new Thread(new CreateReports(db));
+          t.start();
+    }
+    
     private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed
     }//GEN-LAST:event_loginKeyPressed
 
@@ -207,9 +212,17 @@ public class Pin extends javax.swing.JFrame {
        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pin().setVisible(true);
+                Pin p = new Pin();
+                p.setVisible(true);
+                p.startThread();
             }
         });
+        
+  
+        
+        
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
