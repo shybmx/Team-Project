@@ -15,11 +15,13 @@ public class SelectParts extends javax.swing.JFrame {
     MechanicMenu men;
     int tableQty;
     int qty;
+    JobList jl;
+    
     public SelectParts(DBConnect db, MechanicMenu men) {
         initComponents();
         this.db = db;
         this.men = men;
-        this.setSize(1400, 470);
+        this.setSize(1500, 470);
         this.setResizable(false);
         updateTable();
          setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -29,7 +31,17 @@ public class SelectParts extends javax.swing.JFrame {
          partNo.setEditable(false);
          totalPrice.setEditable(false);
          unitCostField.setEditable(false);
+        putInBox.setOpaque(false);
+        putInBox.setContentAreaFilled(false); 
+        putInBox.setBorderPainted(false);
+        selectToOrder.setOpaque(false);
+        selectToOrder.setContentAreaFilled(false); 
+        selectToOrder.setBorderPainted(false);
+        closeFrame.setOpaque(false);
+        closeFrame.setContentAreaFilled(false); 
+        closeFrame.setBorderPainted(false);
     }
+    
     
     public void updateTable(){
         try{
@@ -57,7 +69,6 @@ public class SelectParts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         partNo = new javax.swing.JTextField();
         putInBox = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         totalPrice = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         unitCostField = new javax.swing.JTextField();
@@ -82,28 +93,28 @@ public class SelectParts extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(12, 12, 1120, 403);
 
-        selectToOrder.setText("Select");
+        selectToOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/confirm.png"))); // NOI18N
         selectToOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectToOrderActionPerformed(evt);
             }
         });
         getContentPane().add(selectToOrder);
-        selectToOrder.setBounds(1270, 20, 92, 25);
+        selectToOrder.setBounds(1250, 10, 120, 150);
 
-        closeFrame.setText("Close");
+        closeFrame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         closeFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeFrameActionPerformed(evt);
             }
         });
         getContentPane().add(closeFrame);
-        closeFrame.setBounds(1270, 50, 92, 25);
+        closeFrame.setBounds(1370, 10, 110, 150);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("Quantity:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(1140, 210, 100, 30);
+        jLabel2.setBounds(1190, 220, 100, 30);
 
         quantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,35 +122,30 @@ public class SelectParts extends javax.swing.JFrame {
             }
         });
         getContentPane().add(quantity);
-        quantity.setBounds(1280, 210, 110, 30);
+        quantity.setBounds(1330, 220, 110, 30);
 
         desLabel.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         desLabel.setText("Description:");
         getContentPane().add(desLabel);
-        desLabel.setBounds(1140, 170, 140, 30);
+        desLabel.setBounds(1190, 180, 140, 30);
         getContentPane().add(descText);
-        descText.setBounds(1280, 170, 110, 30);
+        descText.setBounds(1330, 180, 110, 30);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("Part no:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(1140, 250, 100, 30);
+        jLabel3.setBounds(1190, 260, 100, 30);
         getContentPane().add(partNo);
-        partNo.setBounds(1280, 250, 110, 30);
+        partNo.setBounds(1330, 260, 110, 30);
 
-        putInBox.setText("Put in box");
+        putInBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Select.png"))); // NOI18N
         putInBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 putInBoxActionPerformed(evt);
             }
         });
         getContentPane().add(putInBox);
-        putInBox.setBounds(1140, 50, 90, 25);
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setText("Total Price:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(1140, 330, 130, 30);
+        putInBox.setBounds(1140, 10, 110, 150);
 
         totalPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,12 +153,12 @@ public class SelectParts extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalPrice);
-        totalPrice.setBounds(1280, 330, 110, 30);
+        totalPrice.setBounds(1330, 340, 110, 30);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel5.setText("Unit Cost:");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(1140, 290, 130, 30);
+        jLabel5.setBounds(1190, 300, 130, 30);
 
         unitCostField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,11 +166,11 @@ public class SelectParts extends javax.swing.JFrame {
             }
         });
         getContentPane().add(unitCostField);
-        unitCostField.setBounds(1280, 290, 110, 30);
+        unitCostField.setBounds(1330, 300, 110, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1400, 470);
+        jLabel1.setBounds(0, 0, 1500, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,9 +189,10 @@ public class SelectParts extends javax.swing.JFrame {
             String sTotal = format.format(tPrice);
             totalPrice.setText(sTotal);
             prestate = db.conn.prepareStatement("INSERT INTO `temp parts`(`Job_Number`, `Description`, `Part No`,  `Unit Cost`, `Qty`, `Total Price`) "
-                    + "VALUES ( "+men.getNo()+", ' "+descText.getText()+"' , '"+partNo.getText()+"',    '"+unitCostField.getText() +"'    ,  '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
+                    + "VALUES ( "+men.getNo() +", ' "+descText.getText()+"' , '"+partNo.getText()+"',    '"+unitCostField.getText() +"'    ,  '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
             prestate.executeUpdate();
-            men.updatePartsTable();
+           men.updatePartsTable();
+            jl.updatePartsTable();
             int newQty = tableQty - qty;
             prestate = db.conn.prepareStatement("UPDATE `parts` SET Quantity = '"+newQty+"' WHERE  `PartNo` = '"+partNo.getText()+"'  ");
             prestate.execute();
@@ -227,7 +234,6 @@ public class SelectParts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField partNo;

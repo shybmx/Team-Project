@@ -19,11 +19,13 @@ public class MechanicMenu extends javax.swing.JFrame {
     DBConnect db;
     Vector<String> work = new Vector<>();
     double rate;
-    double vat = 15;
     
     public MechanicMenu(DBConnect db) {
         initComponents();
         this.db = db;
+        completeJob.setOpaque(false);
+        completeJob.setContentAreaFilled(false);        
+        completeJob.setBorderPainted(false);
         editStatus.setOpaque(false);
         editStatus.setContentAreaFilled(false);        
         editStatus.setBorderPainted(false);
@@ -33,9 +35,6 @@ public class MechanicMenu extends javax.swing.JFrame {
         editJobStatusAddParts.setOpaque(false);
         editJobStatusAddParts.setContentAreaFilled(false);
         editJobStatusAddParts.setBorderPainted(false);
-        editJobStatusClose.setOpaque(false);
-        editJobStatusClose.setContentAreaFilled(false);
-        editJobStatusClose.setBorderPainted(false);
         logout.setOpaque(false);
         logout.setContentAreaFilled(false);        
         logout.setBorderPainted(false);
@@ -152,7 +151,6 @@ public class MechanicMenu extends javax.swing.JFrame {
         editJobStatusAddWorkDone = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         editJobStatusAddParts = new javax.swing.JButton();
-        editJobStatusClose = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         hourlyRate = new javax.swing.JTextField();
         jobNumber = new javax.swing.JTextField();
@@ -160,6 +158,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         partsUsed = new javax.swing.JTable();
         completeJob = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jobsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         pendingJobTable = new javax.swing.JTable();
@@ -233,14 +232,6 @@ public class MechanicMenu extends javax.swing.JFrame {
             }
         });
 
-        editJobStatusClose.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        editJobStatusClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
-        editJobStatusClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editJobStatusCloseActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setText("Hourly Rate:");
 
@@ -257,7 +248,7 @@ public class MechanicMenu extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(partsUsed);
 
-        completeJob.setText("Complete");
+        completeJob.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/complete.png"))); // NOI18N
         completeJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 completeJobActionPerformed(evt);
@@ -265,6 +256,9 @@ public class MechanicMenu extends javax.swing.JFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel9.setText("Job No:");
 
         javax.swing.GroupLayout editJobStatusPanelLayout = new javax.swing.GroupLayout(editJobStatusPanel);
         editJobStatusPanel.setLayout(editJobStatusPanelLayout);
@@ -278,63 +272,69 @@ public class MechanicMenu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editJobStatusAddParts, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(completeJob, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6)
+                        .addComponent(completeJob, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(editJobStatusPanelLayout.createSequentialGroup()
-                        .addGap(343, 343, 343)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jobNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(editJobStatusClose, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(133, 133, 133))
             .addGroup(editJobStatusPanelLayout.createSequentialGroup()
                 .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(editJobStatusPanelLayout.createSequentialGroup()
-                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editJobStatusWorkDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(114, 114, 114)
-                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(duration)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editJobStatusWorkDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(114, 114, 114)
+                .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(duration, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(hourlyRate, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(editJobStatusPanelLayout.createSequentialGroup()
+                        .addGap(203, 203, 203)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editJobStatusPanelLayout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jobNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(29, 29, 29))
+            .addGroup(editJobStatusPanelLayout.createSequentialGroup()
+                .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editJobStatusPanelLayout.createSequentialGroup()
+                        .addGap(435, 435, 435)
+                        .addComponent(jLabel3))
+                    .addGroup(editJobStatusPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editJobStatusAddWorkDone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editJobStatusPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
-                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(hourlyRate, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(119, 119, 119)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
+                        .addComponent(editJobStatusAddWorkDone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         editJobStatusPanelLayout.setVerticalGroup(
             editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editJobStatusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addGroup(editJobStatusPanelLayout.createSequentialGroup()
-                        .addComponent(jobNumber)
-                        .addGap(2, 2, 2)))
+                .addComponent(jLabel3)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(editJobStatusPanelLayout.createSequentialGroup()
                         .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editJobStatusWorkDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(duration, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hourlyRate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70))
+                            .addComponent(duration, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(editJobStatusPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(hourlyRate, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                            .addComponent(jobNumber))))
+                .addGap(70, 70, 70)
                 .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(editJobStatusAddWorkDone, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -344,9 +344,8 @@ public class MechanicMenu extends javax.swing.JFrame {
                 .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(editJobStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(completeJob, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editJobStatusClose, javax.swing.GroupLayout.PREFERRED_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(editJobStatusAddParts, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(completeJob, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(editJobStatusAddParts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(46, 46, 46))
         );
 
@@ -420,18 +419,6 @@ public class MechanicMenu extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void editJobStatusCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusCloseActionPerformed
-        try {
-            prestate = db.conn.prepareStatement("DELETE FROM `temp parts`");
-            prestate.execute();
-            editJobStatusPanel.setVisible(false);
-            jobsPanel.setVisible(true);
-            updatePartsTable();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
-        }
-    }//GEN-LAST:event_editJobStatusCloseActionPerformed
-
     private void editJobStatusAddPartsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusAddPartsActionPerformed
         SelectParts selectPartsForm = new SelectParts(db, this);
         selectPartsForm.setVisible(true);
@@ -460,6 +447,11 @@ public class MechanicMenu extends javax.swing.JFrame {
                 result1.next();
             }
             
+            
+            prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables` = 'VAT' ");
+            ResultSet vatR = prestate.executeQuery();
+            vatR.next();
+            
             DecimalFormat format = new DecimalFormat("0.00");
             
             
@@ -468,15 +460,11 @@ public class MechanicMenu extends javax.swing.JFrame {
             
             double subTotal = labourTotal + partsTotal;
             
-            double subVat = vat / 100 * subTotal;
+            double subVat = vatR.getDouble("Value") / 100 * subTotal; // added the vat from database
             
             double grandTotal = subTotal + subVat;
             
              String sVat = format.format(subVat);
-            
-            
-            
-            
             
             PreparedStatement prestate3;
             PreparedStatement prestate4;
@@ -534,7 +522,6 @@ public class MechanicMenu extends javax.swing.JFrame {
     private javax.swing.JTextField duration;
     private javax.swing.JButton editJobStatusAddParts;
     private javax.swing.JButton editJobStatusAddWorkDone;
-    private javax.swing.JButton editJobStatusClose;
     private javax.swing.JPanel editJobStatusPanel;
     private javax.swing.JComboBox editJobStatusWorkDrop;
     private javax.swing.JButton editStatus;
@@ -549,6 +536,7 @@ public class MechanicMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

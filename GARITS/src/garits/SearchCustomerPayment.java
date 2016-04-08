@@ -2,6 +2,7 @@ package garits;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -18,6 +19,7 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
     JTextField amount;
     JTextField custType;
     JTextField disType;
+    double vat;
 
     public SearchCustomerPayment(DBConnect db, String name, JTextField id, JTextField custName, JTextField amount, JTextField custType, JTextField disType) {
         initComponents();
@@ -31,6 +33,12 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
         updateTable();
         this.setSize(1470, 580);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        select.setOpaque(false);
+        select.setContentAreaFilled(false); 
+        select.setBorderPainted(false);
+        close.setOpaque(false);
+        close.setContentAreaFilled(false); 
+        close.setBorderPainted(false);
     }
 
     public void updateTable() {
@@ -39,7 +47,7 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
                     + "`Jobsheets`.`VehicleRegNumber`, `Jobsheets`.`make`,`Jobsheets`.`model`, `Jobsheets`.`TelephoneNumber`, "
                     + "`Jobsheets`.`status`, `Jobsheets`.`TypeOfJob`, `Jobsheets`.`HasPaid`, `job completed`.`Grand total`,`customers`.`customerType`, "
                     + "`customers`.`DiscountType` FROM `jobsheets` INNER JOIN `job completed` ON `jobsheets`.`job_Number` = `job completed`.`Job_Number` "
-                    + "INNER JOIN `customers` ON `customers`.`name` = `jobsheets`.`customer` WHERE `jobsheets`.`Status` = 'Complete' AND `hasPaid` = 'No' And `customer` like '%"+name+"%' ");
+                    + "INNER JOIN `customers` ON `customers`.`name` = `jobsheets`.`customer` WHERE `jobsheets`.`Status` = 'Complete' AND `hasPaid` = 'No' And `customer` like '%" + name + "%' ");
             ResultSet result = prestate.executeQuery();
             needToPay.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             needToPay.setModel(DbUtils.resultSetToTableModel(result));
@@ -78,14 +86,14 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(21, 21, 1220, 403);
 
-        select.setText("Select");
+        select.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Select.png"))); // NOI18N
         select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectActionPerformed(evt);
             }
         });
         getContentPane().add(select);
-        select.setBounds(1260, 30, 64, 25);
+        select.setBounds(1260, 60, 120, 155);
 
         close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +102,7 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
             }
         });
         getContentPane().add(close);
-        close.setBounds(1330, 30, 114, 147);
+        close.setBounds(1260, 220, 114, 147);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -116,8 +124,10 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
             String cusType = needToPay.getValueAt(index, 10).toString();
             String discType = needToPay.getValueAt(index, 11).toString();
             String workType = needToPay.getValueAt(index, 7).toString();
+            DecimalFormat format = new DecimalFormat("0.00");
+            
             if (cusType.equals("Account")) {
-                 double a = Double.parseDouble(total);
+                double a = Double.parseDouble(total);
                 if (discType.equals("Flexible")) {
                     try {
                         prestate = db.conn.prepareStatement("SELECT `Spent` FROM `customers` WHERE name = '" + customerName + "' ");
@@ -127,54 +137,76 @@ public class SearchCustomerPayment extends javax.swing.JFrame {
                         if (mSpent > 0 && mSpent < 1000) {
                             double aPercent = ((1.0 / 100) * a);
                             a = a - aPercent;
-                            total = String.valueOf(a);
-                        }else if(mSpent > 1001 && mSpent < 5000){
-                           double aPercent = ((2.0 / 100) * a);
+                           total =  format.format(a);
+                           // total = String.valueOf(a);
+                        } else if (mSpent > 1001 && mSpent < 5000) {
+                            double aPercent = ((2.0 / 100) * a);
                             a = a - aPercent;
-                            total = String.valueOf(a);
-                        }else if(mSpent > 5001){
+                            total =  format.format(a);
+                            //System.out.println("a1 " + a);
+                            //total = String.valueOf(a);
+                        } else if (mSpent > 5001) {
                             double aPercent = ((3.0 / 100) * a);
                             a = a - aPercent;
-                            total = String.valueOf(a);
+                            total =  format.format(a);
+                            //total = String.valueOf(a);
+
                         }
+
+
+
                     } catch (Exception ex) {
-                            ex.printStackTrace();
+                        ex.printStackTrace();
                     }
                 } else if (discType.equals("Fixed")) {
-                    try{
+                    try {
                         prestate = db.conn.prepareStatement("SELECT `value` FROM `System config` WHERE  `Variables` = 'Fixed Discount' ");
                         ResultSet rs = prestate.executeQuery();
                         rs.next();
                         double percent = rs.getDouble("value");
-                        double aPercent= ((percent/100) * a);
+                        double aPercent = ((percent / 100) * a);
                         a = a - aPercent;
-                        total = String.valueOf(a);
-                    }catch(Exception ex){
-                        
+                        total =  format.format(a);
+                        //total = String.valueOf(a);
+
+                    } catch (Exception ex) {
+                            ex.printStackTrace();
                     }
                 } else {
-                    try{
-                        if(workType.equals("MOT")){
+                    try {
+                        
+                        
+                        
+                        prestate = db.conn.prepareStatement("Select * FROM `standard jobs` WHERE  `TypeOfJob` = " +"'"+workType+"'");
+                        ResultSet jSet = prestate.executeQuery();
+                        jSet.next();
+                       double percent = jSet.getDouble("Discount");
+                        double aPercent = ((percent / 100) * a);
+                        a = a - aPercent;
+                        total =  format.format(a);
+                        //total = String.valueOf(a);
+                        /* (workType.equals("MOT")) {
                             prestate = db.conn.prepareStatement("SELECT `value` FROM `system config` WHERE `Variables` = 'MOT'  ");
                             ResultSet rs = prestate.executeQuery();
                             rs.next();
                             double percent = rs.getDouble("value");
-                            double aPercent = ((percent/100) * a);
-                            
+                            double aPercent = ((percent / 100) * a);
+
                             System.out.println(aPercent);
                             a = a - aPercent;
                             total = String.valueOf(a);
-                        }else if(workType.equals("Annual Service")){
-                             prestate = db.conn.prepareStatement("SELECT `value` FROM `system config` WHERE `Variables` = 'Annual service'  ");
+                        } else if (workType.equals("Annual Service")) {
+                            prestate = db.conn.prepareStatement("SELECT `value` FROM `system config` WHERE `Variables` = 'Annual service'  ");
                             ResultSet rs = prestate.executeQuery();
                             rs.next();
                             double percent = rs.getDouble("value");
-                            double aPercent = ((percent/100) * a);
+                            double aPercent = ((percent / 100) * a);
                             a = a - aPercent;
                             total = String.valueOf(a);
-                        }
-                    }catch(Exception ex){
-                        
+                        } */
+                       
+                    } catch (Exception ex) {
+                            ex.printStackTrace();
                     }
                 }
             }

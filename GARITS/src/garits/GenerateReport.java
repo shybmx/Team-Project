@@ -8,9 +8,6 @@ public class GenerateReport extends javax.swing.JPanel {
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
-        print.setOpaque(false);
-        print.setContentAreaFilled(false); 
-        print.setBorderPainted(false);
         generate.setOpaque(false);
         generate.setContentAreaFilled(false); 
         generate.setBorderPainted(false);
@@ -24,7 +21,6 @@ public class GenerateReport extends javax.swing.JPanel {
 
         panel = new javax.swing.JPanel();
         generate = new javax.swing.JButton();
-        print = new javax.swing.JButton();
         close = new javax.swing.JButton();
         reportType = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -38,8 +34,6 @@ public class GenerateReport extends javax.swing.JPanel {
                 generateActionPerformed(evt);
             }
         });
-
-        print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/printicon.png"))); // NOI18N
 
         close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         close.addActionListener(new java.awt.event.ActionListener() {
@@ -62,9 +56,7 @@ public class GenerateReport extends javax.swing.JPanel {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(generate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(141, 141, 141)
                         .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -76,7 +68,6 @@ public class GenerateReport extends javax.swing.JPanel {
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(close, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(generate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
@@ -99,9 +90,12 @@ public class GenerateReport extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
+         CreateReports c = new CreateReports();
         if(reportType.getSelectedItem().equals("Vehicle Service")){
-            CreateReports c = new CreateReports(db);
+           
             c.serviceReport();
+        }else if(reportType.getSelectedItem().equals("Spare Part")){
+            c.sparePartReport();
         }
     }//GEN-LAST:event_generateActionPerformed
 
@@ -111,7 +105,6 @@ public class GenerateReport extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel panel;
-    private javax.swing.JButton print;
     private javax.swing.JComboBox reportType;
     // End of variables declaration//GEN-END:variables
 }

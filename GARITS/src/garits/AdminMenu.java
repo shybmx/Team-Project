@@ -11,15 +11,15 @@ public class AdminMenu extends javax.swing.JFrame {
         initComponents();
         this.db = db;
         this.setResizable(false);
+        systemConfig.setOpaque(false);
+        systemConfig.setContentAreaFilled(false); 
+        systemConfig.setBorderPainted(false);
         backupDB.setOpaque(false);
         backupDB.setContentAreaFilled(false); 
         backupDB.setBorderPainted(false);
         restoreDB.setOpaque(false);
         restoreDB.setContentAreaFilled(false); 
         restoreDB.setBorderPainted(false);
-        archiveDB.setOpaque(false);
-        archiveDB.setContentAreaFilled(false); 
-        archiveDB.setBorderPainted(false);
         logout.setOpaque(false);
         logout.setContentAreaFilled(false); 
         logout.setBorderPainted(false);
@@ -36,12 +36,9 @@ public class AdminMenu extends javax.swing.JFrame {
 
         backupDB = new javax.swing.JButton();
         restoreDB = new javax.swing.JButton();
-        archiveDB = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         manage = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        alerts = new javax.swing.JTable();
         systemConfig = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -66,15 +63,6 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(restoreDB);
         restoreDB.setBounds(520, 20, 120, 150);
 
-        archiveDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/archiveicon.png"))); // NOI18N
-        archiveDB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                archiveDBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(archiveDB);
-        archiveDB.setBounds(640, 20, 120, 150);
-
         logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/logouticon.png"))); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +70,7 @@ public class AdminMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(850, 20, 120, 150);
+        logout.setBounds(760, 20, 120, 150);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/imageedit_1_5745129201.gif"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -97,30 +85,14 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(manage);
         manage.setBounds(250, 20, 120, 150);
 
-        alerts.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(alerts);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(980, 20, 300, 150);
-
-        systemConfig.setText("System config");
+        systemConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/System.png"))); // NOI18N
         systemConfig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 systemConfigActionPerformed(evt);
             }
         });
         getContentPane().add(systemConfig);
-        systemConfig.setBounds(760, 15, 90, 160);
+        systemConfig.setBounds(640, 20, 120, 150);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -154,13 +126,6 @@ public class AdminMenu extends javax.swing.JFrame {
         this.validate();
     }//GEN-LAST:event_restoreDBActionPerformed
 
-    private void archiveDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveDBActionPerformed
-        ArchiveDB archivedbpanel = new ArchiveDB(db);
-        this.getContentPane().add(archivedbpanel);
-        this.invalidate();
-        this.validate();
-    }//GEN-LAST:event_archiveDBActionPerformed
-
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
        Register register = new Register(this, db);
         this.getContentPane().add(register);
@@ -176,12 +141,9 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_systemConfigActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable alerts;
-    private javax.swing.JButton archiveDB;
     private javax.swing.JButton backupDB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton manage;
     private javax.swing.JButton restoreDB;

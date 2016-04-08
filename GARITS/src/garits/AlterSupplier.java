@@ -11,6 +11,15 @@ public class AlterSupplier extends javax.swing.JPanel {
     public AlterSupplier(DBConnect db) {
         initComponents();
         this.db = db;
+        addNewSupplier.setOpaque(false);
+        addNewSupplier.setContentAreaFilled(false); 
+        addNewSupplier.setBorderPainted(false);
+        delete.setOpaque(false);
+        delete.setContentAreaFilled(false); 
+        delete.setBorderPainted(false);
+        close.setOpaque(false);
+        close.setContentAreaFilled(false); 
+        close.setBorderPainted(false);
         addSupplierPanel.setVisible(false);
         addSupplierPanel.setOpaque(false);
         addSupplier.setOpaque(false);
@@ -43,6 +52,10 @@ public class AlterSupplier extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttons = new javax.swing.JPanel();
+        deleteSupplier = new javax.swing.JButton();
+        addNewSupplier = new javax.swing.JButton();
+        close = new javax.swing.JButton();
         deleteSupplierPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -65,12 +78,62 @@ public class AlterSupplier extends javax.swing.JPanel {
         quantity = new javax.swing.JTextField();
         closeAddSupplier = new javax.swing.JButton();
         addSupplier = new javax.swing.JButton();
-        buttons = new javax.swing.JPanel();
-        deleteSupplier = new javax.swing.JButton();
-        addNewSupplier = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
         setLayout(null);
+
+        deleteSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/delete.png"))); // NOI18N
+        deleteSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteSupplierActionPerformed(evt);
+            }
+        });
+
+        addNewSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/add.png"))); // NOI18N
+        addNewSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewSupplierActionPerformed(evt);
+            }
+        });
+
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
+        buttons.setLayout(buttonsLayout);
+        buttonsLayout.setHorizontalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addNewSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        buttonsLayout.setVerticalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, buttonsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, buttonsLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(deleteSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(addNewSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        add(buttons);
+        buttons.setBounds(520, 400, 370, 160);
 
         supplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,7 +148,7 @@ public class AlterSupplier extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(supplierTable);
 
-        delete.setText("Delete");
+        delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/delete.png"))); // NOI18N
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteActionPerformed(evt);
@@ -106,27 +169,25 @@ public class AlterSupplier extends javax.swing.JPanel {
             .addGroup(deleteSupplierPanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(159, 159, 159)
-                .addGroup(deleteSupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(delete)
-                    .addComponent(closeDeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(closeDeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         deleteSupplierPanelLayout.setVerticalGroup(
             deleteSupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deleteSupplierPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(deleteSupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(deleteSupplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeDeletePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 21, Short.MAX_VALUE))
-            .addGroup(deleteSupplierPanelLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(delete)
-                .addGap(18, 18, 18)
-                .addComponent(closeDeletePanel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(deleteSupplierPanel);
-        deleteSupplierPanel.setBounds(400, 350, 610, 340);
+        deleteSupplierPanel.setBounds(430, 310, 530, 340);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Part No:");
@@ -250,45 +311,7 @@ public class AlterSupplier extends javax.swing.JPanel {
         );
 
         add(addSupplierPanel);
-        addSupplierPanel.setBounds(370, 370, 630, 340);
-
-        deleteSupplier.setText("delete");
-        deleteSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteSupplierActionPerformed(evt);
-            }
-        });
-
-        addNewSupplier.setText("add");
-        addNewSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewSupplierActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
-        buttons.setLayout(buttonsLayout);
-        buttonsLayout.setHorizontalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addNewSupplier)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteSupplier)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        buttonsLayout.setVerticalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addNewSupplier)
-                    .addComponent(deleteSupplier))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-
-        add(buttons);
-        buttons.setBounds(610, 300, 149, 67);
+        addSupplierPanel.setBounds(420, 310, 630, 340);
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel8);
@@ -365,12 +388,17 @@ public class AlterSupplier extends javax.swing.JPanel {
         deleteSupplierPanel.setVisible(false);
     }//GEN-LAST:event_closeDeletePanelActionPerformed
 
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        buttons.setVisible(false);
+    }//GEN-LAST:event_closeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewSupplier;
     private javax.swing.JButton addSupplier;
     private javax.swing.JPanel addSupplierPanel;
     private javax.swing.JPanel buttons;
+    private javax.swing.JButton close;
     private javax.swing.JButton closeAddSupplier;
     private javax.swing.JButton closeDeletePanel;
     private javax.swing.JButton delete;

@@ -17,6 +17,13 @@ public class SearchCustomer extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         updateTable();
         this.setSize(1100, 500);
+        this.setResizable(false);
+        select.setOpaque(false);
+        select.setContentAreaFilled(false); 
+        select.setBorderPainted(false);
+        close.setOpaque(false);
+        close.setContentAreaFilled(false); 
+        close.setBorderPainted(false);
     }
     
     public void updateTable(){
@@ -39,8 +46,8 @@ public class SearchCustomer extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         searchCustomerTable = new javax.swing.JTable();
-        selectButton = new javax.swing.JButton();
-        closeFrame = new javax.swing.JButton();
+        select = new javax.swing.JButton();
+        close = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,23 +69,23 @@ public class SearchCustomer extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(12, 12, 931, 403);
 
-        selectButton.setText("Select");
-        selectButton.addActionListener(new java.awt.event.ActionListener() {
+        select.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Select.png"))); // NOI18N
+        select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectButtonActionPerformed(evt);
+                selectActionPerformed(evt);
             }
         });
-        getContentPane().add(selectButton);
-        selectButton.setBounds(961, 12, 120, 202);
+        getContentPane().add(select);
+        select.setBounds(960, 60, 120, 150);
 
-        closeFrame.setText("Close");
-        closeFrame.addActionListener(new java.awt.event.ActionListener() {
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
+        close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeFrameActionPerformed(evt);
+                closeActionPerformed(evt);
             }
         });
-        getContentPane().add(closeFrame);
-        closeFrame.setBounds(976, 294, 61, 25);
+        getContentPane().add(close);
+        close.setBounds(960, 220, 120, 150);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -87,25 +94,25 @@ public class SearchCustomer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
+    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         try{
             int index = searchCustomerTable.getSelectedRow();
-            cj.setFields(searchCustomerTable.getValueAt(index, 1).toString(),    searchCustomerTable.getValueAt(index, 7).toString(),searchCustomerTable.getValueAt(index, 8).toString(), searchCustomerTable.getValueAt(index, 9).toString(), searchCustomerTable.getValueAt(index, 3).toString() );
+            cj.setFields(searchCustomerTable.getValueAt(index, 1).toString(),    searchCustomerTable.getValueAt(index, 8).toString(),searchCustomerTable.getValueAt(index, 9).toString(), searchCustomerTable.getValueAt(index, 10).toString(), searchCustomerTable.getValueAt(index, 4).toString() );
             this.setVisible(false);
         }catch(Exception ex){
-            
+            ex.printStackTrace();
         }
-    }//GEN-LAST:event_selectButtonActionPerformed
+    }//GEN-LAST:event_selectActionPerformed
 
-    private void closeFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameActionPerformed
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         this.setVisible(false);
-    }//GEN-LAST:event_closeFrameActionPerformed
+    }//GEN-LAST:event_closeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton closeFrame;
+    private javax.swing.JButton close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable searchCustomerTable;
-    private javax.swing.JButton selectButton;
+    private javax.swing.JButton select;
     // End of variables declaration//GEN-END:variables
 }

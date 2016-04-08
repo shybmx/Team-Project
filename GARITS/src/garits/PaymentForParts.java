@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,18 +19,14 @@ public class PaymentForParts extends javax.swing.JFrame {
     PreparedStatement prestate;
     ArrayList<List<String>> rowData;
     double basketTotal;
-    
-                double mPerc;
-            double vPerc;
-            double markPrice;
-           
-            double vatPrice;
-            double grandTotal;
-    
-    
-    
-    
 
+    double mPerc;
+    double vPerc;
+    double markPrice;
+
+    double vatPrice;
+    double grandTotal;
+    String paymentType;
     public PaymentForParts(DBConnect db, ArrayList<List<String>> rowData, double basketTotal) {
         initComponents();
         this.db = db;
@@ -77,30 +74,45 @@ public class PaymentForParts extends javax.swing.JFrame {
         calculations();
         amountFieldCard.setText(String.valueOf(grandTotal));
         amountFieldCheque.setText(String.valueOf(grandTotal));
-       amountFieldCash.setText(String.valueOf(grandTotal));
-       paymentCard.setEditable(false);
-       amountFieldCard.setEditable(false);
-       amountFieldCash.setEditable(false);
-       cashPaymentType.setEditable(false);
-       paymentCheque.setEditable(false);
-       amountFieldCheque.setEditable(false);
+        amountFieldCash.setText(String.valueOf(grandTotal));
+        paymentCard.setEditable(false);
+        amountFieldCard.setEditable(false);
+        amountFieldCash.setEditable(false);
+        cashPaymentType.setEditable(false);
+        paymentCheque.setEditable(false);
+        amountFieldCheque.setEditable(false);
     }
-    
-    public void calculations(){
+
+    public void calculations() {
+
+        DecimalFormat format = new DecimalFormat("0.00");
+        //double mPerc = 0.0;
         
-            DecimalFormat format = new DecimalFormat("0.00");
-            
-               mPerc = 30;
-          vPerc = 15;
-            markPrice  = ((mPerc/100) * basketTotal);
-           
-            vatPrice = ((vPerc/100) * (markPrice + basketTotal));
-            grandTotal = basketTotal +  markPrice + vatPrice;
-            String sGTotal =format.format(grandTotal);
-            grandTotal = Double.parseDouble(sGTotal);
+        try {
+            prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables` = 'mark up for parts' ");
+            ResultSet markR = prestate.executeQuery();
+            prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables`= 'VAT'");
+            ResultSet vatR = prestate.executeQuery();
+            markR.next();
+            vatR.next();
+            mPerc = markR.getDouble("Value");
+            vPerc = vatR.getDouble("Value");
+        } catch (Exception ex) {
+                System.out.println("mark-up error");
+        }
+
+ 
+        //vPerc = 15;
+        markPrice = ((mPerc / 100) * basketTotal);
+
+        vatPrice = ((vPerc / 100) * (markPrice + basketTotal));
+        grandTotal = basketTotal + markPrice + vatPrice;
+        String sGTotal = format.format(grandTotal);
+        grandTotal = Double.parseDouble(sGTotal);
     }
-    public void payment(){
-            File file = new File("/Users/shahzad/Desktop/Invoicee.txt");
+
+    public void payment() {
+        File file = new File("/Users/shahzad/Desktop/PartStoreInvoice.txt");
         List<String> headers = Arrays.asList("ITEM", "PART NO", "UNIT COST", "QTY", "COST(£)");
         try {
             FileWriter fr = new FileWriter(file.getAbsoluteFile());
@@ -108,17 +120,16 @@ public class PaymentForParts extends javax.swing.JFrame {
             out.write("Customer Name: " + customerNameFieldCard.getText());
             out.newLine();
             out.newLine();
-            
+
             Board board = new Board(90);
             String tableString = board.setInitialBlock(new Table(board, 90, headers, rowData).tableToBlocks()).build().getPreview();
             System.out.println(tableString);
             out.write(tableString);
-            
+
             out.newLine();
             out.newLine();
 
-
-           out.write("Payment Type: " + paymentCard.getText());
+            out.write("Payment Type: " + paymentType);
             out.newLine();
             out.write("VAT:" + " £" + vatPrice);
             out.newLine();
@@ -130,6 +141,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         }
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -253,7 +265,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         );
 
         getContentPane().add(cashPaymentPanel);
-        cashPaymentPanel.setBounds(10, 140, 386, 390);
+        cashPaymentPanel.setBounds(100, 150, 386, 390);
 
         cashPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/cashicon.png"))); // NOI18N
         cashPayment.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +324,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         );
 
         getContentPane().add(buttons);
-        buttons.setBounds(40, 180, 530, 173);
+        buttons.setBounds(30, 220, 530, 173);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("Customer Name:");
@@ -447,7 +459,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         );
 
         getContentPane().add(cardPaymentPanel);
-        cardPaymentPanel.setBounds(80, 90, 423, 580);
+        cardPaymentPanel.setBounds(80, 60, 423, 580);
 
         storeChequePayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/storeicon.png"))); // NOI18N
         storeChequePayment.addActionListener(new java.awt.event.ActionListener() {
@@ -564,7 +576,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         );
 
         getContentPane().add(chequePaymentPanel);
-        chequePaymentPanel.setBounds(170, 50, 411, 470);
+        chequePaymentPanel.setBounds(80, 110, 411, 470);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -620,21 +632,25 @@ public class PaymentForParts extends javax.swing.JFrame {
     }//GEN-LAST:event_storeCardPaymentActionPerformed
 
     private void closeCardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeCardPaymentActionPerformed
+      
         this.setVisible(false);
     }//GEN-LAST:event_closeCardPaymentActionPerformed
 
     private void cashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashPaymentActionPerformed
         buttons.setVisible(false);
+        paymentType = "Cash Payment";
         cashPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cashPaymentActionPerformed
 
     private void cardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardPaymentActionPerformed
         buttons.setVisible(false);
+        paymentType = "Card Payment";
         cardPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cardPaymentActionPerformed
 
     private void chequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chequePaymentActionPerformed
         buttons.setVisible(false);
+        paymentType = "Cheque Payment";
         chequePaymentPanel.setVisible(true);
     }//GEN-LAST:event_chequePaymentActionPerformed
 
@@ -681,7 +697,7 @@ public class PaymentForParts extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to database");
         }
-     
+
         payment();
     }//GEN-LAST:event_storeChequePaymentActionPerformed
 
@@ -690,31 +706,31 @@ public class PaymentForParts extends javax.swing.JFrame {
     }//GEN-LAST:event_closeChequePaymentActionPerformed
 
     private void storeCashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeCashPaymentActionPerformed
-      String customerNameString =  customerName.getText();
-      String amountFieldCashString = amountFieldCash.getText();
-      String paymentTypeString = cashPaymentType.getText();
-        try{
-        prestate = db.conn.prepareStatement("INSERT INTO `cashpayment`(CustomerName, Amount) "
-                + "Values(?,?)");
-        prestate.setString(1, customerNameString);
-        prestate.setString(2, amountFieldCashString);
-        prestate.executeUpdate();
-        
-      }catch(Exception ex){
-          ex.printStackTrace();
-      }
-        
-        try{
+        String customerNameString = customerName.getText();
+        String amountFieldCashString = amountFieldCash.getText();
+        String paymentTypeString = cashPaymentType.getText();
+        try {
+            prestate = db.conn.prepareStatement("INSERT INTO `cashpayment`(CustomerName, Amount) "
+                    + "Values(?,?)");
+            prestate.setString(1, customerNameString);
+            prestate.setString(2, amountFieldCashString);
+            prestate.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
             prestate = db.conn.prepareStatement("INSERT INTO `payment` (PaymentType, Amount, CustomerName)"
                     + "Values(?,?,?)");
             prestate.setString(1, paymentTypeString);
             prestate.setString(2, amountFieldCashString);
             prestate.setString(3, customerNameString);
             prestate.executeUpdate();
-        }catch(Exception ex){
-            
+        } catch (Exception ex) {
+
         }
-        
+
         payment();
     }//GEN-LAST:event_storeCashPaymentActionPerformed
 

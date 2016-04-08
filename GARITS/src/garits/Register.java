@@ -17,6 +17,9 @@ public class Register extends javax.swing.JPanel {
         initComponents();
         this.db = db;
         myFrame = frame;
+        delete.setOpaque(false);
+        delete.setContentAreaFilled(false); 
+        delete.setBorderPainted(false);
         addUserOption.setOpaque(false);
         addUserOption.setContentAreaFilled(false); 
         addUserOption.setBorderPainted(false);
@@ -175,7 +178,7 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
-        delete.setText("Remove user");
+        delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/delete.png"))); // NOI18N
         delete.setPreferredSize(new java.awt.Dimension(120, 155));
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,10 +212,10 @@ public class Register extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refreshTable, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addComponent(searchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,7 +471,7 @@ public class Register extends javax.swing.JPanel {
         );
 
         add(editingUser);
-        editingUser.setBounds(50, 530, 930, 370);
+        editingUser.setBounds(170, 410, 930, 370);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("Name:");
@@ -754,7 +757,7 @@ public class Register extends javax.swing.JPanel {
         );
 
         add(fieldsPanel);
-        fieldsPanel.setBounds(190, 380, 1050, 470);
+        fieldsPanel.setBounds(10, 330, 1050, 470);
 
         userNames.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -177,9 +177,11 @@ public class Pin extends javax.swing.JFrame {
         }
     }
     
-    public void startThread(){
-                Thread t = new Thread(new CreateReports(db));
-          t.start();
+    public  void startThread(){
+                Thread t = new Thread(new CreateReports());
+                 t.start();
+                 Thread t1 =new Thread(new ReminderCount());
+                 t1.start();
     }
     
     private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed

@@ -18,6 +18,12 @@ public class OrderList extends javax.swing.JFrame {
         searchTable.setOpaque(false);
         searchTable.setContentAreaFilled(false); 
         searchTable.setBorderPainted(false);
+        resetTable.setOpaque(false);
+        resetTable.setContentAreaFilled(false); 
+        resetTable.setBorderPainted(false);
+        closeFrame.setOpaque(false);
+        closeFrame.setContentAreaFilled(false); 
+        closeFrame.setBorderPainted(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
@@ -74,14 +80,14 @@ public class OrderList extends javax.swing.JFrame {
         getContentPane().add(searchOrderNumber);
         searchOrderNumber.setBounds(223, 78, 180, 30);
 
-        resetTable.setText("reset Table");
+        resetTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/update.png"))); // NOI18N
         resetTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetTableActionPerformed(evt);
             }
         });
         getContentPane().add(resetTable);
-        resetTable.setBounds(540, 10, 100, 140);
+        resetTable.setBounds(530, 10, 110, 140);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("Search Order ID:");
@@ -95,7 +101,7 @@ public class OrderList extends javax.swing.JFrame {
             }
         });
         getContentPane().add(closeFrame);
-        closeFrame.setBounds(650, 10, 110, 140);
+        closeFrame.setBounds(640, 10, 110, 140);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);

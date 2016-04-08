@@ -16,10 +16,16 @@ public class SupplierParts extends javax.swing.JFrame {
         this.db = db;
         this.supplier = supplier;
         this.stock = stock;
-        this.setSize(1250, 470);
+        this.setSize(1280, 470);
         this.setResizable(false);
         updateTable();
          setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+         selectToOrder.setOpaque(false);
+        selectToOrder.setContentAreaFilled(false);
+        selectToOrder.setBorderPainted(false);
+        closeFrame.setOpaque(false);
+        closeFrame.setContentAreaFilled(false);
+        closeFrame.setBorderPainted(false);
     }
     
     public void updateTable(){
@@ -62,27 +68,27 @@ public class SupplierParts extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(12, 12, 1120, 403);
 
-        selectToOrder.setText("Select");
+        selectToOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/Select.png"))); // NOI18N
         selectToOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectToOrderActionPerformed(evt);
             }
         });
         getContentPane().add(selectToOrder);
-        selectToOrder.setBounds(1138, 23, 92, 25);
+        selectToOrder.setBounds(1140, 60, 110, 150);
 
-        closeFrame.setText("Close");
+        closeFrame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/closeicon.png"))); // NOI18N
         closeFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeFrameActionPerformed(evt);
             }
         });
         getContentPane().add(closeFrame);
-        closeFrame.setBounds(1138, 53, 92, 25);
+        closeFrame.setBounds(1140, 210, 110, 150);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1250, 470);
+        jLabel1.setBounds(0, 0, 1280, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

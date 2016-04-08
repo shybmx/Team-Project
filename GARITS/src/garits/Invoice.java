@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,14 +57,14 @@ public class Invoice extends javax.swing.JPanel {
             return f;
         } else {
             count++;
-            f = createFile(name + (count)+"txt");
+            f = createFile(name + (count) + "txt");
         }
         return f;
     }
 
     public void updateTable() {
         try {
-            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' ");
+            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete'  ");
             ResultSet result = prestate.executeQuery();
             invoiceTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
@@ -170,9 +171,8 @@ public class Invoice extends javax.swing.JPanel {
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tablePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 7, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         add(tablePanel);
@@ -225,8 +225,8 @@ public class Invoice extends javax.swing.JPanel {
             String customerName = invoiceTable.getValueAt(index, 1).toString();
             String vehReg = invoiceTable.getValueAt(index, 2).toString();
             String make = invoiceTable.getValueAt(index, 3).toString();
-            String model = invoiceTable.getValueAt(index, 6).toString(); 
-            prestate = db.conn.prepareStatement("SELECT * FROM customers WHERE name = " + "'" + customerName +"'");
+            String model = invoiceTable.getValueAt(index, 6).toString();
+            prestate = db.conn.prepareStatement("SELECT * FROM customers WHERE name = " + "'" + customerName + "'");
             ResultSet rs = prestate.executeQuery();
             rs.next();
             out.write("Name " + customerName);
@@ -236,33 +236,38 @@ public class Invoice extends javax.swing.JPanel {
             out.newLine();
             out.write("Vehicle Registration No :" + vehReg);
             out.newLine();
-            out.write("Make: "+ make);
+            out.write("Make: " + make);
             out.newLine();
-            out.write("Model: "+ model);
-            out.newLine(); out.newLine();
-            prestate = db.conn.prepareStatement("SELECT * FROM `work done` WHERE Job_Number = " + "'" + jobNumber +"'");
+            out.write("Model: " + model);
+            out.newLine();
+            out.newLine();
+            prestate = db.conn.prepareStatement("SELECT * FROM `work done` WHERE Job_Number = " + "'" + jobNumber + "'");
             rs = prestate.executeQuery();
             rs.next();
-            out.write("Description of work:"); out.newLine();
-            while(!rs.isAfterLast()){
+            out.write("Description of work:");
+            out.newLine();
+            while (!rs.isAfterLast()) {
                 out.write(rs.getString("work done"));
                 out.newLine();
                 rs.next();
             }
             out.newLine();
-            prestate = db.conn.prepareStatement("SELECT * FROM `job completed` WHERE Job_Number = '"+jobNumber+"' ");
+            prestate = db.conn.prepareStatement("SELECT * FROM `job completed` WHERE Job_Number = '" + jobNumber + "' ");
             rs = prestate.executeQuery();
             rs.next();
             out.newLine();
-           double unitTotal = 0 ;
-           List<String> headers = Arrays.asList("ITEM", "PART NO" , "UNIT COST", "QTY", "COST(£)"); 
-           ArrayList<List<String>> rowData= new ArrayList<>();
-          while(!rs.isAfterLast()){
-            unitTotal = unitTotal + Double.parseDouble(rs.getString("Total Price"));
-            rowData.add(Arrays.asList(rs.getString("Description"), rs.getString("Part No"),  String.valueOf(rs.getFloat("Unit Cost")), String.valueOf(rs.getInt("Qty")), 
-                String.valueOf(rs.getFloat("Total Price"))));
-          out.newLine();
-          rs.next();      
+            double unitTotal = 0;
+            List<String> headers = Arrays.asList("ITEM", "PART NO", "UNIT COST", "QTY", "COST(£)");
+            ArrayList<List<String>> rowData = new ArrayList<>();
+            DecimalFormat format = new DecimalFormat("0.00");
+            String fUnitTotal;
+            while (!rs.isAfterLast()) {
+                unitTotal = unitTotal + Double.parseDouble(rs.getString("Total Price"));
+                fUnitTotal = format.format(unitTotal);
+                rowData.add(Arrays.asList(rs.getString("Description"), rs.getString("Part No"), String.valueOf(rs.getFloat("Unit Cost")), String.valueOf(rs.getInt("Qty")),
+                        String.valueOf(format.format(rs.getFloat("Total Price")))));
+                out.newLine();
+                rs.next();
             }
             Board board = new Board(90);
             String tableString = board.setInitialBlock(new Table(board, 90, headers, rowData).tableToBlocks()).build().getPreview();
@@ -275,17 +280,34 @@ public class Invoice extends javax.swing.JPanel {
             double rate = Double.parseDouble(rs.getString("Labour Rate"));
             double duration = Double.parseDouble(rs.getString("Duration"));
             double labourTotal = rate * duration;
-            out.write("Labour:               "+rs.getString("Labour rate"));
+
+            String grandTot = format.format(Double.parseDouble(rs.getString("Grand Total")));
+            String vat = format.format(Double.parseDouble(rs.getString("VAT")));
+            String labourTot = format.format((labourTotal));
+            String tot = format.format((labourTotal + unitTotal));
+            String labourRate = format.format(Double.parseDouble(rs.getString("Labour Rate")));
+
+            out.write("Labour:               £ " + labourRate);
             out.newLine();
-            out.write("Duration              "+rs.getString("Duration"));
+            out.write("Duration              " + rs.getString("Duration"));
             out.newLine();
-            out.write("Labour Total:         £"+labourTotal);
+            out.write("Labour Total:         £" + labourTot);
             out.newLine();
-            out.write("Total:                £"+ (labourTotal + unitTotal)  );
+            out.write("Total:                £" + tot);
             out.newLine();
-            out.write("VAT:                  £"+rs.getString("VAT"));
+            out.write("VAT:                  £" + vat);
             out.newLine();
-            out.write("Grand Total:          £"+rs.getString("Grand Total"));
+            out.write("Grand Total:          £" + grandTot);
+            out.newLine();
+            out.newLine();
+            out.write("Thank you for your valued custom. We look forward to receiving your payment in due course.");
+            out.newLine();
+            out.newLine();
+            out.newLine();
+            out.write("Your sincerely,");
+            out.newLine();
+            out.newLine();
+            out.write("G.Lancaster");
             out.close();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -294,51 +316,51 @@ public class Invoice extends javax.swing.JPanel {
     }//GEN-LAST:event_invoiceActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-       try{
-            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '"+customerSearch.getText()+"' ");
+        try {
+            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result = prestate.executeQuery();
-            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '"+customerSearch.getText()+"' ");
+            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result2 = prestate.executeQuery();
             result2.next();
             int it = result2.getInt("Count(*)");
-            if(it > 0){
+            if (it > 0) {
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
-            }else{
-                
+            } else {
+
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
-       
-       try{
-            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '"+customerSearch.getText()+"' ");
+
+        try {
+            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result = prestate.executeQuery();
-            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '"+customerSearch.getText()+"' ");
+            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result2 = prestate.executeQuery();
             result2.next();
             int it = result2.getInt("Count(*)");
-            if(it > 0){
+            if (it > 0) {
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
-            }else{
-                
+            } else {
+
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
-       
-       try{
-            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '"+customerSearch.getText()+"' ");
+
+        try {
+            prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result = prestate.executeQuery();
-            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '"+customerSearch.getText()+"' ");
+            prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '" + customerSearch.getText() + "' ");
             ResultSet result2 = prestate.executeQuery();
             result2.next();
             int it = result2.getInt("Count(*)");
-            if(it > 0){
+            if (it > 0) {
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
-            }else{
-                
+            } else {
+
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
     }//GEN-LAST:event_searchActionPerformed

@@ -60,7 +60,7 @@ public class ForePerson extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(950, 10, 114, 150);
+        logout.setBounds(940, 10, 114, 150);
 
         createJob.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/createJob.png"))); // NOI18N
         createJob.addActionListener(new java.awt.event.ActionListener() {

@@ -4,9 +4,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class DBConnect {
-    
     public Connection conn;
-   
     public DBConnect(){
         try{
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","");

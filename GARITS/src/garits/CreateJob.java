@@ -1,7 +1,5 @@
 package garits;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -16,16 +14,16 @@ public class CreateJob extends javax.swing.JPanel {
         this.db = db;
         this.repaint();
         add.setOpaque(false);
-        add.setContentAreaFilled(false); 
+        add.setContentAreaFilled(false);
         add.setBorderPainted(false);
         close.setOpaque(false);
-        close.setContentAreaFilled(false); 
+        close.setContentAreaFilled(false);
         close.setBorderPainted(false);
         create.setOpaque(false);
-        create.setContentAreaFilled(false); 
+        create.setContentAreaFilled(false);
         create.setBorderPainted(false);
         search.setOpaque(false);
-        search.setContentAreaFilled(false); 
+        search.setContentAreaFilled(false);
         search.setBorderPainted(false);
         addButtonPanel.setOpaque(false);
         buttons2.setOpaque(false);
@@ -34,16 +32,31 @@ public class CreateJob extends javax.swing.JPanel {
         searchPanel.setOpaque(false);
         workDonePanel.setOpaque(false);
         this.setSize(1300, 900);
+        populateCombo();
     }
 
-   public void setFields(String name, String regNo, String make, String model, String phone){
+    public void setFields(String name, String regNo, String make, String model, String phone) {
         customerNameField.setText(name);
         vehicleRegNoField.setText(regNo);
         makeField.setText(make);
         modelField.setText(model);
         telephoneField.setText(phone);
     }
-   
+
+    public void populateCombo() {
+        try {
+            prestate = db.conn.prepareStatement("Select * FROM `standard jobs` ");
+            ResultSet rs = prestate.executeQuery();
+            rs.next();
+            while (!rs.isAfterLast()) {
+                typeOfJob.addItem(rs.getString("TypeOfJob"));
+                rs.next();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -224,8 +237,6 @@ public class CreateJob extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel11.setText("Type of Job:");
 
-        typeOfJob.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Annual service", "MOT", "Repairs" }));
-
         javax.swing.GroupLayout formPanel2Layout = new javax.swing.GroupLayout(formPanel2);
         formPanel2.setLayout(formPanel2Layout);
         formPanel2Layout.setHorizontalGroup(
@@ -306,41 +317,42 @@ public class CreateJob extends javax.swing.JPanel {
         String telephone = telephoneField.getText();
         String typeOfJobString = typeOfJob.getSelectedItem().toString();
         int jobNo = 0;
-            try{
-                prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
-                        + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber, TypeOfJob)"
-                        + "Values(?,?,?,?,?,?,?,?)");
-                prestate.setString(1, customerName);
-                prestate.setString(2, vechicleRegNo);
-                prestate.setString(3, make);
-                prestate.setString(4, estimatedTime);
-                prestate.setString(5, date);
-                prestate.setString(6, model);
-                prestate.setString(7, telephone);
-                prestate.setString(8, typeOfJobString);
-                int i = prestate.executeUpdate();
-                prestate = db.conn.prepareStatement("Select jobsheets.Job_Number From jobsheets Where jobsheets.VehicleRegNumber  = "
-               + "'"+ vechicleRegNo + "'" );
-                ResultSet result = prestate.executeQuery();
-                result.next();
-                jobNo = result.getInt("Job_Number");
-                for(String t: vec){
-                    prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
-                        + "Values( '"+jobNo+"', ?  ) ");
-                    prestate.setString(1, t);
-                    prestate.executeUpdate();
-                }
-                prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Due' Where `name` = '"+customerName+"' ");
-                prestate.execute();
-                formPanel1.setVisible(false);
-                workDonePanel.setVisible(false);
-                addButtonPanel.setVisible(false);
-                buttons2.setVisible(false);
-                formPanel2.setVisible(false);
-                searchPanel.setVisible(false);
-            }catch(Exception ex){
-                 JOptionPane.showMessageDialog(null, ex);
+        try {
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
+                    + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber, TypeOfJob)"
+                    + "Values(?,?,?,?,?,?,?,?)");
+            prestate.setString(1, customerName);
+            prestate.setString(2, vechicleRegNo);
+            prestate.setString(3, make);
+            prestate.setString(4, estimatedTime);
+            prestate.setString(5, date);
+            prestate.setString(6, model);
+            prestate.setString(7, telephone);
+            prestate.setString(8, typeOfJobString);
+            int i = prestate.executeUpdate();
+            prestate = db.conn.prepareStatement("Select jobsheets.Job_Number From jobsheets Where jobsheets.VehicleRegNumber  = "
+                    + "'" + vechicleRegNo + "'");
+            ResultSet result = prestate.executeQuery();
+            result.next();
+            jobNo = result.getInt("Job_Number");
+            for (String t : vec) {
+                prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
+                        + "Values( '" + jobNo + "', ?  ) ");
+                prestate.setString(1, t);
+                prestate.executeUpdate();
             }
+            prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Due' Where `name` = '" + customerName + "' ");
+            prestate.execute();
+            formPanel1.setVisible(false);
+            workDonePanel.setVisible(false);
+            addButtonPanel.setVisible(false);
+            buttons2.setVisible(false);
+            formPanel2.setVisible(false);
+            searchPanel.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Job successfully created");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_createActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
@@ -348,8 +360,8 @@ public class CreateJob extends javax.swing.JPanel {
     }//GEN-LAST:event_closeActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-       SearchCustomer searchCustomerTableFrame = new SearchCustomer(db,this);
-       searchCustomerTableFrame.setVisible(true);
+        SearchCustomer searchCustomerTableFrame = new SearchCustomer(db, this);
+        searchCustomerTableFrame.setVisible(true);
     }//GEN-LAST:event_searchActionPerformed
 
     private void customerNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameFieldActionPerformed

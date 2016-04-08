@@ -1,7 +1,5 @@
 package garits;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JFrame;
@@ -12,9 +10,16 @@ public class CustomerInfo extends javax.swing.JPanel {
     JFrame myFrame;
     DBConnect db;
     PreparedStatement prestate;
+
     public CustomerInfo(DBConnect db) {
         initComponents();
         this.db = db;
+        deleteVeh.setOpaque(false);
+        deleteVeh.setContentAreaFilled(false); 
+        deleteVeh.setBorderPainted(false);
+        deleteCustomerButton.setOpaque(false);
+        deleteCustomerButton.setContentAreaFilled(false); 
+        deleteCustomerButton.setBorderPainted(false);
         searchCustomer.setOpaque(false);
         searchCustomer.setContentAreaFilled(false); 
         searchCustomer.setBorderPainted(false);
@@ -73,29 +78,23 @@ public class CustomerInfo extends javax.swing.JPanel {
                 String sql = "DELETE FROM `customers` WHERE `CustomerID` = '" + id + " ' ";     
                 prestate = db.conn.prepareStatement(sql);
                 prestate.execute();
-                try{
-                    String sql2 = " DELETE FROM `vehicle` WHERE `CustomerID` = '" + id + " '    ";
+                String sql2 = " DELETE FROM `vehicle` WHERE `CustomerID` = '" + id + " '    ";
                     prestate = db.conn.prepareStatement(sql2);
                     prestate.execute();
                     return true;
-                }catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
-                }
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(closeButton, ex);
                 return false;
             }
-        return false;
     }
     
     public void updateTable(){
         try{
-            prestate = db.conn.prepareStatement("SELECT customers.CustomerID, "
-                    + "customers.name, customers.address, customers.PostCode, "
-                    + "customers.TelephoneNumber, customers.EMail, customers.CustomerType, "
-                    + "customers.Discount, vehicle.regNum, vehicle.Make, vehicle.Model,"
-                    + " vehicle.EngSerial, vehicle.ChassieNumber, vehicle.Colour FROM "
-                    + "customers INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID");
+            prestate = db.conn.prepareStatement("SELECT customers.CustomerID, customers.name, "
+                    + "customers.address, customers.PostCode, customers.TelephoneNumber, customers.EMail, "
+                    + "customers.CustomerType, vehicle.regNum, vehicle.Make, vehicle.Model,vehicle.EngSerial, "
+                    + "vehicle.ChassieNumber, vehicle.Colour, vehicle.`MOT date` FROM customers "
+                    + "INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID");
             ResultSet result = prestate.executeQuery();
             customerTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
@@ -112,11 +111,12 @@ public class CustomerInfo extends javax.swing.JPanel {
         createButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
-        deleteCustomerButton = new javax.swing.JButton();
         addMulitpleVech = new javax.swing.JButton();
         searchCustomerField = new javax.swing.JTextField();
         searchCustomer = new javax.swing.JButton();
         updateTableButton = new javax.swing.JButton();
+        deleteCustomerButton = new javax.swing.JButton();
+        deleteVeh = new javax.swing.JButton();
         addPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -149,7 +149,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         customerTypeField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        discountTextField = new javax.swing.JTextField();
+        addMOTDate = new javax.swing.JTextField();
         editUserPanel = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -182,7 +182,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel31 = new javax.swing.JLabel();
         editCustomerType = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        editDiscount = new javax.swing.JTextField();
+        editMOTDate = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         customerID = new javax.swing.JTextField();
         addingExtraVeh = new javax.swing.JPanel();
@@ -204,6 +204,8 @@ public class CustomerInfo extends javax.swing.JPanel {
         mulitpleCustomerID = new javax.swing.JTextField();
         mulitpleName = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        mulitpleMOTDate = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
@@ -242,15 +244,7 @@ public class CustomerInfo extends javax.swing.JPanel {
             }
         });
 
-        deleteCustomerButton.setText("Delete Customer");
-        deleteCustomerButton.setPreferredSize(new java.awt.Dimension(120, 155));
-        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteCustomerButtonActionPerformed(evt);
-            }
-        });
-
-        addMulitpleVech.setText("multple Vech");
+        addMulitpleVech.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/multiple.png"))); // NOI18N
         addMulitpleVech.setPreferredSize(new java.awt.Dimension(120, 155));
         addMulitpleVech.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +266,21 @@ public class CustomerInfo extends javax.swing.JPanel {
             }
         });
 
+        deleteCustomerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/deleteCustomer.png"))); // NOI18N
+        deleteCustomerButton.setPreferredSize(new java.awt.Dimension(120, 155));
+        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCustomerButtonActionPerformed(evt);
+            }
+        });
+
+        deleteVeh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/DeleteVehicle.png"))); // NOI18N
+        deleteVeh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteVehActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
@@ -285,15 +294,17 @@ public class CustomerInfo extends javax.swing.JPanel {
                 .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addMulitpleVech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteVeh, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(updateTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchCustomerField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(searchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,30 +318,29 @@ public class CustomerInfo extends javax.swing.JPanel {
                         .addGap(11, 11, 11)
                         .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(buttonsLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(buttonsLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(deleteCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(buttonsLayout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(searchCustomerField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(searchCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(buttonsLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addMulitpleVech, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(updateTableButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                            .addComponent(deleteCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addMulitpleVech, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(buttonsLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(searchCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(deleteVeh, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         add(buttons);
-        buttons.setBounds(10, 250, 1280, 590);
+        buttons.setBounds(0, 270, 1280, 590);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel8.setText("Model:");
@@ -394,7 +404,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel13.setText("Make:");
 
-        discountBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fixed", "Felixiable", "Vairable", " " }));
+        discountBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fixed", "Flexible", "Variable", " " }));
         discountBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 discountBoxActionPerformed(evt);
@@ -421,167 +431,13 @@ public class CustomerInfo extends javax.swing.JPanel {
         });
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel16.setText("Discount:");
+        jLabel16.setText("MOT Date:");
 
-        discountTextField.addActionListener(new java.awt.event.ActionListener() {
+        addMOTDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                discountTextFieldActionPerformed(evt);
+                addMOTDateActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout addPanelLayout = new javax.swing.GroupLayout(addPanel);
-        addPanel.setLayout(addPanelLayout);
-        addPanelLayout.setHorizontalGroup(
-            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPanelLayout.createSequentialGroup()
-                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(54, 54, 54)
-                                .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(insertName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(36, 36, 36)
-                            .addComponent(insertAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(insertPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(addPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(31, 31, 31)
-                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(discountBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(insertMake, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel16))
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(insertReg))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(discountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(insertColour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(44, 44, 44)
-                        .addComponent(insertChass, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(110, 110, 110)
-                        .addComponent(insertEng, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(insertModel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
-                .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(closeAddingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
-        );
-        addPanelLayout.setVerticalGroup(
-            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(closeAddingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(addPanelLayout.createSequentialGroup()
-                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel7)
-                                            .addComponent(insertReg, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel13)
-                                            .addComponent(insertMake, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel8)
-                                            .addComponent(insertModel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel9)
-                                            .addComponent(insertEng, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(insertChass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(insertName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(insertAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(insertPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel14)
-                                    .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel15)
-                            .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(insertColour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel16)
-                                    .addComponent(discountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel12)
-                                    .addComponent(discountBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-
-        add(addPanel);
-        addPanel.setBounds(100, 230, 1086, 410);
 
         jLabel18.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel18.setText("Model:");
@@ -645,7 +501,7 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel29.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel29.setText("Make:");
 
-        editDiscountBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fixed", "Felixiable", "Vairable", " " }));
+        editDiscountBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fixed", "Flexible", "Variable", " " }));
         editDiscountBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editDiscountBoxActionPerformed(evt);
@@ -672,11 +528,11 @@ public class CustomerInfo extends javax.swing.JPanel {
         });
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel32.setText("Discount:");
+        jLabel32.setText("MOT Date:");
 
-        editDiscount.addActionListener(new java.awt.event.ActionListener() {
+        editMOTDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editDiscountActionPerformed(evt);
+                editMOTDateActionPerformed(evt);
             }
         });
 
@@ -707,7 +563,7 @@ public class CustomerInfo extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(editName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editUserPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 6, Short.MAX_VALUE)
                                 .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -769,7 +625,7 @@ public class CustomerInfo extends javax.swing.JPanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(editDiscountBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(editDiscount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(editMOTDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(editUserPanelLayout.createSequentialGroup()
                             .addComponent(jLabel21)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -778,7 +634,7 @@ public class CustomerInfo extends javax.swing.JPanel {
                             .addComponent(jLabel20)
                             .addGap(44, 44, 44)
                             .addComponent(editChass, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         editUserPanelLayout.setVerticalGroup(
             editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -830,7 +686,7 @@ public class CustomerInfo extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel32)
-                                    .addComponent(editDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(editMOTDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel22)
@@ -851,11 +707,164 @@ public class CustomerInfo extends javax.swing.JPanel {
                                 .addGroup(editUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel30)
                                     .addComponent(customerTypeBoxEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        add(editUserPanel);
-        editUserPanel.setBounds(150, 230, 1086, 410);
+        javax.swing.GroupLayout addPanelLayout = new javax.swing.GroupLayout(addPanel);
+        addPanel.setLayout(addPanelLayout);
+        addPanelLayout.setHorizontalGroup(
+            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPanelLayout.createSequentialGroup()
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(54, 54, 54)
+                                .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(insertName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(36, 36, 36)
+                            .addComponent(insertAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(insertPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(addPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(31, 31, 31)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(discountBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(insertMake, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(141, 141, 141)
+                        .addComponent(insertReg))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(insertColour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(44, 44, 44)
+                        .addComponent(insertChass, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(110, 110, 110)
+                        .addComponent(insertEng, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(insertModel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addMOTDate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 33, 33)
+                .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(closeAddingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 40, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(editUserPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        addPanelLayout.setVerticalGroup(
+            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPanelLayout.createSequentialGroup()
+                .addComponent(editUserPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(closeAddingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(addPanelLayout.createSequentialGroup()
+                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel7)
+                                            .addComponent(insertReg, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel13)
+                                            .addComponent(insertMake, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel8)
+                                            .addComponent(insertModel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel9)
+                                            .addComponent(insertEng, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(insertChass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(insertName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(insertAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(insertPostCode, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(insertPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(insertEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(insertColour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(addMOTDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(customerTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(discountBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(addPanel);
+        addPanel.setBounds(180, 290, 1110, 360);
 
         jLabel36.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel36.setText("Reg.No:");
@@ -895,6 +904,9 @@ public class CustomerInfo extends javax.swing.JPanel {
         jLabel43.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel43.setText("Name:");
 
+        jLabel44.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel44.setText("MOT Date:");
+
         javax.swing.GroupLayout addingExtraVehLayout = new javax.swing.GroupLayout(addingExtraVeh);
         addingExtraVeh.setLayout(addingExtraVehLayout);
         addingExtraVehLayout.setHorizontalGroup(
@@ -908,10 +920,6 @@ public class CustomerInfo extends javax.swing.JPanel {
                                 .addComponent(jLabel40)
                                 .addGap(55, 55, 55)
                                 .addComponent(mulitpleChassNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(addingExtraVehLayout.createSequentialGroup()
-                                .addComponent(jLabel41)
-                                .addGap(162, 162, 162)
-                                .addComponent(mulitpleColour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(addingExtraVehLayout.createSequentialGroup()
                                 .addComponent(jLabel39)
                                 .addGap(121, 121, 121)
@@ -927,8 +935,16 @@ public class CustomerInfo extends javax.swing.JPanel {
                             .addGroup(addingExtraVehLayout.createSequentialGroup()
                                 .addComponent(jLabel36)
                                 .addGap(152, 152, 152)
-                                .addComponent(mulitpleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(119, 119, 119)
+                                .addComponent(mulitpleRegNo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addingExtraVehLayout.createSequentialGroup()
+                                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel41)
+                                    .addComponent(jLabel44))
+                                .addGap(124, 124, 124)
+                                .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mulitpleMOTDate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mulitpleColour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(157, 157, 157)
                         .addComponent(mulitpleAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(mulitpleClose, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -939,12 +955,12 @@ public class CustomerInfo extends javax.swing.JPanel {
                         .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mulitpleCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(mulitpleName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
         );
         addingExtraVehLayout.setVerticalGroup(
             addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addingExtraVehLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addContainerGap()
                 .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
                     .addComponent(mulitpleCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -982,12 +998,16 @@ public class CustomerInfo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mulitpleColour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel41))))
-                .addContainerGap(139, Short.MAX_VALUE))
+                            .addComponent(jLabel41))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addingExtraVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mulitpleMOTDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel44))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         add(addingExtraVeh);
-        addingExtraVeh.setBounds(140, 230, 880, 520);
+        addingExtraVeh.setBounds(190, 290, 880, 400);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/garits/images/background.jpg"))); // NOI18N
         add(jLabel1);
@@ -1013,13 +1033,13 @@ public class CustomerInfo extends javax.swing.JPanel {
             editPhone.setText(customerTable.getValueAt(index, 4).toString());
             editEMail.setText(customerTable.getValueAt(index, 5).toString());
             editCustomerType.setText(customerTable.getValueAt(index, 6).toString());
-            editDiscount.setText(customerTable.getValueAt(index, 7).toString());
-            editReg.setText(customerTable.getValueAt(index, 8).toString());
-            editMake.setText(customerTable.getValueAt(index, 9).toString());
-            editModel.setText(customerTable.getValueAt(index, 10).toString());
-            editEng.setText(customerTable.getValueAt(index, 11).toString());
-            editChass.setText(customerTable.getValueAt(index, 12).toString());
-            editColour.setText(customerTable.getValueAt(index, 13).toString());
+            editMOTDate.setText(customerTable.getValueAt(index, 13).toString());
+            editReg.setText(customerTable.getValueAt(index, 7).toString());
+            editMake.setText(customerTable.getValueAt(index, 8).toString());
+            editModel.setText(customerTable.getValueAt(index, 9).toString());
+            editEng.setText(customerTable.getValueAt(index, 10).toString());
+            editChass.setText(customerTable.getValueAt(index, 11).toString());
+            editColour.setText(customerTable.getValueAt(index, 12).toString());
             buttons.setVisible(false);
             editUserPanel.setVisible(true);
         }catch(Exception ex){
@@ -1067,12 +1087,13 @@ public class CustomerInfo extends javax.swing.JPanel {
         String chass = insertChass.getText();
         String colour = insertColour.getText();
         String discountTypeString = discountBox.getSelectedItem().toString();
-        String discount = discountTextField.getText();
+        String motDateString = addMOTDate.getText().toString();
+        
         int id = 0;
         try{
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
-                    + "TelephoneNumber, EMail, CustomerType, DiscountType, Discount) "
-                    + "Values (?,?,?,?,?,?,?,?)");
+                    + "TelephoneNumber, EMail, CustomerType, DiscountType) "
+                    + "Values (?,?,?,?,?,?,?)");
             prestate.setString(1, name);
             prestate.setString(2, address);
             prestate.setString(3, postcode);
@@ -1080,13 +1101,25 @@ public class CustomerInfo extends javax.swing.JPanel {
             prestate.setString(5, email);
             prestate.setString(6, customerType);
             prestate.setString(7, discountTypeString);
-            prestate.setString(8, discount);
             int i = prestate.executeUpdate();
             prestate = db.conn.prepareStatement("Select customers.customerID From Customers Where customers.name = "
                + "'"+name+"'");
             ResultSet result = prestate.executeQuery();
             result.next();
             id = result.getInt("CustomerID");
+            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`vehicle`(CustomerID ,CustomerName, "
+                    + "regNum,"
+                    + "Make, Model, EngSerial, ChassieNumber, Colour, `MOT Date`) "
+                    + "Values( " + id + ", ?,?,?,?,?,?,?,? )" );
+            prestate.setString(1, name);
+            prestate.setString(2, regno);
+            prestate.setString(3, make);
+            prestate.setString(4, model);
+            prestate.setString(5, eng);
+            prestate.setString(6, chass);
+            prestate.setString(7, colour);
+            prestate.setString(8, motDateString);
+            prestate.executeUpdate();
             if (i>0){
                 JOptionPane.showMessageDialog(null, "Customer has been added");
                 this.setVisible(false);
@@ -1095,23 +1128,6 @@ public class CustomerInfo extends javax.swing.JPanel {
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
-        }
-        try{
-            prestate = db.conn.prepareStatement("INSERT INTO `garits`.`vehicle`(CustomerID ,CustomerName, "
-                    + "regNum,"
-                    + "Make, Model, EngSerial, ChassieNumber, Colour) "
-                    + "Values( " + id + ", ?,?,?,?,?,?,? )" );
-            prestate.setString(1, name);
-            prestate.setString(2, regno);
-            prestate.setString(3, make);
-            prestate.setString(4, model);
-            prestate.setString(5, eng);
-            prestate.setString(6, chass);
-            prestate.setString(7, colour);
-            prestate.executeUpdate();
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, "Customer vehicle cannot be added");
-            ex.printStackTrace();
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 
@@ -1123,10 +1139,6 @@ public class CustomerInfo extends javax.swing.JPanel {
         customerTypeField.setText(customerTypeBox.getSelectedItem().toString());
     }//GEN-LAST:event_customerTypeFieldActionPerformed
 
-    private void discountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountTextFieldActionPerformed
-        discountTextField.setText(discountBox.getSelectedItem().toString());
-    }//GEN-LAST:event_discountTextFieldActionPerformed
-
     private void editAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAddressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_editAddressActionPerformed
@@ -1135,37 +1147,26 @@ public class CustomerInfo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_editColourActionPerformed
 
-    
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
-         try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/garits","root","")){   
-            try {
+             try {
                 prestate = db.conn.prepareStatement("UPDATE `customers` SET `name` = '"+ editName.getText()+"',"
                     + "`address` = '"+ editAddress.getText()+"', `PostCode` = '"+ editPostCode.getText()+"',"
                     + "`TelephoneNumber` = '"+ editPhone.getText()+"', `EMail` = '"+ editEMail.getText()+"',"
-                    + "`CustomerType` = '"+editCustomerType.getText() +"', `Discount` = '"+editDiscount.getText()+"',"
+                    + "`CustomerType` = '"+editCustomerType.getText() +"', "
                         + " `DiscountType` = '"+editDiscountBox.getSelectedItem().toString()+"' WHERE "
                         + "`CustomerID` = '"+customerID.getText()+"' ");
                 prestate.execute();
+                prestate = db.conn.prepareStatement("UPDATE `vehicle` SET `RegNum` = '"+editReg.getText()+"',"
+                        + "`Make` = '"+editMake.getText()+"', `Model` = '"+editModel.getText()+"', "
+                        + "`EngSerial` = '"+editEng.getText()+"', `ChassieNumber` = '"+editChass.getText()+"', "
+                        + "`Colour` = '"+editColour.getText()+"' , `MOT Date` = '"+editMOTDate.getText()+"'    WHERE `CustomerID` = '"+customerID.getText()+"' AND `RegNum` = '"+editReg.getText()+"' " );
+                prestate.execute();
+                editUserPanel.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText()+ " has been updated");
             }catch(Exception ex) {
                 JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText() + " Cannot be updated");
                 ex.printStackTrace();
-            }
-            
-            try{
-                prestate = db.conn.prepareStatement("UPDATE `vehicle` SET `RegNum` = '"+editReg.getText()+"',"
-                        + "`Make` = '"+editMake.getText()+"', `Model` = '"+editModel.getText()+"', "
-                        + "`EngSerial` = '"+editEng.getText()+"', `ChassieNumber` = '"+editChass.getText()+"', "
-                        + "`Colour` = '"+editColour.getText()+"' WHERE `CustomerID` = '"+customerID.getText()+"' AND `RegNum` = '"+editReg.getText()+"' " );
-                prestate.execute();
-                editUserPanel.setVisible(false);
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null, "Cannot update vehicle");
-                
-            }
-         }catch(Exception ex){
-             JOptionPane.showMessageDialog(null, ex);
-         }
+            }         
     }//GEN-LAST:event_editUserButtonActionPerformed
 
     private void closeButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonEditActionPerformed
@@ -1176,9 +1177,9 @@ public class CustomerInfo extends javax.swing.JPanel {
        
     }//GEN-LAST:event_editCustomerTypeActionPerformed
 
-    private void editDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDiscountActionPerformed
-        discountTextField.setText(discountBox.getSelectedItem().toString());
-    }//GEN-LAST:event_editDiscountActionPerformed
+    private void editMOTDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMOTDateActionPerformed
+        
+    }//GEN-LAST:event_editMOTDateActionPerformed
 
     private void customerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIDActionPerformed
 
@@ -1210,9 +1211,10 @@ public class CustomerInfo extends javax.swing.JPanel {
             String engString = mulitpleEngSerial.getText();
             String chassString = mulitpleChassNumber.getText();
             String colourString = mulitpleColour.getText();
+            String mulitpleMOTDateString = mulitpleMOTDate.getText();
             prestate = db.conn.prepareStatement("INSERT INTO `vehicle` (CustomerID, CustomerName,"
-                    + "regNum, Make, Model, EngSerial, ChassieNumber, Colour) "
-                    + "Value(?,?,?,?,?,?,?,?) ");
+                    + "regNum, Make, Model, EngSerial, ChassieNumber, Colour, `MOT Date` ) "
+                    + "Value(?,?,?,?,?,?,?,?,?) ");
             prestate.setString(1, customerIDString);
             prestate.setString(2, nameString);
             prestate.setString(3, regNoString);
@@ -1221,6 +1223,7 @@ public class CustomerInfo extends javax.swing.JPanel {
             prestate.setString(6, engString);
             prestate.setString(7, chassString);
             prestate.setString(8, colourString);
+            prestate.setString(9, mulitpleMOTDateString);
             int i = prestate.executeUpdate();
             if(i > 0){
                JOptionPane.showMessageDialog(null, "Customer: " + nameString + " has added another vehicle");
@@ -1277,8 +1280,27 @@ public class CustomerInfo extends javax.swing.JPanel {
         editCustomerType.setText(customerTypeBox.getSelectedItem().toString());
     }//GEN-LAST:event_customerTypeBoxEditActionPerformed
 
+    private void addMOTDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMOTDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addMOTDateActionPerformed
+
+    private void deleteVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehActionPerformed
+       int index = customerTable.getSelectedRow();
+       //7
+       String veh = customerTable.getValueAt(index, 7).toString();
+       try{
+           prestate = db.conn.prepareStatement("DELETE FROM `vehicle` WHERE `regNum` = '"+veh+"' ");
+           prestate.execute();
+           updateTable();
+           JOptionPane.showMessageDialog(null, "Vehicle: " + veh  + " has been deleted");
+       }catch(Exception ex){
+           
+       }
+    }//GEN-LAST:event_deleteVehActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCustomer;
+    private javax.swing.JTextField addMOTDate;
     private javax.swing.JButton addMulitpleVech;
     private javax.swing.JPanel addPanel;
     private javax.swing.JPanel addingExtraVeh;
@@ -1293,17 +1315,17 @@ public class CustomerInfo extends javax.swing.JPanel {
     private javax.swing.JComboBox customerTypeBoxEdit;
     private javax.swing.JTextField customerTypeField;
     private javax.swing.JButton deleteCustomerButton;
+    private javax.swing.JButton deleteVeh;
     private javax.swing.JComboBox discountBox;
-    private javax.swing.JTextField discountTextField;
     private javax.swing.JTextField editAddress;
     private javax.swing.JButton editButton;
     private javax.swing.JTextField editChass;
     private javax.swing.JTextField editColour;
     private javax.swing.JTextField editCustomerType;
-    private javax.swing.JTextField editDiscount;
     private javax.swing.JComboBox editDiscountBox;
     private javax.swing.JTextField editEMail;
     private javax.swing.JTextField editEng;
+    private javax.swing.JTextField editMOTDate;
     private javax.swing.JTextField editMake;
     private javax.swing.JTextField editModel;
     private javax.swing.JTextField editName;
@@ -1358,6 +1380,7 @@ public class CustomerInfo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1370,6 +1393,7 @@ public class CustomerInfo extends javax.swing.JPanel {
     private javax.swing.JTextField mulitpleColour;
     private javax.swing.JTextField mulitpleCustomerID;
     private javax.swing.JTextField mulitpleEngSerial;
+    private javax.swing.JTextField mulitpleMOTDate;
     private javax.swing.JTextField mulitpleMake;
     private javax.swing.JTextField mulitpleModel;
     private javax.swing.JTextField mulitpleName;

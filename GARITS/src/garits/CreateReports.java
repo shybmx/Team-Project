@@ -14,36 +14,40 @@ import wagu.Board;
 import wagu.Table;
 
 public class CreateReports implements Runnable {
-
     boolean checked = false;
-    DBConnect db;
     PreparedStatement prestate;
     PreparedStatement prestate2;
-
-    public CreateReports(DBConnect db) {
-        this.db = db;
+    DBConnect db;
+    BackupDB bd;
+    public CreateReports() {
+        db = new DBConnect();
+        bd = new BackupDB(db);
+        
     }
 
     public int getDate() {
         Calendar cal = Calendar.getInstance();
         int i = cal.get(Calendar.DATE);
-        //System.out.println(i);
         return i;
     }
 
     public int getMonth() {
         Calendar cal = Calendar.getInstance();
         int i = cal.get(Calendar.MONTH);
-        //System.out.println(i);
         return i;
     }
+    
+    public void backUp(){
+        bd.backup();
+    }
+    
+    
 
     public void serviceReport() {
         try {
             File file = new File("/Users/shahzad/Desktop/ServiceReport.txt");
             FileWriter fr = new FileWriter(file.getAbsoluteFile());
             BufferedWriter out = new BufferedWriter(fr);
-            
             List<String> headers = Arrays.asList("MOT", "Annual Service", "Repairs", "MOT (Account)", "MOT (Non-Account)", "Annual Service (Account)", "Annual Service (Non-Account)", "Repairs (Account)", "Repairs(Non-Account)");
             ArrayList<List<String>> rowData = new ArrayList<>();
             prestate = db.conn.prepareStatement("SELECT count(*) FROM `jobsheets` where `TypeOfJob` = 'MOT' ");
@@ -73,34 +77,53 @@ public class CreateReports implements Runnable {
             prestate = db.conn.prepareStatement("SELECT COUNT(*) FROM `customers` INNER JOIN `jobsheets` on `customers`.`name` = `jobsheets`.`customer` WHERE `TypeOfJob`= 'repair' AND `customers`.`CustomerType` = 'non-account'");
             ResultSet rs8 = prestate.executeQuery();
             rs8.next();
-            
-            rowData.add(Arrays.asList(rs.getString("count(*)"),rs1.getString("count(*)"), rs2.getString("count(*)" ), rs3.getString("count(*)"), rs4.getString("count(*)"), rs5.getString("count(*)"), rs6.getString("count(*)"), rs7.getString("count(*)"), rs8.getString("count(*)")));
+            out.write("Quick Fix FItters");
+            out.newLine();
+            out.write("19 High St.");
+            out.newLine();
+            out.write("Ashford");
+            out.newLine();
+            out.write("Kent CT16 8YY");
+            out.newLine();
+            out.newLine();
+            out.write("Service Report");
+            out.newLine();
+            out.newLine();
+            rowData.add(Arrays.asList(rs.getString("count(*)"), rs1.getString("count(*)"), rs2.getString("count(*)"), rs3.getString("count(*)"), rs4.getString("count(*)"), rs5.getString("count(*)"), rs6.getString("count(*)"), rs7.getString("count(*)"), rs8.getString("count(*)")));
             Board board = new Board(280);
             String tableString = board.setInitialBlock(new Table(board, 280, headers, rowData).tableToBlocks()).build().getPreview();
             out.write(tableString);
             out.close();
-            
-            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public void sparePartReport() {
+    public void sparePartReport(){
         try {
-            File file = new File("/Users/shahzad/Desktop/SparePart.txt");
+            File file = new File("/Users/shahzad/Desktop/SparePartReport.txt");
             FileWriter fr = new FileWriter(file.getAbsoluteFile());
             BufferedWriter out = new BufferedWriter(fr);
-
             List<String> headers = Arrays.asList("Part Name", "Code", "Manufacturer", "Vehicle Type", "Year(s)", "Price", "Initial Stock Level", "Intial Cost, £", "Used", "Delivery", "New Stock Level", "Stock Cost, £", "Low Level Threshold");
             ArrayList<List<String>> rowData = new ArrayList<>();
-
-            prestate = db.conn.prepareStatement("SELECT * FROM `spare reports` "); // copied data
+            prestate = db.conn.prepareStatement("SELECT * FROM `spare reports` "); 
             ResultSet rs1 = prestate.executeQuery();
             prestate2 = db.conn.prepareStatement("SELECT * FROM `parts`");
             ResultSet rs2 = prestate2.executeQuery();
             rs1.next();
             rs2.next();
+            out.write("Quick Fix FItters");
+            out.newLine();
+            out.write("19 High St.");
+            out.newLine();
+            out.write("Ashford");
+            out.newLine();
+            out.write("Kent CT16 8YY");
+            out.newLine();
+            out.newLine();
+            out.write("Spare Parts Report");
+            out.newLine();
+            out.newLine();
             while (!rs1.isAfterLast() && !rs2.isAfterLast()) {
                 rowData.add(Arrays.asList(rs1.getString("PartName"), rs1.getString("PartNo"), rs1.getString("Supplier"),
                         rs1.getString("VehicleType"),
@@ -117,13 +140,12 @@ public class CreateReports implements Runnable {
                 rs1.next();
                 rs2.next();
             }
-
             Board board = new Board(300);
             String tableString = board.setInitialBlock(new Table(board, 300, headers, rowData).tableToBlocks()).build().getPreview();
             out.write(tableString);
             out.close();
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 
@@ -133,7 +155,6 @@ public class CreateReports implements Runnable {
         int lDay = cal.getActualMaximum(Calendar.DATE);
         int cDay = cal.get(Calendar.DATE);
         int m = cal.get(Calendar.MONTH);
-        //System.out.println("HI" + lDay);
         forever:
         while (true) {
             if (checked == true) {
@@ -143,40 +164,31 @@ public class CreateReports implements Runnable {
             }
             if (cDay == lDay && (checked == false)) {
                 System.out.println("Hi its last day of the month " + m + " " + lDay);
-
                 try {
-
+                    
+                    
+                    backUp();
+                    
                     prestate = db.conn.prepareStatement("UPDATE `customers` SET `Spent` = 0");
                     prestate.execute();
-
                     sparePartReport();
-
                     prestate = db.conn.prepareStatement("DELETE FROM `spare reports`");
                     prestate.execute();
                     prestate = db.conn.prepareStatement("INSERT `spare reports` SELECT * FROM `parts` ");
                     prestate.execute();
-
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-
                 cal.add(Calendar.MONTH, 1);
                 cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
                 Date d = cal.getTime();
                 Calendar cal2 = Calendar.getInstance();
                 cal2.setTime(d);
                 lDay = cal2.get(Calendar.DAY_OF_MONTH);
-                //System.out.println(cal2.get(Calendar.DAY_OF_MONTH));
                 checked = true;
-                //continue forever;
-
             }
-            //cDay = cal.get(Calendar.DATE);
             cDay = getDate();
             m = getMonth();
-            //System.out.println(cDay);
-            //cDay = cDay + 1;
         }
     }
-
 }
