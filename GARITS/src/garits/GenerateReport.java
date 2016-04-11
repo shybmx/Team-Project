@@ -3,8 +3,11 @@ package garits;
 public class GenerateReport extends javax.swing.JPanel {
     DBConnect db;
     public GenerateReport(DBConnect db) {
+        //Sets up all the componets within this JFrame
         initComponents();
+        //Passes in the Database connection
         this.db = db;
+        //Removes the background from all the JButtons and JPanels
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -12,6 +15,7 @@ public class GenerateReport extends javax.swing.JPanel {
         generate.setContentAreaFilled(false); 
         generate.setBorderPainted(false);
         panel.setOpaque(false);
+        //Sets the size of this JPanel
         this.setSize(1300, 900);
     }
 
@@ -86,15 +90,18 @@ public class GenerateReport extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Makes this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
-         CreateReports c = new CreateReports();
-        if(reportType.getSelectedItem().equals("Vehicle Service")){
-           
+        //Creates a new create reports object
+        CreateReports c = new CreateReports();
+        if(reportType.getSelectedItem().equals("Vehicle Service")){   
+            //If Vehicle service is selected from the drop down menu it will create a vehicle service report
             c.serviceReport();
         }else if(reportType.getSelectedItem().equals("Spare Part")){
+            //If Spare part is selected from the drop down menu it will create a vehicle service report
             c.sparePartReport();
         }
     }//GEN-LAST:event_generateActionPerformed

@@ -14,10 +14,15 @@ public class Alerts extends javax.swing.JPanel {
     PreparedStatement prestate;
 
     public Alerts(DBConnect db) {
+        //Creates all the compnonets within the JFrame
         initComponents();
+        //Passes in the database connection to this Panel
         this.db = db;
+        //set the size of the JPanel which is being placed within a JFrame
         this.setSize(1300, 900);
+        //Displays content within the JTable from the database
         updateTable();
+        //Remove the backgrounds from the JPanels and buttons
         generate.setOpaque(false);
         generate.setContentAreaFilled(false);
         generate.setBorderPainted(false);
@@ -29,14 +34,18 @@ public class Alerts extends javax.swing.JPanel {
 
     public void updateTable() {
         try {
+            //Creating a MySQL statement that will be passed into the database to be exectued 
             prestate = db.conn.prepareStatement("SELECT `customers`.`name`, `customers`.`address`, "
                     + "`jobsheets`.`VehicleRegNumber`, `job completed`.`Grand Total` FROM `jobsheets` "
                     + "INNER join `customers` on `customers`.`name` = `jobsheets`.`customer` INNER JOIN `job completed` "
                     + "On `job completed`.`job_number` = `jobsheets`.`job_number` where `jobsheets`.`hasPaid` = 'No' "
                     + "and `Reminder count` = '1' or `Reminder count` = '2' or `Reminder count` = '3' ");
+            //Exectuing the query and then placing it within a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result set within a JTable to display to on screen to the user
             paymentDue.setModel(DbUtils.resultSetToTableModel(result));
         } catch (Exception ex) {
+            //Shows an error if the system cannot connect to the database or a problem with the MySQL
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -126,28 +135,41 @@ public class Alerts extends javax.swing.JPanel {
 
     private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
         try {
+            //Gets the selected row by the user
             int index = paymentDue.getSelectedRow();
+            //gets all the values of the selected row and places them into a string variable
             String name = paymentDue.getValueAt(index, 0).toString();
             String address = paymentDue.getValueAt(index, 1).toString();
             String vehReg = paymentDue.getValueAt(index, 2).toString();
             String grandTotal = paymentDue.getValueAt(index, 3).toString();
+            //create an MySQL statement to send to the database, This will check for customers who have not paid for a completed job
             prestate = db.conn.prepareStatement("SELECT `Reminder count` FROM `jobsheets` WHERE `Customer` = '" + name + "' AND  `hasPaid` = 'no' AND `Status` = 'Complete'   ");
+            //The MySQL statement is exectued and then placed within a result set
             ResultSet rs1 = prestate.executeQuery();
+            //We go to the next result set
             rs1.next();
+            //we get all the values from the reminder count colum from the table and then place them into an int variable called count
             int count = rs1.getInt("Reminder count");
-            System.out.println(count);
+            //If the count varible is one we will go into this part of the if statement
             if (count == 1) {
-                System.out.println();
+                //creates a new file on my desktop (Change this to test on other computers)
                 File file = new File("/Users/shahzad/Desktop/FirstReminder.txt");
+                //Writing to a newly created file
                 FileWriter fr = new FileWriter(file.getAbsoluteFile());
+                //Create a new output stream where the file would be writting to
                 BufferedWriter out = new BufferedWriter(fr);
+                //writes the name of the customer to the file
                 out.write(name);
+                //creates a new line within the file
                 out.newLine();
+                //writes the address into the file
                 out.write(address);
                 out.newLine(); 
                 out.newLine(); 
+                //writes a string followed by the name
                 out.write("Dear " + name+",");
                 out.newLine(); out.newLine();
+                //Writes all the relevent information that is needed for the first reminder
                 out.write("First Reminder");
                 out.newLine(); 
                 out.write("Vehicle Registration No . " + vehReg);
@@ -166,14 +188,23 @@ public class Alerts extends javax.swing.JPanel {
                 out.newLine();
                 out.newLine();
                 out.write("G.Lancaster");
+                //closes the output
                 out.close();
+                //This increments the reminder count for that customer
                 prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `Reminder count` = '2' WHERE Customer='"+name+"' AND `hasPaid` = 'No' ");
+                //execute the query
                 prestate.execute();
+                //bringd up a popup menu to show that the report has been created
                 JOptionPane.showMessageDialog(null, "Report has been created");
             } else if (count == 2) {
+                //If the count is two then this part of the if statement is exectued
+                //Creates a new file onto the desktop which is called second reminder
                 File file = new File("/Users/shahzad/Desktop/SecondReminder.txt");
+                //Writing to a newly created file
                 FileWriter fr = new FileWriter(file.getAbsoluteFile());
+                 //Create a new output stream where the file would be writting to
                 BufferedWriter out = new BufferedWriter(fr);
+                //writes all the revelent information that is needed for the second reminder
                 out.write(name);
                 out.newLine();
                 out.write(address);
@@ -203,14 +234,23 @@ public class Alerts extends javax.swing.JPanel {
                 out.newLine();
                 out.newLine();
                 out.write("G.Lancaster");
+                //closes the output
                 out.close();
+                 //This increments the reminder count for that customer
                 prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `Reminder count` = '3' WHERE Customer='"+name+"' AND `hasPaid` = 'No' ");
+                //execute the query
                 prestate.execute();
+                //bringd up a popup menu to show that the report has been created
                 JOptionPane.showMessageDialog(null, "Report has been created");
             } else if (count == 3) {
+                //If the count is three then this part of the if statement is exectued
+                //Creates a new file onto the desktop which is called second reminder
                 File file = new File("/Users/shahzad/Desktop/ThirdReminder.txt");
+                //Writing to a newly created file
                 FileWriter fr = new FileWriter(file.getAbsoluteFile());
+                 //writes all the revelent information that is needed for the third reminder
                 BufferedWriter out = new BufferedWriter(fr);
+                //writes all the revelent information that is needed for the third reminder
                 out.write(name);
                 out.newLine();
                 out.write(address);
@@ -239,17 +279,23 @@ public class Alerts extends javax.swing.JPanel {
                 out.newLine();
                 out.newLine();
                 out.write("G.Lancaster");
+                //closes the output
                 out.close();
+                 //This increments the reminder count for that customer
                 prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `Reminder count` = '4' WHERE Customer='"+name+"' AND `hasPaid` = 'No' ");
+                //execute the query
                 prestate.execute();
+                 //bringd up a popup menu to show that the report has been created
                 JOptionPane.showMessageDialog(null, "Report has been created");
             }
         } catch (Exception ex) {
+            //Prints out to the terminal if there are any errors
             ex.printStackTrace();
         }
     }//GEN-LAST:event_generateActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //If the close button is hit, it will close the panel
         paymentDuePanel.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 

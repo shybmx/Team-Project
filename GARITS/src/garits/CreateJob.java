@@ -10,9 +10,13 @@ public class CreateJob extends javax.swing.JPanel {
     PreparedStatement prestate;
     Vector<String> vec = new Vector<>();
     public CreateJob(DBConnect db) {
+        //Setting up all the componets within the JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Refreshing this JFrame
         this.repaint();
+        //Removing the background from all the JButtons and JPanels
         add.setOpaque(false);
         add.setContentAreaFilled(false);
         add.setBorderPainted(false);
@@ -31,11 +35,14 @@ public class CreateJob extends javax.swing.JPanel {
         formPanel2.setOpaque(false);
         searchPanel.setOpaque(false);
         workDonePanel.setOpaque(false);
+        //Setting the size of this JPanel
         this.setSize(1300, 900);
+        //To populate the Combo box from the database
         populateCombo();
     }
 
     public void setFields(String name, String regNo, String make, String model, String phone) {
+        //Populating the Text fields from another class
         customerNameField.setText(name);
         vehicleRegNoField.setText(regNo);
         makeField.setText(make);
@@ -45,14 +52,21 @@ public class CreateJob extends javax.swing.JPanel {
 
     public void populateCombo() {
         try {
+            //Creating a MySQL statement which will get data to populate the combo box
             prestate = db.conn.prepareStatement("Select * FROM `standard jobs` ");
+            //Placing the result into a result set
             ResultSet rs = prestate.executeQuery();
+            //Going to the next result which is not the header
             rs.next();
+            //creating a while loop which goes through every element in the table and its not the last element within it
             while (!rs.isAfterLast()) {
+                //Seleting which colume it is from
                 typeOfJob.addItem(rs.getString("TypeOfJob"));
+                //going to the next result
                 rs.next();
             }
         } catch (Exception ex) {
+            //Prints out to the terminal if there is any error with the database connection or MySQL statement
             ex.printStackTrace();
         }
     }
@@ -308,6 +322,7 @@ public class CreateJob extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
+        //Getting all the values from the Texfields and placing them into a String variable
         String customerName = customerNameField.getText();
         String vechicleRegNo = vehicleRegNoField.getText();
         String make = makeField.getText();
@@ -316,11 +331,14 @@ public class CreateJob extends javax.swing.JPanel {
         String model = modelField.getText();
         String telephone = telephoneField.getText();
         String typeOfJobString = typeOfJob.getSelectedItem().toString();
+        //Making a job number int to store the right job number
         int jobNo = 0;
         try {
+            //Creating a MySQL statement which will insert the information into a jobsheet
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`jobsheets`(Customer, VehicleRegNumber, "
                     + "Make, EstimatedTime, DateBookedIn, Model, TelephoneNumber, TypeOfJob)"
                     + "Values(?,?,?,?,?,?,?,?)");
+            //Placing the string variables into the MySQL statement 
             prestate.setString(1, customerName);
             prestate.setString(2, vechicleRegNo);
             prestate.setString(3, make);
@@ -329,38 +347,55 @@ public class CreateJob extends javax.swing.JPanel {
             prestate.setString(6, model);
             prestate.setString(7, telephone);
             prestate.setString(8, typeOfJobString);
+            //Executing the MySQL statement and placing it into an int variable
             int i = prestate.executeUpdate();
+            //Creating a select statement which will get the Vehicle reg number and the job number that has just been created
             prestate = db.conn.prepareStatement("Select jobsheets.Job_Number From jobsheets Where jobsheets.VehicleRegNumber  = "
                     + "'" + vechicleRegNo + "'");
+            //Executing the MySQL statement 
             ResultSet result = prestate.executeQuery();
+            //Going to the next result set which is not the header
             result.next();
+            //Getting the job number from the MySQL query and placing it into the JobNo variable
             jobNo = result.getInt("Job_Number");
+            //Creating a for loop which gets all the values from the JList and then placing it into the database with the right job number
             for (String t : vec) {
+                //Creating a MySQL statement which will insert all the jobs into a table with the right job number
                 prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
                         + "Values( '" + jobNo + "', ?  ) ");
+                //Placing in the string variable with the right item from the JList
                 prestate.setString(1, t);
+                //Exectuing the MySQL statement
                 prestate.executeUpdate();
             }
+            //Update the customer information so that they cannot create a new job as they have not paid for this one that has just been created
             prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Due' Where `name` = '" + customerName + "' ");
+            //Exectuing the statement
             prestate.execute();
+            //Making all the JPanels invisable
             formPanel1.setVisible(false);
             workDonePanel.setVisible(false);
             addButtonPanel.setVisible(false);
             buttons2.setVisible(false);
             formPanel2.setVisible(false);
             searchPanel.setVisible(false);
+            //A pop up box to show that the job has been created successfully
             JOptionPane.showMessageDialog(null, "Job successfully created");
         } catch (Exception ex) {
+            //An error message if anything has gone wrong with the database connection or any of the MYSQL statement
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_createActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Making the current JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        //Pop up the new JFrame which will show all the customers which can create a job
         SearchCustomer searchCustomerTableFrame = new SearchCustomer(db, this);
+        //Making the JFrame visable
         searchCustomerTableFrame.setVisible(true);
     }//GEN-LAST:event_searchActionPerformed
 
@@ -369,7 +404,9 @@ public class CreateJob extends javax.swing.JPanel {
     }//GEN-LAST:event_customerNameFieldActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        //Adding the selected items from the JCombo box and placing them into the JList
         vec.add(workRequiredDropDown.getSelectedItem().toString());
+        //Setting the items into the JList
         workRequired.setListData(vec);
     }//GEN-LAST:event_addActionPerformed
 

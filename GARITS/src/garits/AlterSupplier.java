@@ -9,8 +9,11 @@ public class AlterSupplier extends javax.swing.JPanel {
     DBConnect db;
     PreparedStatement prestate;
     public AlterSupplier(DBConnect db) {
+        // this sets up all the componets within this JFrame
         initComponents();
+        //Passes all the database connection to this panel
         this.db = db;
+        //Removes the background from all the buttons and JPanel
         addNewSupplier.setOpaque(false);
         addNewSupplier.setContentAreaFilled(false); 
         addNewSupplier.setBorderPainted(false);
@@ -34,16 +37,22 @@ public class AlterSupplier extends javax.swing.JPanel {
         closeDeletePanel.setOpaque(false);
         closeDeletePanel.setContentAreaFilled(false); 
         closeDeletePanel.setBorderPainted(false);
+        //This updates the table that is being displayed within this JPanel
         updateTable();
+        //This sets the size of the JPanel
         this.setSize(1300, 900);
     }
     
     public void updateTable(){
         try{
+            //Creates a MySQL statement that is sent to the database which will select the appropiate data to be displayed on the JTable
             prestate = db.conn.prepareStatement("SELECT * FROM `suppliers`");
+            //Store the result of the MySQL query into a result set
             ResultSet result = prestate.executeQuery();
+            //Getting the result set and placing it into a database table
             supplierTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //Throw an error if there is a problem with the database connection or MySQL
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -319,15 +328,19 @@ public class AlterSupplier extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSupplierActionPerformed
+        //Making the new JPanel visable
         addSupplierPanel.setVisible(true);
+        //Making the current JPanel invisable
         buttons.setVisible(false);
     }//GEN-LAST:event_addNewSupplierActionPerformed
 
     private void closeAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAddSupplierActionPerformed
+        //Make the adding supplier panel invisable
         addSupplierPanel.setVisible(false);
     }//GEN-LAST:event_closeAddSupplierActionPerformed
 
     private void addSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierActionPerformed
+        //Getting all the values from the JFields and storing them into a String variable
         String partNoString = partNo.getText();
         String partNameString = partName.getText();
         String supplierString = supplier.getText();
@@ -336,9 +349,11 @@ public class AlterSupplier extends javax.swing.JPanel {
         String unitCostString = unitCost.getText();
         String quantityString = quantity.getText();
         try{
+            //Creates a MySQL statement which will insert data into the database
             prestate = db.conn.prepareStatement("INSERT INTO `parts`(PartNo, PartName, Supplier, "
                 + "VehicleType, Years, UnitCost, Quantity)"
                 + "Values(?,?,?,?,?,?,?) ");
+            //Getting the string variables which has been created on the top and passing them into the MySQL statement
             prestate.setString(1, partNoString);
             prestate.setString(2, partNameString);
             prestate.setString(3, supplierString);
@@ -346,18 +361,21 @@ public class AlterSupplier extends javax.swing.JPanel {
             prestate.setString(5, yearsString);
             prestate.setString(6, unitCostString);
             prestate.setString(7, quantityString);
+            //Executing the MySQL statement
             prestate.executeUpdate();
         }catch(Exception ex){
 
         }
         try{
+            //Creates a MySQL statement which will insert data into the database
             prestate = db.conn.prepareStatement("INSERT INTO `suppliers` (`Supplier`)"
                 + "Values ('"+supplierString+"')");
+            //Executing the MySQL statement
             prestate.executeUpdate();
-
         }catch(Exception ex){
 
         }
+        //Resetting the text fields to blank to allow the user to insert more details
         partNo.setText("");
         partName.setText("");
         vehicleType.setText("");
@@ -367,28 +385,39 @@ public class AlterSupplier extends javax.swing.JPanel {
     }//GEN-LAST:event_addSupplierActionPerformed
 
     private void deleteSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSupplierActionPerformed
+        //Makes the next JPanel visable
         deleteSupplierPanel.setVisible(true);
+        //Makes the current JPanel invisable
         buttons.setVisible(false);
     }//GEN-LAST:event_deleteSupplierActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         try{
+            //Getting the selected row number from the JTable
             int index = supplierTable.getSelectedRow();
+            //Getting a certain colume from the selected row 
             String supplier = supplierTable.getValueAt(index, 0).toString();
+            //Creates a MySQL statement which will delete a supplier, selected from the JTable
             prestate = db.conn.prepareStatement("DELETE FROM `suppliers` WHERE  `Supplier` = '"+supplier+"' ");
+            //Execute the MySQL statement
             prestate.execute();
+            //Refreash the JTable
             updateTable();
+            //Show a pop up box to confirm that the supplier has been deleted
             JOptionPane.showMessageDialog(null, "Supplier: " + supplier + " has been deleted");
         }catch(Exception ex){
+            //An error message that shows that the supplier has not been deleted
             JOptionPane.showMessageDialog(null, "Suppiler "+ supplier+ " has not been deleted");
         }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void closeDeletePanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeDeletePanelActionPerformed
+        //Makes the JPanel invisable when the button is pressed
         deleteSupplierPanel.setVisible(false);
     }//GEN-LAST:event_closeDeletePanelActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Makes the JPanel invisable when the button is pressed
         buttons.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 

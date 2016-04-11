@@ -5,12 +5,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+//Creates the main menu for the admin user
 public class AdminMenu extends javax.swing.JFrame {
     DBConnect db;
     public AdminMenu(DBConnect db) {
+        //Creates all the compnonets within the JFrame
         initComponents();
+        //Passing in the database connection 
         this.db = db;
+        //Makes the JFrame non resizable
         this.setResizable(false);
+        //removes the background from all the buttons
         systemConfig.setOpaque(false);
         systemConfig.setContentAreaFilled(false); 
         systemConfig.setBorderPainted(false);
@@ -26,7 +31,9 @@ public class AdminMenu extends javax.swing.JFrame {
         manage.setOpaque(false);
         manage.setContentAreaFilled(false); 
         manage.setBorderPainted(false);
+        //By hitting the close button it does not allow the program to close
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //Sets the size of the frame
         this.setSize(1300, 900);
     }
     
@@ -102,39 +109,52 @@ public class AdminMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        //Once the user hase clicked logout it creates a new PIN object
         Pin logout = new Pin();
         try {
+            //the connection to the database closes
             db.close();
         } catch (SQLException ex) {
+            //catches any errors with closing the database
             Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Makes the PIN object visable
         logout.setVisible(true);
+        //Closes the frame which is currently visable
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void backupDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupDBActionPerformed
+       //Creates a backup database JPanel which will allow the user to restore the database
        BackupDB backupdbpanel = new BackupDB(db);
+       //Places the newly created JPanel within this JFrame
        this.getContentPane().add(backupdbpanel);
        this.invalidate();
        this.validate();
     }//GEN-LAST:event_backupDBActionPerformed
 
     private void restoreDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreDBActionPerformed
+        //Creates a restore database JPanel which will allow the user to restore the database
         RestoreDB restoredbpanel = new RestoreDB(db);
+        //Places the newly created JPanel within this JFrame
         this.getContentPane().add(restoredbpanel);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_restoreDBActionPerformed
 
     private void manageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageActionPerformed
-       Register register = new Register(this, db);
+        //Creates a new register panel which will allow the user to create addtional users for the system to use
+        Register register = new Register(this, db);
+        //Places the newly created JPanel within this JFrame
         this.getContentPane().add(register);
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_manageActionPerformed
 
     private void systemConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemConfigActionPerformed
+        //Creates a new system configuration panel which will allow the user to change some of the settings within the database.
         SystemConfig systemConfigPanel = new SystemConfig(db);
+        //Places the newly created JPanel within this JFrame
         this.getContentPane().add(systemConfigPanel);
         this.invalidate();
         this.validate();

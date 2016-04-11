@@ -4,10 +4,6 @@ import java.sql.PreparedStatement;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- *
- * @author shahzad
- */
 public class ReminderCount implements Runnable {
 
     PreparedStatement prestate;

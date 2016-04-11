@@ -1,6 +1,7 @@
 package garits;
 
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 public class BackupDB extends javax.swing.JPanel {
 
@@ -8,8 +9,11 @@ public class BackupDB extends javax.swing.JPanel {
     PreparedStatement prestate;
 
     public BackupDB(DBConnect db) {
+        //Sets up all the componets within the JFrame
         initComponents();
+        //Passes in the connection to the database
         this.db = db;
+        //removes the background from all the JButtons
         backUpButton.setOpaque(false);
         backUpButton.setContentAreaFilled(false);
         backUpButton.setBorderPainted(false);
@@ -17,16 +21,20 @@ public class BackupDB extends javax.swing.JPanel {
         closeButton.setContentAreaFilled(false);
         closeButton.setBorderPainted(false);
         controlPanel.setOpaque(false);
+        //Sets the size of the JFrame
         this.setSize(1300, 900);
     }
 
+    //This method is used for automatic backup
     public void backup() {
         try {
+            //Creating a string variable of the path where the backup file is going to be placed
             String str = "C:/xampp/mysql/bin/mysqldump -u root garits > C:/Users/shahzad/Desktop/test.sql";
+            //Passing in the String into CMD 
             Process process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", str});
-            System.out.println(str);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //Prints out an error if the path is incorrect
+            JOptionPane.showMessageDialog(null, "Cannot file path");
         }
     }
 
@@ -95,17 +103,21 @@ public class BackupDB extends javax.swing.JPanel {
         jLabel1.setBounds(0, 0, 1300, 900);
     }// </editor-fold>//GEN-END:initComponents
 
+    //This method is used for on demand backup
     private void backUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backUpButtonActionPerformed
         try {
+            //Creating a string variable of the path where the backup file is going to be placed
             String str = "C:/xampp/mysql/bin/mysqldump -u root garits > C:/Users/shahzad/Desktop/test.sql";
+            //Passing in the String into CMD 
             Process process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", str});
-            System.out.println(str);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //Prints out an error if the path is incorrect
+            JOptionPane.showMessageDialog(null, "Cannot file path");
         }
     }//GEN-LAST:event_backUpButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        //Making the current JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
 

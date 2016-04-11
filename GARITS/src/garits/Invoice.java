@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
@@ -26,9 +23,13 @@ public class Invoice extends javax.swing.JPanel {
     int count;
 
     public Invoice(DBConnect db) {
+        //Set up all the componets within this JPanel
         initComponents();
+        //Passes in the database connection
         this.db = db;
+        //Refresh this whole JPanel
         this.repaint();
+        //Remove the background from the JButtons and JPanels
         refreshTable.setOpaque(false);
         refreshTable.setContentAreaFilled(false);
         refreshTable.setBorderPainted(false);
@@ -44,31 +45,47 @@ public class Invoice extends javax.swing.JPanel {
         searchPanel.setOpaque(false);
         tablePanel.setOpaque(false);
         buttons.setOpaque(false);
+        //Set the size of the JPanel
         this.setSize(1300, 900);
+        //Refresh the JTable with information from the database
         updateTable();
+        //Set count to 0
         count = 0;
     }
 
     public File createFile(String name) throws IOException {
+        //Creating a new file
         File f;
+        //Creating a new file with the name
         f = new File(name);
+        //If the file exisit 
         if (!f.exists()) {
+            //It creates a new file
             f.createNewFile();
+            //Return the File
             return f;
         } else {
+            //The count is incrementeds
             count++;
+            //A new File is created with the number in the file name
             f = createFile(name + (count) + "txt");
         }
+        //Return the file
         return f;
     }
 
     public void updateTable() {
         try {
+            //Creating a MySQL statement which will select data from the database where the status is complete
             prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete'  ");
+            //Execute the query and place it into a result set
             ResultSet result = prestate.executeQuery();
+            //Make the table resize depending on the information
             invoiceTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            //Place all the information from the result into the JTable
             invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
         } catch (Exception ex) {
+            //Show an error with the MySQL statement or database connection 
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -205,31 +222,45 @@ public class Invoice extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //This will make the current JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceActionPerformed
         try {
+            //Creating a new File
             File file = new File("/Users/shahzad/Desktop/Invoice.txt");
+            //If the file does not exist
             if (!file.exists()) {
+                //Creates a new file
                 file.createNewFile();
-                System.out.println("Here1");
             } else {
+                //The count increments
                 count++;
+                //A new file is created with the count number with the file name
                 file = createFile("Invoice" + count + ".txt");
             }
+            //Creating a new File writier
             FileWriter fr = new FileWriter(file.getAbsoluteFile());
+            //Creating a new buffered writer which will allow us to write into the file
             BufferedWriter out = new BufferedWriter(fr);
+            //Get the selected row
             int index = invoiceTable.getSelectedRow();
+            //Get all the values of the selected and place a few of the columes into a string variable
             String jobNumber = invoiceTable.getValueAt(index, 0).toString();
             String customerName = invoiceTable.getValueAt(index, 1).toString();
             String vehReg = invoiceTable.getValueAt(index, 2).toString();
             String make = invoiceTable.getValueAt(index, 3).toString();
             String model = invoiceTable.getValueAt(index, 6).toString();
+            //Creating a MySQL statement which will select the customer from the database
             prestate = db.conn.prepareStatement("SELECT * FROM customers WHERE name = " + "'" + customerName + "'");
+            //Execute the statement and place it in a result set
             ResultSet rs = prestate.executeQuery();
+            //Go to the next result which is not the header
             rs.next();
+            //Write into the file the customer name and any other information
             out.write("Name " + customerName);
+            //A new line
             out.newLine();
             out.write(rs.getString("address") + " " + rs.getString("PostCode"));
             out.newLine();
@@ -241,52 +272,79 @@ public class Invoice extends javax.swing.JPanel {
             out.write("Model: " + model);
             out.newLine();
             out.newLine();
+            //Creating a MySQL statement which will select the Job number
             prestate = db.conn.prepareStatement("SELECT * FROM `work done` WHERE Job_Number = " + "'" + jobNumber + "'");
+            //Execute the statement and place it in a result set 
             rs = prestate.executeQuery();
+            //Go to the next result which is not the header
             rs.next();
             out.write("Description of work:");
             out.newLine();
+            //A while look that loops through the result set and it is not the last value
             while (!rs.isAfterLast()) {
+                //Print out all the values in the work done colume
                 out.write(rs.getString("work done"));
                 out.newLine();
+                //The next value
                 rs.next();
             }
             out.newLine();
+            //Creating a MySQL statement which selects the job number from the job completed table
             prestate = db.conn.prepareStatement("SELECT * FROM `job completed` WHERE Job_Number = '" + jobNumber + "' ");
+            //Execute the statement and place it in a result set
             rs = prestate.executeQuery();
+            //The next result which is not the header
             rs.next();
             out.newLine();
+            //Making a new double which is set to 0
             double unitTotal = 0;
+            //Creating a list for the headers
             List<String> headers = Arrays.asList("ITEM", "PART NO", "UNIT COST", "QTY", "COST(£)");
+            //Creating an ArrayList which has a list of Strings
             ArrayList<List<String>> rowData = new ArrayList<>();
+            //Formatting all the doubles so they have a 0.00 
             DecimalFormat format = new DecimalFormat("0.00");
+            //A string variable that will contain the formatted total
             String fUnitTotal;
+            //A while loop that checks if it not the last element in the loop
             while (!rs.isAfterLast()) {
+                //Parse the total price from the database from a string into a double and add it to the unit cost
                 unitTotal = unitTotal + Double.parseDouble(rs.getString("Total Price"));
+                //Format the unit cosr
                 fUnitTotal = format.format(unitTotal);
+                //Add all the into the ArrayList
                 rowData.add(Arrays.asList(rs.getString("Description"), rs.getString("Part No"), String.valueOf(rs.getFloat("Unit Cost")), String.valueOf(rs.getInt("Qty")),
                         String.valueOf(format.format(rs.getFloat("Total Price")))));
                 out.newLine();
+                //The next element within the resultset
                 rs.next();
             }
+            //Creating the size within the text field for the colume
             Board board = new Board(90);
+            //Creating the table within the text file
             String tableString = board.setInitialBlock(new Table(board, 90, headers, rowData).tableToBlocks()).build().getPreview();
-            System.out.println(tableString);
+            //Writing out the new table in the text file
             out.write(tableString);
             out.newLine();
             out.newLine();
             rs.absolute(1);
-            System.out.println(unitTotal);
+            //Parsing the labour rate from the database from a string to a double
             double rate = Double.parseDouble(rs.getString("Labour Rate"));
+            //Parsing the duration from the database from a string to a double
             double duration = Double.parseDouble(rs.getString("Duration"));
+            //Finding out the total cost of labour
             double labourTotal = rate * duration;
-
+            //A String variable which contains the grand total from the database
             String grandTot = format.format(Double.parseDouble(rs.getString("Grand Total")));
+            //A String variable which contains the VAT from the database
             String vat = format.format(Double.parseDouble(rs.getString("VAT")));
+            //Formatting the labour total 
             String labourTot = format.format((labourTotal));
+            //Formatting thr total from the labour cost and unit price
             String tot = format.format((labourTotal + unitTotal));
+            //formattng the labour rate
             String labourRate = format.format(Double.parseDouble(rs.getString("Labour Rate")));
-
+            //Displaying all our calucalations
             out.write("Labour:               £ " + labourRate);
             out.newLine();
             out.write("Duration              " + rs.getString("Duration"));
@@ -308,54 +366,77 @@ public class Invoice extends javax.swing.JPanel {
             out.newLine();
             out.newLine();
             out.write("G.Lancaster");
+            //Closing of wiritng into the file
             out.close();
         } catch (Exception ex) {
+            //Prints any errors to the terminal
             ex.printStackTrace();
-            System.out.println("NOPE");
         }
     }//GEN-LAST:event_invoiceActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         try {
+            //Creating a MySQL statement which searches for a customer and the status is completed
             prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '" + customerSearch.getText() + "' ");
+            //Executing this query and placing the result into a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which counts how many customer have been found
             prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `customer` LIKE '" + customerSearch.getText() + "' ");
+            //Executing the query and placing the result into a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Get the count from the result and placing it into a int variable
             int it = result2.getInt("Count(*)");
             if (it > 0) {
+                //Placing the information from the MySQL into a JTable
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
             } else {
 
             }
         } catch (Exception ex) {
+            //Show an error message if there is a problem with the MySQL statement or database connection
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
 
         try {
+            //Creating a MySQL statement which selelcts the make and the status has been completed
             prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '" + customerSearch.getText() + "' ");
+            //Executing the query and placing it into a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which counts how many customer have been found
             prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `make` LIKE '" + customerSearch.getText() + "' ");
+            //Executing the query and placing the result into a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Get the count from the result and placing it into a int variable
             int it = result2.getInt("Count(*)");
             if (it > 0) {
+                //Placing the information from the MySQL into a JTable
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
             } else {
 
             }
         } catch (Exception ex) {
+            //Placing the information from the MySQL into a JTable
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
 
         try {
+            //Creating a MySQL statement which selelcts the model and the status has been completed
             prestate = db.conn.prepareStatement("SELECT * FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '" + customerSearch.getText() + "' ");
+            //Executing the query and placing it into a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which counts how many customer have been found
             prestate = db.conn.prepareStatement("SELECT Count(*) FROM jobsheets WHERE Status = 'complete' AND `model` LIKE '" + customerSearch.getText() + "' ");
+            //Executing the query and placing the result into a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
             int it = result2.getInt("Count(*)");
             if (it > 0) {
+                //Placing the information from the MySQL into a JTable
                 invoiceTable.setModel(DbUtils.resultSetToTableModel(result));
             } else {
 
@@ -366,6 +447,7 @@ public class Invoice extends javax.swing.JPanel {
     }//GEN-LAST:event_searchActionPerformed
 
     private void refreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableActionPerformed
+        //Refresh the table
         updateTable();
     }//GEN-LAST:event_refreshTableActionPerformed
 

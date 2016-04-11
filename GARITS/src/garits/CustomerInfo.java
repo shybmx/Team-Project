@@ -12,8 +12,12 @@ public class CustomerInfo extends javax.swing.JPanel {
     PreparedStatement prestate;
 
     public CustomerInfo(DBConnect db) {
+        //Setting up all the componets within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the background from all JPanels and JButtons
+        //Also making certain text fields uneditable
         deleteVeh.setOpaque(false);
         deleteVeh.setContentAreaFilled(false); 
         deleteVeh.setBorderPainted(false);
@@ -44,7 +48,6 @@ public class CustomerInfo extends javax.swing.JPanel {
         mulitpleClose.setBorderPainted(false);
         buttons.setOpaque(false);
         buttons.setOpaque(false);
-        updateTable();
         editUserButton.setOpaque(false);
         editUserButton.setContentAreaFilled(false); 
         editUserButton.setBorderPainted(false);
@@ -70,34 +73,50 @@ public class CustomerInfo extends javax.swing.JPanel {
         mulitpleName.setEditable(false);
         customerTypeField.setEditable(false);
         editCustomerType.setEditable(false);
+        //Updating the JTable that is getting information from te database
+        updateTable();
+        //Setting the size of this JPanel
         this.setSize(1300, 900);
     }
     
     public boolean delete(String id){
             try{ 
-                String sql = "DELETE FROM `customers` WHERE `CustomerID` = '" + id + " ' ";     
+                //Creating a MySQL statement which will delete an item selected from the table
+                String sql = "DELETE FROM `customers` WHERE `CustomerID` = '" + id + " ' ";
+                //Passing in the sql statement to the database connection 
                 prestate = db.conn.prepareStatement(sql);
+                //Executing the query
                 prestate.execute();
+                //Creating a MySQL statement which will delete an item selected from the table
                 String sql2 = " DELETE FROM `vehicle` WHERE `CustomerID` = '" + id + " '    ";
+                //Passing in the sql statement to the database connection 
                     prestate = db.conn.prepareStatement(sql2);
+                    //Executing the query
                     prestate.execute();
+                    //Return true
                     return true;
             }catch(Exception ex){
+                //Show a popup menu if there is an error with the databse connection or MySQL statement
                 JOptionPane.showMessageDialog(closeButton, ex);
+                //Return false
                 return false;
             }
     }
     
     public void updateTable(){
         try{
+            //Creating a MySQL statement which will select the information from several tables and place them into a JTable
             prestate = db.conn.prepareStatement("SELECT customers.CustomerID, customers.name, "
                     + "customers.address, customers.PostCode, customers.TelephoneNumber, customers.EMail, "
                     + "customers.CustomerType, vehicle.regNum, vehicle.Make, vehicle.Model,vehicle.EngSerial, "
                     + "vehicle.ChassieNumber, vehicle.Colour, vehicle.`MOT date` FROM customers "
                     + "INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID");
+            //Executing the query and placing it into a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result set into the JTable
             customerTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //displaying a popup menu if there is an error with the MySQL statement or database connection
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -1015,17 +1034,22 @@ public class CustomerInfo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        //Making a JPanel invisable
         buttons.setVisible(false);
+        //Making another Panel visable
         addPanel.setVisible(true);
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         try{
+            //Get the selected row and placing it into an int variable
             int index = customerTable.getSelectedRow();
+            //Getting all the values from the selected rows and placing them into the right text field
             customerID.setText(customerTable.getValueAt(index, 0).toString());
             editName.setText(customerTable.getValueAt(index, 1).toString());
             editAddress.setText(customerTable.getValueAt(index, 2).toString());
@@ -1040,27 +1064,34 @@ public class CustomerInfo extends javax.swing.JPanel {
             editEng.setText(customerTable.getValueAt(index, 10).toString());
             editChass.setText(customerTable.getValueAt(index, 11).toString());
             editColour.setText(customerTable.getValueAt(index, 12).toString());
+            //Close the current JPanel
             buttons.setVisible(false);
+            //Open up the correct JPanel
             editUserPanel.setVisible(true);
-            System.out.println("here");
         }catch(Exception ex){
-            ex.printStackTrace();
+            //Show an error if the user has not selected a user they wish to edit
             JOptionPane.showMessageDialog(null, "You must select a customer to edit");
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
+        //An array of string of two choices
         String[] options ={"Yes","No"};
+        //Asking the user if they want to delete the selected item
         int answer = JOptionPane.showOptionDialog(null, "Are you sure you want to Delete?",
                 "Confirmed", JOptionPane.YES_NO_CANCEL_OPTION, 
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        //If they select yes then it gets the selected row and name from that row
         if(answer == 0){
             int index = customerTable.getSelectedRow();
             String id = customerTable.getValueAt(index, 0).toString();
             if(delete(id)){
+                //if the user has been deleted then the table updates
                 updateTable();
+                //A pop up box shows that the user has been deleted
                 JOptionPane.showMessageDialog(null, "Customer: " +  id + " has been deleted");
             }else{
+                //An error pop up box to show that the user has not been deleted
                 JOptionPane.showMessageDialog(null, "Customer: " + id + " has not been deleted");
             }
         }                  
@@ -1075,6 +1106,7 @@ public class CustomerInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_insertColourActionPerformed
 
     private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
+        //Getting all the values from the Text Fields
         String name = insertName.getText();
         String address = insertAddress.getText();
         String postcode = insertPostCode.getText();
@@ -1089,12 +1121,14 @@ public class CustomerInfo extends javax.swing.JPanel {
         String colour = insertColour.getText();
         String discountTypeString = discountBox.getSelectedItem().toString();
         String motDateString = addMOTDate.getText().toString();
-        
+        //Creating an int variable where we can store the customer ID
         int id = 0;
         try{
+            //Creating a MySQL statement which will insert the customer details
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`customers`(name, address, PostCode,"
                     + "TelephoneNumber, EMail, CustomerType, DiscountType) "
                     + "Values (?,?,?,?,?,?,?)");
+            //Passing in the String variables into the MySQL statement
             prestate.setString(1, name);
             prestate.setString(2, address);
             prestate.setString(3, postcode);
@@ -1102,16 +1136,23 @@ public class CustomerInfo extends javax.swing.JPanel {
             prestate.setString(5, email);
             prestate.setString(6, customerType);
             prestate.setString(7, discountTypeString);
+            //Executing the MySQL statement
             int i = prestate.executeUpdate();
+            //Creating a MySQL statement which will select the customer just created and get the customer ID
             prestate = db.conn.prepareStatement("Select customers.customerID From Customers Where customers.name = "
                + "'"+name+"'");
+            //Executing the query
             ResultSet result = prestate.executeQuery();
+            //Going to the next result which is not the header
             result.next();
+            //Getting the customer ID
             id = result.getInt("CustomerID");
+            //Creating a MySQL statement which will insert the vehicle details with the customer ID
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`vehicle`(CustomerID ,CustomerName, "
                     + "regNum,"
                     + "Make, Model, EngSerial, ChassieNumber, Colour, `MOT Date`) "
                     + "Values( " + id + ", ?,?,?,?,?,?,?,? )" );
+            //Getting the String variables and passing it into the MySQL statement
             prestate.setString(1, name);
             prestate.setString(2, regno);
             prestate.setString(3, make);
@@ -1120,57 +1161,71 @@ public class CustomerInfo extends javax.swing.JPanel {
             prestate.setString(6, chass);
             prestate.setString(7, colour);
             prestate.setString(8, motDateString);
+            //Executing the statement
             prestate.executeUpdate();
             if (i>0){
+                //A pop up box that will show that the customer has been created
                 JOptionPane.showMessageDialog(null, "Customer has been added");
+                //Close the visable box
                 this.setVisible(false);
             }else{
+                //show an error message that the customer has not been created
                 JOptionPane.showMessageDialog(null, "Customer has not been added");
             }
         }catch(Exception ex){
+            //Show an error message with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 
     private void closeAddingCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAddingCustomerActionPerformed
+        //Making the current JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeAddingCustomerActionPerformed
 
     private void customerTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTypeFieldActionPerformed
+        //Making the selected item being placed into a text field 
         customerTypeField.setText(customerTypeBox.getSelectedItem().toString());
     }//GEN-LAST:event_customerTypeFieldActionPerformed
 
     private void editAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAddressActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_editAddressActionPerformed
 
     private void editColourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editColourActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_editColourActionPerformed
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
              try {
+                 //Creating a MySQL statement which will update the selected user getting all the new information from the text field
                 prestate = db.conn.prepareStatement("UPDATE `customers` SET `name` = '"+ editName.getText()+"',"
                     + "`address` = '"+ editAddress.getText()+"', `PostCode` = '"+ editPostCode.getText()+"',"
                     + "`TelephoneNumber` = '"+ editPhone.getText()+"', `EMail` = '"+ editEMail.getText()+"',"
                     + "`CustomerType` = '"+editCustomerType.getText() +"', "
                         + " `DiscountType` = '"+editDiscountBox.getSelectedItem().toString()+"' WHERE "
                         + "`CustomerID` = '"+customerID.getText()+"' ");
+                //Executing the MySQL statement
                 prestate.execute();
+                //Creating a MySQL statement which will update the Vehicle details based on the customer ID
                 prestate = db.conn.prepareStatement("UPDATE `vehicle` SET `RegNum` = '"+editReg.getText()+"',"
                         + "`Make` = '"+editMake.getText()+"', `Model` = '"+editModel.getText()+"', "
                         + "`EngSerial` = '"+editEng.getText()+"', `ChassieNumber` = '"+editChass.getText()+"', "
                         + "`Colour` = '"+editColour.getText()+"' , `MOT Date` = '"+editMOTDate.getText()+"'    WHERE `CustomerID` = '"+customerID.getText()+"' AND `RegNum` = '"+editReg.getText()+"' " );
+                //Executing the statement
                 prestate.execute();
+                //Making the current JPanel invisable
                 editUserPanel.setVisible(false);
+                //A popup menu that shows the customer has been updated
                 JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText()+ " has been updated");
             }catch(Exception ex) {
+                //Shows an error message if there is a probelm with the database connection or MySQL statement
                 JOptionPane.showMessageDialog(null, "Customer with ID: " + customerID.getText() + " Cannot be updated");
-                ex.printStackTrace();
             }         
     }//GEN-LAST:event_editUserButtonActionPerformed
 
     private void closeButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonEditActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeButtonEditActionPerformed
 
@@ -1187,23 +1242,30 @@ public class CustomerInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_customerIDActionPerformed
 
     private void mulitpleCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulitpleCloseActionPerformed
+        //Making a JPanel invisable
         addingExtraVeh.setVisible(false);
     }//GEN-LAST:event_mulitpleCloseActionPerformed
 
     private void addMulitpleVechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMulitpleVechActionPerformed
         try{
+            //Getting the selected row
             int index = customerTable.getSelectedRow();
+            //Getting the relevent information from the table to create extra vehciles
             mulitpleCustomerID.setText(customerTable.getValueAt(index, 0).toString());
             mulitpleName.setText(customerTable.getValueAt(index, 1).toString());
+            //Make the JPanel invisable
             buttons.setVisible(false);
+            //Making another JPanel visable
             addingExtraVeh.setVisible(true);
         }catch(Exception ex){
+            //Showing an error if a customer has not been selected
             JOptionPane.showMessageDialog(null, "Please select a customer you wish to add mulitple vehicle");
         }
     }//GEN-LAST:event_addMulitpleVechActionPerformed
 
     private void mulitpleAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulitpleAddActionPerformed
         try{
+            //Getting all the values within the Textfields and storing them into a string variables to allow a customer to add another vehcile
             String customerIDString = mulitpleCustomerID.getText();
             String nameString = mulitpleName.getText();
             String regNoString = mulitpleRegNo.getText();
@@ -1213,9 +1275,11 @@ public class CustomerInfo extends javax.swing.JPanel {
             String chassString = mulitpleChassNumber.getText();
             String colourString = mulitpleColour.getText();
             String mulitpleMOTDateString = mulitpleMOTDate.getText();
+            //Creating a MySQL statement which will insert the relevent information into the database
             prestate = db.conn.prepareStatement("INSERT INTO `vehicle` (CustomerID, CustomerName,"
                     + "regNum, Make, Model, EngSerial, ChassieNumber, Colour, `MOT Date` ) "
                     + "Value(?,?,?,?,?,?,?,?,?) ");
+            //Getting all the strings and passing them into the MySQL statement
             prestate.setString(1, customerIDString);
             prestate.setString(2, nameString);
             prestate.setString(3, regNoString);
@@ -1225,47 +1289,64 @@ public class CustomerInfo extends javax.swing.JPanel {
             prestate.setString(7, chassString);
             prestate.setString(8, colourString);
             prestate.setString(9, mulitpleMOTDateString);
+            //Executing the MySQL statement
             int i = prestate.executeUpdate();
             if(i > 0){
+                //A pop up menu that shows that the customer has added another vehicle
                JOptionPane.showMessageDialog(null, "Customer: " + nameString + " has added another vehicle");
+               //Closes the current JPanel
                addingExtraVeh.setVisible(false);
             }else{
+                //An error pop up menu that shows that they have not added another vehicle
                 JOptionPane.showMessageDialog(null, "Customer: " + nameString + " has not added another vehicle");
             }
         }catch(Exception ex){
+            //An error pop up which shows a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_mulitpleAddActionPerformed
 
     private void customerTypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTypeBoxActionPerformed
+        //Inserting the selected value from a JCombo box into a JTextField
         customerTypeField.setText(customerTypeBox.getSelectedItem().toString());
     }//GEN-LAST:event_customerTypeBoxActionPerformed
 
     private void searchCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerActionPerformed
        try{
+           //Creating a MySQL statement which will select a customer based off a customer name
             prestate = db.conn.prepareStatement("SELECT customers.CustomerID, customers.name, customers.address, "
                     + "customers.PostCode, customers.TelephoneNumber, customers.EMail, customers.CustomerType, "
                     + "customers.Discount, vehicle.regNum, vehicle.Make, vehicle.Model, vehicle.EngSerial, vehicle.ChassieNumber, "
                     + "vehicle.Colour FROM customers INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID WHERE customers.name like '%"+searchCustomerField.getText()+"%'");
+            //Executing the MySQL data and placing it within a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which will get the count of the customer searched
             prestate = db.conn.prepareStatement("SELECT count(*), customers.CustomerID, customers.name, customers.address, "
                     + "customers.PostCode, customers.TelephoneNumber, customers.EMail, customers.CustomerType, customers.Discount, "
                     + "vehicle.regNum, vehicle.Make, vehicle.Model, vehicle.EngSerial, vehicle.ChassieNumber, vehicle.Colour FROM customers "
                     + "INNER JOIN vehicle on customers.CustomerID = vehicle.CustomerID WHERE customers.name like '%"+searchCustomerField.getText()+"%'");
+            //Executing the MySQL query and placing it within a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Getting the value of the Count and placing it into an int variable
             int it = result2.getInt("Count(*)");
+            //If the result is more then one
             if(it > 0){
-            customerTable.setModel(DbUtils.resultSetToTableModel(result));
+                //Display all the customers on the JTable
+                customerTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
+                //The customer cannot be found
                 JOptionPane.showMessageDialog(null, "The Customer: " + searchCustomerField.getText() +" cannot be found");
             }
         }catch(Exception ex){
+            //Show an error with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
     }//GEN-LAST:event_searchCustomerActionPerformed
 
     private void updateTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTableButtonActionPerformed
+        //Refesh the table
         updateTable();
     }//GEN-LAST:event_updateTableButtonActionPerformed
 
@@ -1278,21 +1359,27 @@ public class CustomerInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_editDiscountBoxActionPerformed
 
     private void customerTypeBoxEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTypeBoxEditActionPerformed
+        //Insert the selected item from a JCombo box into a Text Field
         editCustomerType.setText(customerTypeBox.getSelectedItem().toString());
     }//GEN-LAST:event_customerTypeBoxEditActionPerformed
 
     private void addMOTDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMOTDateActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_addMOTDateActionPerformed
 
     private void deleteVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehActionPerformed
-       int index = customerTable.getSelectedRow();
-       //7
+       //Get the selected row from the table
+        int index = customerTable.getSelectedRow();
+        //Get the value of the selected row at colum 7
        String veh = customerTable.getValueAt(index, 7).toString();
        try{
+           //Creating a MySQL statement which will delete the selected vehicle
            prestate = db.conn.prepareStatement("DELETE FROM `vehicle` WHERE `regNum` = '"+veh+"' ");
+           //Execute the query
            prestate.execute();
+           //Refreash the table
            updateTable();
+           //Show that the vehicle has been deleted
            JOptionPane.showMessageDialog(null, "Vehicle: " + veh  + " has been deleted");
        }catch(Exception ex){
            

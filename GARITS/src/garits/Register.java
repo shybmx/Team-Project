@@ -1,10 +1,7 @@
 package garits;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
@@ -907,8 +904,6 @@ public class Register extends javax.swing.JPanel {
         String email = insertEMail.getText();
         String position = insertPositionText.getText();
         String labourRate = insertLabourRate.getText();
-        Connection conn = null;
-        PreparedStatement prestate = null;
         try{
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`login`(Username, Loginpassword, "
                 + "Name, Address, PostCode, Telephone, EMail, Position, LabourRate)"

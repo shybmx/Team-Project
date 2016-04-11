@@ -19,10 +19,15 @@ public class JobList extends javax.swing.JPanel {
      Vector<String> work = new Vector<>();
      double rate;
     public JobList(JFrame frame, DBConnect db) {
+        //Sets ip all the componets within this JPanel
         initComponents();
+        //Passing in a frame object
         myFrame = frame;
+        //Passing in the database connection
         this.db = db;
+        //Refreshing the JPanel
         this.repaint();
+        //Removing the background from all JPanels, JButtons and making certain textfields uneditable
         editJobStatusAddWorkDone.setOpaque(false);
         editJobStatusAddWorkDone.setContentAreaFilled(false);
         editJobStatusAddWorkDone.setBorderPainted(false);
@@ -71,70 +76,97 @@ public class JobList extends javax.swing.JPanel {
         editJobCustomerName.setEditable(false);
         editJobCustomerName.setEditable(false);
         editJobDateBookedIn.setEditable(false);
-        updateTable();
-        getRate();
         editJobStatusPanel.setVisible(false);
         editJobStatusPanel.setOpaque(false);
         jobNumber.setEditable(false);
         hourlyRate.setEditable(false);
+        //Set the size of this JPanel
         this.setSize(1300, 900);
+        //Populate the combo box with items fron the database
         insertCombo();
-        
+        //Update the JTable from the database
+        updateTable();
+        //Get the rate of the mechanic from the login and database
+        getRate();
+        //Set the field of the hourly rate
         hourlyRate.setText(String.valueOf(rate));
     }
     
     public void getRate() {
+        //Getting the rate of the user that is logged in
         String user = Pin.loggedUser;
         try {
+            //Creating a MySQL statement which connects to the database to get the hourly rate
             prestate = db.conn.prepareStatement("SELECT LabourRate From login Where Username = " + "'" + user + "'");
+            //Executing the query and placing it into a result set
             ResultSet result = prestate.executeQuery();
+            //Executing the query and going to the next result which is not the header
             result.next();
-            rate = result.getDouble("LabourRate");
-            
+            //Getting the labour rate from the database
+            rate = result.getDouble("LabourRate"); 
         } catch (Exception ex) {
             
         }
     }
     
     public String getNo(){
+        //Getting the job number from a text field
         return jobNumber.getText();
     }
+    
     public void insertCombo() {
-        
         try {
+            //Creating a MySQL statement which selects all the job name from a table
             prestate = db.conn.prepareStatement("SELECT `Job Name` FROM jobs");
+            //Executing the query which is then placed into a result set
             ResultSet result = prestate.executeQuery();
+            //Getting the next result which is not the header
             result.next();
+            //Creating a MySQL which gets the count fro jobs
             PreparedStatement prestate2 = db.conn.prepareStatement("Select Count(*) FROM jobs ");
+            //Executing the qurey and placing it into a result set
             ResultSet result2 = prestate2.executeQuery();
+            //Getting the next result
             result2.next();
+            //Placing the count into a int variable
             int it = result2.getInt("Count(*)");
             for (int i = it; i != 0; i--) {
+                //A loop to add each item into the drop down menu
                 editJobStatusWorkDrop.addItem(result.getString("Job Name"));
+                //Going to the next result
                 result.next();
             }
         } catch (SQLException ex) {
-            System.out.println("");
+           
         }
     }
     
     public void updateTable(){
         try{
+            //Creating a MySQL statement which will select all from the jobsheets table
             prestate = db.conn.prepareStatement("SELECT * FROM `jobsheets`");
+            //Executing the statement and placing it into a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result set and displaying it through a JTable
             jobListTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //An pop up message to show that there is an error to connect to the database or MySQL error
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
     
     public void updatePartsTable() {
         try {
+            //Creating a MySQL statement which will select all from the temp parts table
             prestate = db.conn.prepareStatement("SELECT * FROM `temp parts`");
+            //Execute the statement and placing into a result set
             ResultSet result = prestate.executeQuery();
+            //making the JTable resize itself depending on the information being within it
             partsUsed.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            //Getting the result and display it into the JTable
             partsUsed.setModel(DbUtils.resultSetToTableModel(result));
         } catch (Exception ex) {
+            //Displaying a pop up menu which shows an error with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -748,11 +780,17 @@ public class JobList extends javax.swing.JPanel {
 
     private void editStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusActionPerformed
         try{
+            //Get the selected row and place them into an int variable
             int index = jobListTable.getSelectedRow();
+            //Get the value at the select row and set the text with the value at colum 0
             jobNumber.setText(jobListTable.getValueAt(index, 0).toString());
+            //Getting the selected row and placing the value at colum 8 into a string variable
             String test = jobListTable.getValueAt(index, 8).toString();
+            //If the String variable is the same as pending
             if(test.equals("Pending")){
+                //Make the current panel invisable
                 buttons.setVisible(false);
+                //Make the new panel visable
                 editJobStatusPanel.setVisible(true);
             }else{
                 
@@ -764,7 +802,9 @@ public class JobList extends javax.swing.JPanel {
 
     private void editJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobActionPerformed
         try{
+            //Get the selected row and place them into an int variable
             int index = jobListTable.getSelectedRow();
+            //Set the text fields with the values from the selected row
             editJobCustomerID.setText(jobListTable.getValueAt(index, 0).toString());
             editJobCustomerName.setText(jobListTable.getValueAt(index, 1).toString());
             editJobVehicleRegNo.setText(jobListTable.getValueAt(index, 2).toString());
@@ -773,18 +813,30 @@ public class JobList extends javax.swing.JPanel {
             editJobDateBookedIn.setText(jobListTable.getValueAt(index, 5).toString());
             editJobModel.setText(jobListTable.getValueAt(index, 6).toString());
             editJobTelephone.setText(jobListTable.getValueAt(index, 7).toString());
+            //Creating a MySQL statement which will get the count of task where it has a job number
             PreparedStatement prestate = db.conn.prepareStatement("Select Count(*) FROM task where Job_Number = '"+jobListTable.getValueAt(index, 0)+"'");
+            //Execute the query and place it into a result set
             ResultSet result = prestate.executeQuery();
+            //Goes to the next result which is not the header
             result.next();
+            //Get the count and place it into a int variable
             int it = result.getInt("Count(*)");
-                  PreparedStatement prestate2 = db.conn.prepareStatement("SELECT * FROM task WHERE Job_Number = '"+jobListTable.getValueAt(index, 0)+"'  ");
-                  ResultSet result2 = prestate2.executeQuery();
-                 result2.next();
+            //Creating a MySQL statement which will select all the values from the task there there is a job number
+            PreparedStatement prestate2 = db.conn.prepareStatement("SELECT * FROM task WHERE Job_Number = '"+jobListTable.getValueAt(index, 0)+"'  ");
+            //Exectuing the result and placing it into a result set
+            ResultSet result2 = prestate2.executeQuery();
+            //Goes to the next value which is not the header
+            result2.next();
+            //Creating a for loop which will iterate through the whole count
             for(int i = it; i != 0; i--){
+                //Adds everything from task to the vector 
                 vec.add(result2.getString("task"));
+                //Goes to the next result which is not the end 
                 result2.next();
             }
+            //Adds all the results to the JLIst
             editJobWorkDoneListCurrent.setListData(vec);
+            //Makes all the different panels invisable
             buttons.setVisible(false);
             editJobPanel.setVisible(true);
             editJobForm1.setVisible(true);
@@ -792,6 +844,7 @@ public class JobList extends javax.swing.JPanel {
             editJobWorkDone.setVisible(true);
             editJobButtons.setVisible(true);
         }catch(Exception ex){
+            //Show a pop up menu when the user has not selected a user they wish to edit
             JOptionPane.showMessageDialog(null, "You must select a job you wish to edit");
         }
     }//GEN-LAST:event_editJobActionPerformed
@@ -802,57 +855,85 @@ public class JobList extends javax.swing.JPanel {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try{
+            //Create a MySQL which selects all the customers with a name
             prestate = db.conn.prepareStatement("SELECT * FROM `jobsheets` WHERE  `customer` LIKE '"+searchCustomer.getText()+"' ");
+            //Execute the query and place it into a result set
             ResultSet result = prestate.executeQuery();
+            //Create a MySQL statement which gets the count for the customer searched
             prestate = db.conn.prepareStatement("Select Count(*) FROM `jobsheets` WHERE `customer` LIKE  '"+searchCustomer.getText()+"' ");
+            //Execute the query and place it into a result set
             ResultSet result2 = prestate.executeQuery();
+            //Goes to the next result which is not the header
             result2.next();
+            //Places count from the database into an int variable
             int it = result2.getInt("Count(*)");
+            //If the int is bigger then 0 
             if(it > 0){
-            jobListTable.setModel(DbUtils.resultSetToTableModel(result));
+                //Place the result into the JTable
+                jobListTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
                 
             }
         }catch(Exception ex){
+            //A pop up showing there is an error with the database connection and MySQL statements
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
         
         try{
+            //Creating a MySQL statement which will search for a vehicle reg number
             prestate = db.conn.prepareStatement("SELECT * FROM `jobsheets` WHERE  `VehicleRegNumber` =  '"+searchCustomer.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement that counts how many search results there were
             prestate = db.conn.prepareStatement("Select Count(*) FROM `jobsheets` WHERE `VehicleRegNumber` =  '"+searchCustomer.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is the next result
             result2.next();
+            //Get the result from the database and place it into a int variable
             int it = result2.getInt("Count(*)");
+            //if the int variable is bigger then 0
             if(it > 0){
-            jobListTable.setModel(DbUtils.resultSetToTableModel(result));
+                //Place the result set into the database
+                jobListTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
                 
             }
         }catch(Exception ex){
+            ///if there is an error with the database connection or the MySQL statement this error will occur
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void editJobUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobUpdateActionPerformed
-       String jobnum = editJobCustomerID.getText();
+        //Get the value from the text field and place it into a String variable
+        String jobnum = editJobCustomerID.getText();
         try{   
+           //Creating a MySQL statement that will update the job information
            prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `VehicleRegNumber`= '"+editJobVehicleRegNo.getText()+"' ,"
                    + "`Make`= '"+editJobMake.getText()+"',`EstimatedTime`= '"+editJobEstimatedTime.getText()+"' ,"
                    + "`Model`= '"+editJobModel.getText()+"' ,`TelephoneNumber`=  '"+editJobTelephone.getText()+"'   "
                    + "WHERE `Job_Number` = '"+jobnum+"'");
+           //Execute the query
            prestate.execute();
+           //Show a pop up box saying the job has been updated
            JOptionPane.showMessageDialog(null, "Job Number: " + jobnum + " has been updated");
        }catch(Exception ex){
+           //A pop up box showing there was an error with the update 
            JOptionPane.showMessageDialog(null, "Job Number: " + jobnum + " has not been updated");
        }
        
        try{
+           //a for loop for every value within an array 
            for(String t: vec2){
+               //Creating a MySQL statement which will insert items to the database
                prestate = db.conn.prepareStatement("INSERT INTO `task` (Job_Number, Task)"
                        + "Values ( '"+jobnum+"', ?  )");
+               //Placing the string into the MySQL statement
                prestate.setString(1, t);
+               //Executing the query
                prestate.executeUpdate();
+               //Closing the JPanel
                editJobPanel.setVisible(false);
            }
        }catch(Exception ex){
@@ -861,30 +942,38 @@ public class JobList extends javax.swing.JPanel {
     }//GEN-LAST:event_editJobUpdateActionPerformed
 
     private void editJobCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobCloseActionPerformed
+        //Set the JPanel to invisable
         this.setVisible(false);
     }//GEN-LAST:event_editJobCloseActionPerformed
 
     private void editJobAddNewWorkDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobAddNewWorkDoneActionPerformed
+        //Adding the new elements into the vector
         vec2.add(editJobDropDown.getSelectedItem().toString());
+        //Adding the new work done to the JList
         editJobWorkDoneListNew.setListData(vec2);
     }//GEN-LAST:event_editJobAddNewWorkDoneActionPerformed
 
     private void editStatusRemoveCurrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStatusRemoveCurrentActionPerformed
+        //Getting the job number and placing it into a string variable
         String jobnum = editJobCustomerID.getText();
         try{
-             
+            //Update the JList
              editJobWorkDoneListCurrent.updateUI();
+             //Creating a MySQL statement where we delete items from the JList
              prestate = db.conn.prepareStatement("DELETE FROM `Task` WHERE "
                      + " `Job_Number` = '"+jobnum+"' AND `Task` = '"+editJobWorkDoneListCurrent.getSelectedValue().toString()+"' ");
+             //Removing items from the JList
              vec.remove(editJobWorkDoneListCurrent.getSelectedValue().toString()); 
+             //Executing the query
              prestate.execute();
-             System.out.println(prestate);
          }catch(Exception ex){
+             //Printing out any errors to the terminal
              ex.printStackTrace();
          }
     }//GEN-LAST:event_editStatusRemoveCurrentActionPerformed
 
     private void refreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableActionPerformed
+        //refreshing the JTable
         updateTable();
     }//GEN-LAST:event_refreshTableActionPerformed
 
@@ -893,92 +982,121 @@ public class JobList extends javax.swing.JPanel {
     }//GEN-LAST:event_editJobStatusWorkDropActionPerformed
 
     private void editJobStatusAddWorkDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusAddWorkDoneActionPerformed
+        //Adding elements to the vector
         work.add(editJobStatusWorkDrop.getSelectedItem().toString());
+        //Adding elements to the JList
         editWorkStatusWorkList.setListData(work);
     }//GEN-LAST:event_editJobStatusAddWorkDoneActionPerformed
 
     private void editJobStatusAddPartsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editJobStatusAddPartsActionPerformed
+        //Creating a new select parts object
         SelectPartsFor selectPartsForm = new SelectPartsFor(db, this);
+        //Making the frame visable
         selectPartsForm.setVisible(true);
     }//GEN-LAST:event_editJobStatusAddPartsActionPerformed
 
     private void completeJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeJobActionPerformed
+        //Creating a null prestate which we will be using
         PreparedStatement prestate2 = null;
-
         try {
+            //Creating a MySQL which will select the total price from temp parts table
             prestate = db.conn.prepareStatement("SELECT `Total Price` FROM `temp parts`  ");
+            //Executing the query and placing it in a result set
             ResultSet result1 = prestate.executeQuery();
-
+            //Creating a MySQL statement which gets the count form temp parts 
             prestate2 = db.conn.prepareStatement("SELECT count(*) FROM `temp parts`");
+            //Executing the query and placing it in a result set
             ResultSet result2 = prestate2.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Placing the count into an int variable
             int it = result2.getInt("count(*)");
+            //Making a double variable
             double partsTotal = 0;
+            //Placing the count into an int variable
             result1.next();
+            //A for loop to go through every element in the count
             for (int i = it; i != 0; i--) {
+                //Adding parts total to the total price from the database
                 partsTotal = partsTotal + result1.getDouble("Total Price");
+                //Going to the next result
                 result1.next();
             }
-
+            //Creating a new MySQL query which will select the VAT amount
             prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables` = 'VAT' ");
+            //Placing the result into a result set
             ResultSet vatR = prestate.executeQuery();
+            //Going to the next result which is not the header
             vatR.next();
-
+            //Creating the formatting for the numbers
             DecimalFormat format = new DecimalFormat("0.00");
-
+            //Creating a labour rate double variable which will take calculate the duration
             double labourTotal = rate * (Double.parseDouble(duration.getText()));
-
+            //Creating a double variable which takes sub totals
             double subTotal = labourTotal + partsTotal;
-
+            //Creating a doube to store the sub vat
             double subVat = vatR.getDouble("Value") / 100 * subTotal; // added the vat from database
-
+            //Creating a double variable which stores the grand total
             double grandTotal = subTotal + subVat;
-
+            //Creaing a string variable that will format the sub vat and make it into a string
             String sVat = format.format(subVat);
-
+            //Creating 2 more prepared statement
             PreparedStatement prestate3;
             PreparedStatement prestate4;
+            //Creating a MySQL statement which selects all the quantity from temp parts
             prestate3 = db.conn.prepareStatement("SELECT `Qty` FROM `temp parts`");
+            //Execute the query and store it in a result set
             ResultSet result3 = prestate3.executeQuery();
+            //Goes to the next result which is not the header
             result3.next();
-
+            //Creating a new query that will select the description from temp parts
             prestate3 = db.conn.prepareStatement("SELECT `Description` FROM `temp parts` ");
+            //Executing the query and placing it in a result set
             ResultSet result4 = prestate3.executeQuery();
+            //Going to the next result which is not the header
             result4.next();
-
+            //Creating a statement which will select all from temp parts
             prestate4 = db.conn.prepareStatement("SELECT * FROM `temp parts` ");
+            //Execute the qeury and place it in a result set
             ResultSet result5 = prestate4.executeQuery();
+            //Goes to the next result which is not the header
             result5.next();
-
-            for (int i = it; i != 0; i--) {
-
+            //A for loop which goes through all the count
+            for (int i = it; i != 0; i--) { 
+                //Creates a query which Inserts into job completed all the items which are needed
                 prestate3 = db.conn.prepareStatement("INSERT INTO `job completed` (`Job_Number`, "
                     + " `Description`,  `Part No`,`Unit Cost`,`Qty`, `Total Price`, `Labour Rate`,  `Duration`  ,`VAT`, `Grand Total`) "
                     + "VALUES ( '" + jobNumber.getText() + "', '" + result4.getString("Description") + "',     '"+result5.getString("Part No")+"',  '"+ result5.getFloat("Unit Cost")+"' ,  " + result3.getInt("Qty") + ",'" + (result3.getInt("Qty")* result5.getDouble("Unit Cost")) + "','" + rate + "',    '"+duration.getText()+"'    ,'" + sVat + "','" + grandTotal + "' )");
-                System.out.println(prestate3);
+                //Goes to the next result
                 result3.next();
                 result4.next();
                 result5.next();
+                //Execute the query
                 prestate3.executeUpdate();
-
             }
-
+            //Creating a for loop which will insert into work done
             for (int i = 0; i < work.size(); i++) {
+                //Creating a statement which will insert all the work done with the right job number
                 prestate3 = db.conn.prepareStatement("INSERT INTO `work done`(`Job_Number` , `work done`)   VALUES (  '" + jobNumber.getText() + "', '" + work.get(i) + "'   )  ");
+                //Execute the query
                 prestate3.executeUpdate();
             }
-
+            //Creating a query which will update the jobsheet to completed
             prestate4 = db.conn.prepareStatement("UPDATE `jobsheets` SET `Status` = 'Complete' WHERE"
                 + " `Job_Number` = '" + jobNumber.getText() + "'  ");
+            //Execute the query 
             prestate4.execute();
+            //Update the JTable
             updateTable();
-
+            //Creating a query which deletes everything from temp parts
             prestate4 = db.conn.prepareStatement("DELETE FROM `temp parts`");
+            //Execute the query
             prestate4.execute();
+            //Make this JPanel invisable
             editJobStatusPanel.setVisible(false);
         } catch (Exception ex) {
+            //Print out any errors to the terminal
             ex.printStackTrace();
-
         }
     }//GEN-LAST:event_completeJobActionPerformed
 

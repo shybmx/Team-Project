@@ -2,7 +2,6 @@ package garits;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Payment extends javax.swing.JPanel {
