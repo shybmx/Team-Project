@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class Stock extends javax.swing.JPanel {
-    
     DBConnect db;
     PreparedStatement prestate;
     Vector<String> vec = new Vector<>();
@@ -23,8 +22,11 @@ public class Stock extends javax.swing.JPanel {
      double basketTotal; // reset to 0
      Vector<String> basketVec = new Vector<>();
     public Stock(DBConnect db) {
+        //Setting the all the componerts within this JPanel
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the backgrounds from the JButtons, JPanels and making some of the textfields uneditable
         bringOrder.setOpaque(false);
         bringOrder.setContentAreaFilled(false);
         bringOrder.setBorderPainted(false);
@@ -65,8 +67,6 @@ public class Stock extends javax.swing.JPanel {
         placeOrder.setOpaque(false);
         placeOrder.setContentAreaFilled(false);
         placeOrder.setBorderPainted(false);
-        updateTable();
-        insertCombo();
         addStockPanel.setVisible(false);
         addStockPanel.setOpaque(false);
         addStockToDB.setOpaque(false);
@@ -89,12 +89,6 @@ public class Stock extends javax.swing.JPanel {
         orderPriceOfUnit.setEditable(false);
         orderTotal.setEditable(false);
         orderSupplier.setEditable(false);
-        this.setSize(1300, 900);
-        updateSalesTable();
-        orderGrandTotal.setEditable(false);
-        total = 0;
-        grandTotal = 0;
-        basketTotal = 0;
         saleToCustomerPanel.setVisible(false);
         saleToCustomerPanel.setOpaque(false);
         addToBasket.setOpaque(false);
@@ -103,61 +97,94 @@ public class Stock extends javax.swing.JPanel {
         pay.setOpaque(false);
         pay.setContentAreaFilled(false);
         pay.setBorderPainted(false);
+        orderGrandTotal.setEditable(false);
+        //Setting the size of the JPanel
+        this.setSize(1300, 900);
+        //refreshing the JTable
+        updateSalesTable();
+        updateTable();
+        insertCombo();
+        //Setting variables
+        total = 0;
+        grandTotal = 0;
+        basketTotal = 0;
     }
 
     public void updateTable() {
         try {
+            //Creating a MySQL statement which gets all from parts
             prestate = db.conn.prepareStatement("SELECT * from `garits`.`parts`");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result in the JTable
             stockTable.setModel(DbUtils.resultSetToTableModel(result));
         } catch (Exception ex) {
+            //An error message if there is a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
     
     public void updateTempTable(){
         try{
+            //Creating a MySQL statment which gets all from temp parts
             prestate = db.conn.prepareStatement("SELECT * from `temp part order` ");
+            //Executing the query and placing it in a result set 
             ResultSet result = prestate.executeQuery();
+            //Placing the result into a JTable
             orderList.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+             //An error message if there is a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
     
     public void updateSalesTable(){
         try{
+            //Creating a mySQL query that gets everything from the parts table
             prestate = db.conn.prepareStatement("SELECT * from `parts` ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result into a JTable
             salesTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //An error message if there is a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
 
     public void insertCombo() {
         try {
+            //Creating a mySQL query that gets everything from the suppliers table
             prestate = db.conn.prepareStatement("SELECT * FROM suppliers");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Going to the next result which is not the header
             result.next();
+            //Creating a mySQL query that gets the count from the suppliers table
             PreparedStatement prestate2 = db.conn.prepareStatement("Select Count(*) FROM suppliers ");
+            //Executing the query and placing it in a result set
             ResultSet result2 = prestate2.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Placing the count from the database into a int variable
             int it = result2.getInt("Count(*)");
+            //For loop to go throught everything in the database
             for (int i = it; i != 0; i--) {
+                //Adding items into the JCombo box
                 supplierCombo.addItem(result.getString("Supplier"));
+                //Going to the next result
                 result.next();
             }
         } catch (SQLException ex) {
-            System.out.println("");
+            
         }
     }
 
     public void setTextFields(String cost, String partName, String suppName) {
+        //Setting the text fields
         orderPriceOfUnit.setText(cost);
         orderSupplier.setText(suppName);
         orderDescription.setText(partName);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -967,11 +994,14 @@ public class Stock extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
+        //Closing a JPanel
         orderStockPanel.setVisible(true);
+        //Opening another JPanel
         buttons.setVisible(false);
     }//GEN-LAST:event_orderActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        //Refreshing the JTable
         updateTable();
     }//GEN-LAST:event_updateActionPerformed
 
@@ -981,21 +1011,31 @@ public class Stock extends javax.swing.JPanel {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try{
+            //Creating a MySQL statement which selects the part number
             prestate = db.conn.prepareStatement("SELECT * FROM `parts` WHERE PartNo = '"+searchStock.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result into a JTable
             stockTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
             
         }
-        
         try{
+            //Creating a MySQL statement which  gets the vehicle type
             prestate = db.conn.prepareStatement("SELECT * FROM `parts` WHERE  `VehicleType` = '"+searchStock.getText()+"' ");
+            //Executing the result and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which gets the count 
             prestate = db.conn.prepareStatement("Select Count(*) FROM `parts` WHERE `VehicleType` = '"+searchStock.getText()+"' ");
+            //Executing the result and placing it in a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Getting the count from the database and placing it in a int variable
             int it = result2.getInt("Count(*)");
+            //If the count is bigger then 0
             if(it > 0){
+                //Place the result in the JTable
                 stockTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
                 
@@ -1003,15 +1043,22 @@ public class Stock extends javax.swing.JPanel {
          }catch(Exception ex){
             
          }
-        
         try{
+            //Creating query that selects from part name
             prestate = db.conn.prepareStatement("SELECT * FROM `parts` WHERE  `PartName` = '"+searchStock.getText()+"' ");
+            //Executing the result and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement which gets the count 
             prestate = db.conn.prepareStatement("Select Count(*) FROM `parts` WHERE `PartName` = '"+searchStock.getText()+"' ");
+            //Executing the result and placing it in a result set
             ResultSet result2 = prestate.executeQuery();
+            //Going to the next result which is not the header
             result2.next();
+            //Getting the count from the database and placing it in a int variable
             int it = result2.getInt("Count(*)");
+            //If the count is bigger then 0
             if(it > 0){
+                //Place the result in the JTable
                 stockTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
                 
@@ -1022,8 +1069,9 @@ public class Stock extends javax.swing.JPanel {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void addStockToDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStockToDBActionPerformed
-       DecimalFormat format = new DecimalFormat("0.00");
-        
+        //Formatting the number
+        DecimalFormat format = new DecimalFormat("0.00");
+        //Getting text fields and placing them in string variables
         String partNumber = addPartNumber.getText();
         String partName = addPartName.getText();
         String manufacturer = addManufacturer.getText();
@@ -1033,11 +1081,12 @@ public class Stock extends javax.swing.JPanel {
         String quantity = addQuantity.getText();
         String threshold = addThreshold.getText();
         String fUnitCost = format.format(Double.parseDouble(unitCost));
-        
         try {
+            //Creating a MySQL to insert into the database
             prestate = db.conn.prepareStatement("INSERT INTO `parts`(`PartNo`, `PartName`, "
                     + "`Supplier`, `VehicleType`, `Years`, `UnitCost`, `Quantity`, `Threshold`) "
                     + "VALUES (?,?,?,?,?,?,?,?)");
+            //Placing the string variable into the MySQL query
             prestate.setString(1, partNumber);
             prestate.setString(2, partName);
             prestate.setString(3, manufacturer);
@@ -1046,49 +1095,66 @@ public class Stock extends javax.swing.JPanel {
             prestate.setString(6, fUnitCost);
             prestate.setString(7, quantity);
             prestate.setString(8, threshold);
+            //Execute the query and place it in a int variable
             int i = prestate.executeUpdate();
+            //If the result is more the 0
             if (i > 0) {
+                //Show that the part has been added
                 JOptionPane.showMessageDialog(null, "Part has been added");
+                //Removing the JPanel
                 addStockPanel.setVisible(false);
             } else {
+                //An error message showing the part has not been added
                 JOptionPane.showMessageDialog(null, "Part has not been added");
             }
         } catch (Exception ex) {
+            //An error message showung that there was a problem with the database connection or MySQL query
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_addStockToDBActionPerformed
 
     private void addCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCloseActionPerformed
+        //Making a JPanel invisable
         addStockPanel.setVisible(false);
     }//GEN-LAST:event_addCloseActionPerformed
 
     private void addStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStockActionPerformed
+        //Making a JPanel invisable
         buttons.setVisible(false);
+        //Making a JPanel visable
         addStockPanel.setVisible(true);
     }//GEN-LAST:event_addStockActionPerformed
 
     private void editStockToDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStockToDBActionPerformed
         try {
+            //Creating a MySQL to update the parts
             prestate = db.conn.prepareStatement("UPDATE `parts` SET `PartName`= '" + editPartName.getText() + "' ,"
                     + "`Supplier`= '" + editManufacturer.getText() + "',`VehicleType`='" + editVehicleType.getText() + "',"
                     + "`Years`='" + editYear.getText() + "' ,`UnitCost`='" + editUnitCost.getText() + "' ,"
                     + "`Quantity`= '" + editQuantity.getText() + "' ,  `Threshold` = '"+editThreshold.getText()+"' "
                     + "WHERE `PartNo` = '" + editPartNumber.getText() + "'  ");
+            //Executing the query
             prestate.execute();
+            //Making the JPanel invisable
             editStockPanel.setVisible(false);
+            //A pop up box showing the part has been updated
             JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has been updated");
         } catch (Exception ex) {
+            //An error message showung that there was a problem with the database connection or MySQL query
             JOptionPane.showMessageDialog(null, "Part: " + editPartNumber.getText() + " has not been updated");
         }
     }//GEN-LAST:event_editStockToDBActionPerformed
 
     private void editCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCloseActionPerformed
+        //Making a JPanel invisable
         editStockPanel.setVisible(false);
     }//GEN-LAST:event_editCloseActionPerformed
 
     private void editStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStockActionPerformed
         try {
+            //Geting the selected row and placing it into an int variable
             int index = stockTable.getSelectedRow();
+            //Getting all the fields from the JTable and placing them into text field
             editPartNumber.setText(stockTable.getValueAt(index, 0).toString());
             editPartName.setText(stockTable.getValueAt(index, 1).toString());
             editManufacturer.setText(stockTable.getValueAt(index, 2).toString());
@@ -1097,21 +1163,29 @@ public class Stock extends javax.swing.JPanel {
             editUnitCost.setText(stockTable.getValueAt(index, 5).toString());
             editQuantity.setText(stockTable.getValueAt(index, 6).toString());
             editThreshold.setText(stockTable.getValueAt(index, 8).toString());
+            //Making a JPanel invisable
             editStockPanel.setVisible(true);
+            //Making a JPanel visable
             buttons.setVisible(false);
         } catch (Exception ex) {
+            //Showing an error message that the user has not selected a part
             JOptionPane.showMessageDialog(null, "You must select a part you wish to edit");
         }
     }//GEN-LAST:event_editStockActionPerformed
 
     private void addToOrderListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToOrderListActionPerformed
+        //Formatting the number
         DecimalFormat format = new DecimalFormat("0.00");
+        //Removing the £ sign
         total = Double.parseDouble(orderTotal.getText().replace('£', '\0'));
+        //Calculations
         String sTotal = format.format(total);
         grandTotal = grandTotal + total;
+        //Formatting the result
         String sTotal2 = format.format(grandTotal);
-        
+        //Setting it in a text field and parsing to string
         orderGrandTotal.setText(String.valueOf(sTotal2));
+        //Getting all the text fields and placing them in a string variable
         String orderNumberString = orderNumber.getText();
         String orderDescriptionString = orderDescription.getText();
         String orderQuantityString = orderQuantity.getText();
@@ -1120,8 +1194,10 @@ public class Stock extends javax.swing.JPanel {
         String orderDateString = orderDate.getText();
         String orderIDString = orderID.getText();
         try{
+            //Creating a MySQL to insert into the database
             prestate = db.conn.prepareStatement("INSERT INTO `temp part order` (`Order No`, `Description`, "
                     + "`Qty`, `Price`, `Supplier`, `Date`, `Order ID`) Values (?,?,?,?,?,?,?) ");
+            //Passing in the string variables to the query
             prestate.setString(1, orderNumberString);
             prestate.setString(2, orderDescriptionString);
             prestate.setString(3, orderQuantityString);
@@ -1129,10 +1205,12 @@ public class Stock extends javax.swing.JPanel {
             prestate.setString(5, orderSupplierString);
             prestate.setString(6, orderDateString);
             prestate.setString(7, orderIDString);
+            //Executing the query
             prestate.executeUpdate();
+            //Updating the table
             updateTempTable();
         }catch(Exception ex){
-            System.out.println(prestate);
+            //Print out errors to the terminal
             ex.printStackTrace();
         }
     }//GEN-LAST:event_addToOrderListActionPerformed
@@ -1142,24 +1220,34 @@ public class Stock extends javax.swing.JPanel {
     }//GEN-LAST:event_supplierComboActionPerformed
 
     private void selectSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectSupplierActionPerformed
+        //Get item from combo box
         String x = supplierCombo.getSelectedItem().toString();
+        //Creating a new supplier frame object
         SupplierParts supplierFrame = new SupplierParts(x, db, this);
+        //Making the JFrame visable
         supplierFrame.setVisible(true);
     }//GEN-LAST:event_selectSupplierActionPerformed
 
     private void calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateActionPerformed
+        //parsing the int
         int quantity = Integer.parseInt(orderQuantity.getText());
+        //Parsing to double
         double price = Float.parseFloat(orderPriceOfUnit.getText());
         double total = quantity * price;
+        //Formatting
         DecimalFormat format = new DecimalFormat("0.00");
+        //Calculations
         String sTotal = format.format(total);
         orderTotal.setText("£ " + sTotal);
     }//GEN-LAST:event_calculateActionPerformed
 
     private void orderListCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderListCloseActionPerformed
         try{
+            //Creating a MySQL statement which deletes the table
             prestate = db.conn.prepareStatement("delete from `temp part order`");
+            //Execute the query
             prestate.execute();
+            //Close the JPanel
             orderStockPanel.setVisible(false);
         }catch(Exception ex){
             
@@ -1168,11 +1256,17 @@ public class Stock extends javax.swing.JPanel {
 
     private void placeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderActionPerformed
         try{
+            //Creating a MySQL to insert into the database
             prestate = db.conn.prepareStatement("INSERT INTO `part order` SELECT * FROM `temp part order` ");
+            //Executing the query
             prestate.executeUpdate();
+            //Creating a MySQL to delete the table
             prestate = db.conn.prepareStatement("DELETE FROM `temp part order` ");
+            //Executing the query
             prestate.execute();
+            //Refresh the JTable
             updateTempTable();
+            //closing the JPanel
             orderStockPanel.setVisible(false);
         }catch(Exception ex){
             
@@ -1181,33 +1275,47 @@ public class Stock extends javax.swing.JPanel {
 
     private void addToBasketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToBasketActionPerformed
         try{
+            //Get the selected row 
             int index = salesTable.getSelectedRow();
+            //Get all the values from the table
             int tableQty = Integer.parseInt(salesTable.getValueAt(index, 6).toString());
             String partNo = salesTable.getValueAt(index, 0).toString();
             String partName = salesTable.getValueAt(index, 1).toString();
             String unitCost = salesTable.getValueAt(index, 5).toString();
+            //Calculations
             int nQty = tableQty - (Integer.parseInt(newQty.getText()));
-            System.out.println(nQty);
+            //Creating a mysql that will update the table
             prestate = db.conn.prepareStatement("UPDATE `parts` SET `Quantity` = '"+nQty+"' WHERE  `PartNo` = '"+partNo+"'  ");
+            //Executing the query
             prestate.execute();
+            //Ca;culatons
             double totalUnitCost = (Double.parseDouble(newQty.getText())) * (Double.parseDouble(unitCost));
+            //Adding to the array list
             rowData.add(Arrays.asList(partName, partNo, unitCost, newQty.getText(), String.valueOf(totalUnitCost)));
+            //Calculations
             basketTotal = basketTotal +totalUnitCost;
+            //Adding to the basket
             basketVec.add(partNo + "  " + partName + "("+newQty.getText()+")");
             basket.setListData(basketVec);
+            //Refresh the Table
             updateSalesTable();
          }catch(Exception ex){
+             //An error message showing they have not selected an item
             JOptionPane.showMessageDialog(null, "You must select an item from the menu you wish to add to the basket");
         }
     }//GEN-LAST:event_addToBasketActionPerformed
 
     private void saleToCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleToCustomerActionPerformed
+        //Closing a JPanel
         buttons.setVisible(false);
+        //Opening another JPanel
         saleToCustomerPanel.setVisible(true);
     }//GEN-LAST:event_saleToCustomerActionPerformed
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
+        //Creating a new payment for parts JFrame
         PaymentForParts pFrame = new PaymentForParts(db,rowData, basketTotal);
+        //Making the JFrame visable
         pFrame.setVisible(true);
     }//GEN-LAST:event_payActionPerformed
 
@@ -1220,14 +1328,21 @@ public class Stock extends javax.swing.JPanel {
     }//GEN-LAST:event_closeStockActionPerformed
 
     private void deleteStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStockActionPerformed
+        //Getting the selected item from the JTable
         int index = stockTable.getSelectedRow();
+        //Getting the value from the JTable
         String partno = stockTable.getValueAt(index, 0).toString();
         try{
+            //MySQL statement to delete an item
             prestate = db.conn.prepareStatement("DELETE FROM `parts` WHERE `PartNo` = '"+partno+"' ");
+            //Executing the query
             prestate.execute();
+            //Refresh the JTable
             updateTable();
+            //A pop up box to show they item has been deleted
             JOptionPane.showMessageDialog(null, "Item: " + partno + " has been deleted");
         }catch(Exception ex){
+            //A error message if the part cannot be deleted
             JOptionPane.showMessageDialog(null, "Item: " + partno + " has not been deleted");
         }
     }//GEN-LAST:event_deleteStockActionPerformed

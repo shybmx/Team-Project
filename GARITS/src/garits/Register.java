@@ -11,9 +11,13 @@ public class Register extends javax.swing.JPanel {
     PreparedStatement prestate;
     DBConnect db;
     public Register(JFrame frame, DBConnect db) {
+        //Setting up all the componets within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Passing in the JFrame
         myFrame = frame;
+        //Removing the background from all the JButtons and JPanels, Making certain textfields uneditable
         delete.setOpaque(false);
         delete.setContentAreaFilled(false); 
         delete.setBorderPainted(false);
@@ -49,7 +53,6 @@ public class Register extends javax.swing.JPanel {
         editingUser.setVisible(false);
         editingUser.setOpaque(false);
         editUserName.setEditable(false);
-        updateTable();
         fieldsPanel.setVisible(false);
         search.setOpaque(false);
         search.setContentAreaFilled(false); 
@@ -57,27 +60,40 @@ public class Register extends javax.swing.JPanel {
         refreshTable.setOpaque(false);
         refreshTable.setContentAreaFilled(false); 
         refreshTable.setBorderPainted(false);
+        //Refresing the JTable
+        updateTable();
+        //Setting the size of this JPanel
         this.setSize(1300, 900);
     }
     
     public void updateTable(){
         try{
+            //Creating a MySQL statement which will get all from login
             prestate = db.conn.prepareStatement("SELECT * from `login`");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result within a JTable
             userNames.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //Showing any error message with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
     
     public boolean delete(String id){
         try{ 
+            //Creating a MySQL statement which will delete a user from the database
             String sql = "DELETE FROM `login` WHERE `Username` = '" + id + "'";
+            //Passing in the query into the database
             prestate = db.conn.prepareStatement(sql);
+            //Executing the query
             prestate.execute();
+            //Returning true
             return true;
         }catch(Exception ex){
+            //An error message
             JOptionPane.showMessageDialog(close, ex);
+            //Returning false
             return false;
         }
     }
@@ -800,20 +816,25 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
-         buttons.remove(this);
+        buttons.remove(this);
         this.remove(this);
     }//GEN-LAST:event_closeActionPerformed
 
     private void addUserOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserOptionActionPerformed
+        //Closing the JPanels
         tablePanel.setVisible(false);
         buttons.setVisible(false);
+        //Making this JPanel visable
         fieldsPanel.setVisible(true);
     }//GEN-LAST:event_addUserOptionActionPerformed
 
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
         try{
+            //Getting the selected row and placing it in an int variable
             int index = userNames.getSelectedRow();
+            //Getting the values fromt the JTables and convertin them to string
             editUserName.setText(userNames.getValueAt(index, 0).toString());
             editPassword.setText(userNames.getValueAt(index, 1).toString());
             editName.setText(userNames.getValueAt(index, 2).toString()); 
@@ -821,27 +842,39 @@ public class Register extends javax.swing.JPanel {
             editPostCode.setText(userNames.getValueAt(index, 4).toString());
             editPhone.setText(userNames.getValueAt(index, 5).toString());
             editEMail.setText(userNames.getValueAt(index, 6).toString());
+            //Making the JPanels invisable
             tablePanel.setVisible(false);
             buttons.setVisible(false);
+            //Making the JPanel visable
             editingUser.setVisible(true);
         }catch(Exception ex){
+            //An error message if there was no user selected
             JOptionPane.showMessageDialog(null, "Please select a user you wish to edit");
         }
                 
     }//GEN-LAST:event_editUserActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        //Array of strings which hold the options
         String[] options ={"Yes","No"};
+        //A pop up box asking if the user should be deleted
         int answer = JOptionPane.showOptionDialog(null, "Are you sure you want to Delete?",
                 "Confirmed", JOptionPane.YES_NO_CANCEL_OPTION, 
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        //If the answer is yes
         if(answer == 0){
+            //Get the user name
             int index = userNames.getSelectedRow();
+            //Create a string id with the user name
             String id = userNames.getValueAt(index, 0).toString();
+            //If returned true
             if(delete(id)){
+                //Update the JTable
                 updateTable();
+                //A pop up box showing the user has been deleted
                 JOptionPane.showMessageDialog(null, id + " has been deleted");
             }else{
+                //A pop up box showing the user has not been deleted
                 JOptionPane.showMessageDialog(null, id + " has not been deleted");
             }
         }       
@@ -871,6 +904,7 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_insertEMailActionPerformed
 
     private void insertPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertPositionActionPerformed
+        //Getting the selected items from the drop box menu and placing it in a text field
         insertPositionText.setText(insertPosition.getSelectedItem().toString());
     }//GEN-LAST:event_insertPositionActionPerformed
 
@@ -895,6 +929,7 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_insertPassword1ActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
+        //Getting all the Text field items and placing them into a string variable
         String username = insertUserName.getText();
         String password = insertPassword.getText();
         String name = insertName.getText();
@@ -905,9 +940,11 @@ public class Register extends javax.swing.JPanel {
         String position = insertPositionText.getText();
         String labourRate = insertLabourRate.getText();
         try{
+            //Creating a MySQL statement which will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`login`(Username, Loginpassword, "
                 + "Name, Address, PostCode, Telephone, EMail, Position, LabourRate)"
                 + "Values(?,?,?,?,?,?,?,?,?)");
+            //Passing in the string variables into the MySQL query
             prestate.setString(1, username);
             prestate.setString(2, password);
             prestate.setString(3, name);
@@ -917,18 +954,23 @@ public class Register extends javax.swing.JPanel {
             prestate.setString(7, email);
             prestate.setString(8, position);
             prestate.setString(9, labourRate);
+            //Executing the query and placing it in an int variable
             int i = prestate.executeUpdate();
             if(i>0){
+                //A pop up box showing that the user has been added
                 JOptionPane.showMessageDialog(null, "User has been added");
             }else{
+                //A pop up box showing an error with adding the user
                 JOptionPane.showMessageDialog(null, "User cannot be added");
             }
         }catch(Exception ex){
+            //Closing the JPanel
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_addUserActionPerformed
 
     private void closeAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAddUserActionPerformed
+        //Closing this JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeAddUserActionPerformed
 
@@ -966,51 +1008,70 @@ public class Register extends javax.swing.JPanel {
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
         try{
+            //Creating a MySQL query that will update the information of the customer
             prestate = db.conn.prepareStatement("UPDATE `login` SET `Name` = '"  + editName.getText() +"', "
                 + " `Loginpassword` = '" +  editPassword.getText() + "', `PostCode` = '"+ editPostCode.getText()+  "', "
                 + " `Telephone` = '"+ editPhone.getText()+"', `EMail` = '"+ editEMail.getText()+"', "
                     + "`Address` = '"+editAddress.getText()+"' "
                 + " WHERE `Username` = '" + editUserName.getText() +"' ");
+            //Executing the query
             prestate.execute();
+            //Making this JPanel invisable
             editingUser.setVisible(false);
+            //A pop up menu which will show the user has been updated
             JOptionPane.showMessageDialog(null, "User: " + editUserName.getText() + " has been updated");
         }catch(Exception ex){
+            //A pop up box showing an error with updating the user
             JOptionPane.showMessageDialog(null, "User: " + editUserName.getText() + " has not been updated");
         }
     }//GEN-LAST:event_editUserButtonActionPerformed
 
     private void closeEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEditUserActionPerformed
+        //Closing the JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeEditUserActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         try{
+            //Creating a MySQL statement which will select all from a search box
             prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE  `Username` = '"+searchUser.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result into the JTable
             userNames.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //Showing an error message that there was a problem with the database or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
-        
         try{
+            //Creating a MySQL statement which will select all from a search box
             prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE  `name` LIKE '"+searchUser.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Creating the MySQL statement which will get the count from the search box
             prestate = db.conn.prepareStatement("Select Count(*) FROM `login` WHERE `name` LIKE  '"+searchUser.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result2 = prestate.executeQuery();
+            //Goes to the next result which is not the header
             result2.next();
+            //Getting the count and placing the count into a int variable
             int it = result2.getInt("Count(*)");
+            //If the count is larger then 0
             if(it > 0){
-            userNames.setModel(DbUtils.resultSetToTableModel(result));
+                //Placing the results within the JTable
+                userNames.setModel(DbUtils.resultSetToTableModel(result));
             }else{
                 
             }
         }catch(Exception ex){
+            //Showing an error message with a connection to the database or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
     }//GEN-LAST:event_searchActionPerformed
 
     private void refreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableActionPerformed
-       updateTable();
+        //Refreshing the JTable
+        updateTable();
     }//GEN-LAST:event_refreshTableActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

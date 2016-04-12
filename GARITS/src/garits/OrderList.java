@@ -10,11 +10,17 @@ public class OrderList extends javax.swing.JFrame {
     PreparedStatement prestate;
     DBConnect db;
     public OrderList(DBConnect db) {
+        //Setting up the componets within the JFrame
         initComponents();
+        //Setting the size of the JFrame
         this.setSize(890, 620);
+        //Making the size of the JFrame non resizeable
         this.setResizable(false);
+        //Passing in the database connection
         this.db = db;
+        //Updating the JTable
         updateTable();
+        //Removing the background from the JButtons and JPanels
         searchTable.setOpaque(false);
         searchTable.setContentAreaFilled(false); 
         searchTable.setBorderPainted(false);
@@ -24,15 +30,20 @@ public class OrderList extends javax.swing.JFrame {
         closeFrame.setOpaque(false);
         closeFrame.setContentAreaFilled(false); 
         closeFrame.setBorderPainted(false);
+        //Making the program not close when the close button is hit
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
     public void updateTable(){
         try{
+            //Creating a MySQL statement that will select everything from the parts table
             prestate = db.conn.prepareStatement("SELECT * FROM `part order`");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result within a JTable
             orderListTable.setModel(DbUtils.resultSetToTableModel(result));
         }catch(Exception ex){
+            //A pop up box to show an error with thr database connection or the mySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     }
@@ -112,28 +123,39 @@ public class OrderList extends javax.swing.JFrame {
 
     private void searchTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTableActionPerformed
         try{
+            //Creating a MySQL query that will select all the parts with a ID
             prestate = db.conn.prepareStatement("SELECT * FROM `part order` WHERE  `Order ID` = '"+searchOrderNumber.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Creating a MySQL statement that will get the count
             prestate = db.conn.prepareStatement("Select Count(*) FROM `part order` WHERE `Order ID` = '"+searchOrderNumber.getText()+"' ");
+            //Executing the query and placing it in a result set
             ResultSet result2 = prestate.executeQuery();
+            //Goes to the next result which is not the header
             result2.next();
+            //Getting the count from the database and placing it in a result set
             int it = result2.getInt("Count(*)");
+            //If the count is larger then 0
             if(it > 0){
-            orderListTable.setModel(DbUtils.resultSetToTableModel(result));
+                //Placing the result within a JTable
+                orderListTable.setModel(DbUtils.resultSetToTableModel(result));
             }else{
+                //Showing an error message if a Order ID cannot be found
                 JOptionPane.showMessageDialog(null, "The item you are searching for cannot be found in the database");
             }
         }catch(Exception ex){
+            //Error if there is a problem witht the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
-            ex.printStackTrace();
         }
     }//GEN-LAST:event_searchTableActionPerformed
 
     private void resetTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetTableActionPerformed
-       updateTable();
+       //Refreshing the JTable
+        updateTable();
     }//GEN-LAST:event_resetTableActionPerformed
 
     private void closeFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameActionPerformed
+        //Making the JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeFrameActionPerformed
 

@@ -5,8 +5,11 @@ import javax.swing.JFrame;
 public class ReceptionistMenu extends javax.swing.JFrame {
     DBConnect db;
     public ReceptionistMenu(DBConnect db) {
+        //Setting up the componets within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the background from all the JButtons
         createJobs.setOpaque(false);
         createJobs.setContentAreaFilled(false); 
         createJobs.setBorderPainted(false);
@@ -28,8 +31,11 @@ public class ReceptionistMenu extends javax.swing.JFrame {
         jobList.setOpaque(false);
         jobList.setContentAreaFilled(false); 
         jobList.setBorderPainted(false);
+        //Make the JFrame non resizable
         this.setResizable(false);
+        //Making the program not close when the close button is hit
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //Set the size of the JFrame
         this.setSize(1300, 900);
     }
 
@@ -126,49 +132,69 @@ public class ReceptionistMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createJobsActionPerformed
+        //Creating a new create jobs object
         CreateJob createJobPanel = new CreateJob(db);
+        //Adding it to this JFrame
         this.getContentPane().add(createJobPanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_createJobsActionPerformed
 
     private void produceInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produceInvoiceActionPerformed
+        //Creating a new Invoice object 
         Invoice invoicePanel = new Invoice(db);
+        //Adding it to this JFrame
         this.getContentPane().add(invoicePanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_produceInvoiceActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        //Creating a new pin object
         Pin pin = new Pin();
+        //Making the new pin object visable
         pin.setVisible(true);
+        //Making this JFrame invisable
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
+        //Creating a new Payment object
         Payment paymentPanel = new Payment(db);
+        //Adding it to this JFrame
         this.getContentPane().add(paymentPanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_paymentActionPerformed
 
     private void jobListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobListActionPerformed
+        //Creating a new Joblist object
         JobList jobListPanel = new JobList(this, db);
+        //Adding it to this JFrame
         this.getContentPane().add(jobListPanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_jobListActionPerformed
 
     private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
+        //Creating a new stock object
         Stock stockPanel = new Stock(db);
+        //Adding it to this JFrame
         this.getContentPane().add(stockPanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_stockActionPerformed
 
     private void reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsActionPerformed
         SparePartReport sparepartreportpanel = new SparePartReport(db);
+        //Adding it to this JFrame
         this.getContentPane().add(sparepartreportpanel);
+        //Refreshing the JFrame
         this.invalidate();
         this.validate();
     }//GEN-LAST:event_reportsActionPerformed

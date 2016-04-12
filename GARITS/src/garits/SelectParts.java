@@ -15,18 +15,26 @@ public class SelectParts extends javax.swing.JFrame {
     MechanicMenu men;
     int tableQty;
     int qty;
-    JobList jl;
-    
+    JobList jl;   
     public SelectParts(DBConnect db, MechanicMenu men) {
+        //Setting the all the componerts within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Passing in the mechanic menu object
         this.men = men;
+        //Setting the size of the JFrame
         this.setSize(1500, 470);
+        //Making the JFrame not resizeable
         this.setResizable(false);
+        //refreshing the JTable
         updateTable();
-         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //Not making the program close when the close button is hit
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //Setting variables
          tableQty = 0;
          qty = 0;
+         //Removing the backgrounds from the JButtons, JPanels and making some of the textfields uneditable
          descText.setEditable(false);
          partNo.setEditable(false);
          totalPrice.setEditable(false);
@@ -42,14 +50,18 @@ public class SelectParts extends javax.swing.JFrame {
         closeFrame.setBorderPainted(false);
     }
     
-    
     public void updateTable(){
         try{
+            //Creating a mySQL query that gets everything from the parts table
             prestate = db.conn.prepareStatement("SELECT * FROM parts ");
+            //Executing the query and placing it in a result set 
             ResultSet result = prestate.executeQuery();
+            //Placing the result into a JTable
             partsTable.setModel(DbUtils.resultSetToTableModel(result));
+            //Closing this JFrame
             this.setVisible(false);
         }catch(Exception ex){
+            //An error message if there is a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     } 
@@ -176,35 +188,51 @@ public class SelectParts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectToOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectToOrderActionPerformed
-       qty =  Integer.parseInt(quantity.getText());
+       //Getting the quantity from the text field
+        qty =  Integer.parseInt(quantity.getText());
+        //Formatting the numbers
        DecimalFormat format = new DecimalFormat("0.00");
         try{
-            
-                if(qty > tableQty){
-             JOptionPane.showMessageDialog(null, "Quantity too high");
+            //Check if the amount requested is larger then the requested amount
+            if(qty > tableQty){
+                //Show an error message 
+                 JOptionPane.showMessageDialog(null, "Quantity too high");
          }else{
-            int index = partsTable.getSelectedRow();
-            double unitCost = Double.parseDouble(partsTable.getValueAt(index, 5).toString());
-            double tPrice = qty * unitCost;
-            String sTotal = format.format(tPrice);
-            totalPrice.setText(sTotal);
-            prestate = db.conn.prepareStatement("INSERT INTO `temp parts`(`Job_Number`, `Description`, `Part No`,  `Unit Cost`, `Qty`, `Total Price`) "
-                    + "VALUES ( "+men.getNo() +", ' "+descText.getText()+"' , '"+partNo.getText()+"',    '"+unitCostField.getText() +"'    ,  '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
-            prestate.executeUpdate();
-           men.updatePartsTable();
-            jl.updatePartsTable();
-            int newQty = tableQty - qty;
-            prestate = db.conn.prepareStatement("UPDATE `parts` SET Quantity = '"+newQty+"' WHERE  `PartNo` = '"+partNo.getText()+"'  ");
-            prestate.execute();
-            updateTable();
+                //Getting the selected row
+                int index = partsTable.getSelectedRow();
+                //Caluclations
+                double unitCost = Double.parseDouble(partsTable.getValueAt(index, 5).toString());
+                double tPrice = qty * unitCost;
+                //Formatting the cost
+                String sTotal = format.format(tPrice);
+                //Setting the text field
+                totalPrice.setText(sTotal);
+                //Creating a MySQL statement which will insert the details into the database
+                prestate = db.conn.prepareStatement("INSERT INTO `temp parts`(`Job_Number`, `Description`, `Part No`,  `Unit Cost`, `Qty`, `Total Price`) "
+                        + "VALUES ( "+men.getNo() +", ' "+descText.getText()+"' , '"+partNo.getText()+"',    '"+unitCostField.getText() +"'    ,  '"+quantity.getText()+" ', '"+totalPrice.getText()+"' ) ");
+                //Executing the query
+                prestate.executeUpdate();
+                //Updating the JTables
+               men.updatePartsTable();
+                jl.updatePartsTable();
+                //Getting the new quantity
+                int newQty = tableQty - qty;
+                //Creating a mySQL which will update the quantity
+                prestate = db.conn.prepareStatement("UPDATE `parts` SET Quantity = '"+newQty+"' WHERE  `PartNo` = '"+partNo.getText()+"'  ");
+                //Executing the query
+                prestate.execute();
+                //Updating the JTable
+                updateTable();
           }
         }catch(Exception ex){
+            //Printing any errors to the terminal 
             ex.printStackTrace();
         }
     }//GEN-LAST:event_selectToOrderActionPerformed
 
     private void closeFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameActionPerformed
-       this.setVisible(false);
+       //Closing this JFrame
+        this.setVisible(false);
     }//GEN-LAST:event_closeFrameActionPerformed
 
     private void quantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityActionPerformed
@@ -212,7 +240,9 @@ public class SelectParts extends javax.swing.JFrame {
     }//GEN-LAST:event_quantityActionPerformed
 
     private void putInBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_putInBoxActionPerformed
+        //Geting the selected row and placing it into an int variable
         int index = partsTable.getSelectedRow();
+        //Getting all the fields from the JTable and placing them into text fields
         tableQty = Integer.parseInt(partsTable.getValueAt(index, 6).toString());
         descText.setText(partsTable.getValueAt(index, 1).toString());
         partNo.setText(partsTable.getValueAt(index, 0).toString());

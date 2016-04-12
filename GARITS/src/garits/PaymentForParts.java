@@ -14,23 +14,24 @@ import wagu.Board;
 import wagu.Table;
 
 public class PaymentForParts extends javax.swing.JFrame {
-
     DBConnect db;
     PreparedStatement prestate;
     ArrayList<List<String>> rowData;
     double basketTotal;
-
     double mPerc;
     double vPerc;
     double markPrice;
-
     double vatPrice;
     double grandTotal;
     String paymentType;
     public PaymentForParts(DBConnect db, ArrayList<List<String>> rowData, double basketTotal) {
+        //Setting up all the componets within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Setting the size of this JFrame
         this.setSize(600, 680);
+        //Removes the background from the JButtons and JPanels
         cardPayment.setOpaque(false);
         cardPayment.setContentAreaFilled(false);
         cardPayment.setBorderPainted(false);
@@ -68,43 +69,48 @@ public class PaymentForParts extends javax.swing.JFrame {
         closeCash.setOpaque(false);
         closeCash.setContentAreaFilled(false);
         closeCash.setBorderPainted(false);
-        this.setResizable(false);
-        this.rowData = rowData;
-        this.basketTotal = basketTotal;
-        calculations();
-        amountFieldCard.setText(String.valueOf(grandTotal));
-        amountFieldCheque.setText(String.valueOf(grandTotal));
-        amountFieldCash.setText(String.valueOf(grandTotal));
         paymentCard.setEditable(false);
         amountFieldCard.setEditable(false);
         amountFieldCash.setEditable(false);
         cashPaymentType.setEditable(false);
         paymentCheque.setEditable(false);
         amountFieldCheque.setEditable(false);
+        //Make the JFrame non resaizeable
+        this.setResizable(false);
+        //Passing in the data
+        this.rowData = rowData;
+        this.basketTotal = basketTotal;
+        //Doing the calculations
+        calculations();
+        //Setting the text fields
+        amountFieldCard.setText(String.valueOf(grandTotal));
+        amountFieldCheque.setText(String.valueOf(grandTotal));
+        amountFieldCash.setText(String.valueOf(grandTotal));
     }
 
     public void calculations() {
-
+        //Formatting the numbers
         DecimalFormat format = new DecimalFormat("0.00");
-        //double mPerc = 0.0;
-        
         try {
+            //Creating a MySQL statement where it will select the mark up price
             prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables` = 'mark up for parts' ");
+            //Executing the query and placing it in a result set
             ResultSet markR = prestate.executeQuery();
+            //Creating a MySQL statement that will get the VAT
             prestate = db.conn.prepareStatement("SELECT * FROM `system config` WHERE `Variables`= 'VAT'");
+            //Executing the query and placing it in a result set
             ResultSet vatR = prestate.executeQuery();
+            //Goes to the next result which is not the header
             markR.next();
             vatR.next();
+            //placing the values into variables
             mPerc = markR.getDouble("Value");
             vPerc = vatR.getDouble("Value");
         } catch (Exception ex) {
-                System.out.println("mark-up error");
+                
         }
-
- 
-        //vPerc = 15;
+        //Calculate everything that is needed
         markPrice = ((mPerc / 100) * basketTotal);
-
         vatPrice = ((vPerc / 100) * (markPrice + basketTotal));
         grandTotal = basketTotal + markPrice + vatPrice;
         String sGTotal = format.format(grandTotal);
@@ -112,34 +118,40 @@ public class PaymentForParts extends javax.swing.JFrame {
     }
 
     public void payment() {
+        //Creating a file on a certain path
         File file = new File("/Users/shahzad/Desktop/PartStoreInvoice.txt");
+        //A List for the headers of the file
         List<String> headers = Arrays.asList("ITEM", "PART NO", "UNIT COST", "QTY", "COST(£)");
         try {
+            //Creating a new file writer
             FileWriter fr = new FileWriter(file.getAbsoluteFile());
+            //Creating a new buffered writer which will let use wirte to the file
             BufferedWriter out = new BufferedWriter(fr);
+            //Starting to write all the information into the file
             out.write("Customer Name: " + customerNameFieldCard.getText());
+            //Creating a new line
             out.newLine();
             out.newLine();
-
+            //Setting the size of the table
             Board board = new Board(90);
+            //Creating the table
             String tableString = board.setInitialBlock(new Table(board, 90, headers, rowData).tableToBlocks()).build().getPreview();
-            System.out.println(tableString);
+            //writing in the table to the file
             out.write(tableString);
-
             out.newLine();
             out.newLine();
-
+            //Writing in more relevent information
             out.write("Payment Type: " + paymentType);
             out.newLine();
             out.write("VAT:" + " £" + vatPrice);
             out.newLine();
             out.write("Grand Total:" + " £" + grandTotal);
-
+            //Close the writing file
             out.close();
         } catch (Exception ex) {
+            //Prints out any error to the terminal
             ex.printStackTrace();
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -586,6 +598,7 @@ public class PaymentForParts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void storeCardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeCardPaymentActionPerformed
+        //Get the text fields and place them into a String variable
         String name = customerNameFieldCard.getText();
         String nameOnCard = nameOnCardFieldCard.getText();
         String amount = amountFieldCard.getText();
@@ -596,9 +609,11 @@ public class PaymentForParts extends javax.swing.JFrame {
         String securityNumber = securityNumberFieldCard.getText();
         String paymentType = paymentCard.getText();
         try {
+            //Creating a MySQL statement which will insert the card payment details
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`cardpayment` (CustomerName, CardOwnerName, "
                     + "Amount, CardNumber, ExpiryDate, SortCode, AccountNumber, SecuirtyNumber) "
                     + "Values(?,?,?,?,?,?,?,?)");
+            //Get the string variables and place them into the query
             prestate.setString(1, name);
             prestate.setString(2, nameOnCard);
             prestate.setString(3, amount);
@@ -607,58 +622,80 @@ public class PaymentForParts extends javax.swing.JFrame {
             prestate.setString(6, sortCode);
             prestate.setString(7, accountNumber);
             prestate.setString(8, securityNumber);
+            //Executing the query and placing it into an int 
             int i = prestate.executeUpdate();
+            //If the result is more then 0
             if (i > 0) {
+                //Show a pop up which shows a payment successful
                 JOptionPane.showMessageDialog(null, "Payment successfully saved");
+                //Make this JPanel invisable
                 this.setVisible(false);
             } else {
+                //A pop up menu which shows the payment not successful
                 JOptionPane.showMessageDialog(null, "Payment has not been saved");
             }
         } catch (Exception ex) {
+            //A pop up box to show that there was an error with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
         try {
+            //Creating a MySQL statement which will insert the card payment details
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                     + "Amount, CustomerName)"
                     + "Values (?,?,?) ");
+            //Getting the string variables and placing them into the MySQL statement
             prestate.setString(1, paymentType);
             prestate.setString(2, amount);
             prestate.setString(3, name);
+            //Execute the query
             prestate.executeUpdate();
         } catch (Exception ex) {
+            //A pop up showing there was an error with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to database");
         }
+        //Creating the invoice for payment
         payment();
     }//GEN-LAST:event_storeCardPaymentActionPerformed
 
     private void closeCardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeCardPaymentActionPerformed
-      
+        //Close the JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeCardPaymentActionPerformed
 
     private void cashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashPaymentActionPerformed
+        //Closing the payment JPanel
         buttons.setVisible(false);
+        //Making the String variable equal to cash payment
         paymentType = "Cash Payment";
+        //Making the JPanel visable
         cashPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cashPaymentActionPerformed
 
     private void cardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardPaymentActionPerformed
+        //Making the JPanel invisable
         buttons.setVisible(false);
+        //Making the String variable equal to card payment
         paymentType = "Card Payment";
+        //Making the JPanel visable
         cardPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cardPaymentActionPerformed
 
     private void chequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chequePaymentActionPerformed
+        //Makes the buttons JPanel invisable
         buttons.setVisible(false);
+        //Making the String variable equal to cheque payment
         paymentType = "Cheque Payment";
+        //Making the JPanel visable
         chequePaymentPanel.setVisible(true);
     }//GEN-LAST:event_chequePaymentActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void storeChequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeChequePaymentActionPerformed
+        //Getting the text fields and placing them into a string variable
         String name = nameFieldCheque.getText();
         String amount = amountFieldCheque.getText();
         String chequeDate = chequeDateFieldCheque.getText();
@@ -667,74 +704,92 @@ public class PaymentForParts extends javax.swing.JFrame {
         String memo = memoFieldCheque.getText();
         String paymentType = paymentCheque.getText();
         try {
+            //Creating a MySQL statement that will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
                     + "PayToName, ChequeName, Memo) "
                     + "Values(?,?,?,?,?,?);");
+            //Getting the strinag variables and placing them into A the query
             prestate.setString(1, name);
             prestate.setString(2, amount);
             prestate.setString(3, chequeDate);
             prestate.setString(4, payToName);
             prestate.setString(5, chequeName);
             prestate.setString(6, memo);
+            //Execute they query and place it in an int variable
             int i = prestate.executeUpdate();
             if (i > 0) {
+                //A pop up showing the payment was successful
                 JOptionPane.showMessageDialog(null, "Payment successfully saved");
+                //Making the JPanel invisable
                 this.setVisible(false);
             } else {
+                //Showing an error message if one of the variables was not right
                 JOptionPane.showMessageDialog(null, "Payment has not been saved");
             }
         } catch (Exception ex) {
+            //Showing an error message if there was a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
         try {
+            //Creating a MySQL statement which will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                     + "Amount, CustomerName)"
                     + "Values (?,?,?) ");
+            //Getting the strinag variables and placing them into A the query
             prestate.setString(1, paymentType);
             prestate.setString(2, amount);
             prestate.setString(3, name);
+            //Executing the query
             prestate.executeUpdate();
         } catch (Exception ex) {
+            //Showing a error message that there was connection with the database or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to database");
         }
-
+        //Creates an invoice
         payment();
     }//GEN-LAST:event_storeChequePaymentActionPerformed
 
     private void closeChequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeChequePaymentActionPerformed
+        //Makes the JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeChequePaymentActionPerformed
 
     private void storeCashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeCashPaymentActionPerformed
+        //Getting the text fields and placing them into a String variable
         String customerNameString = customerName.getText();
         String amountFieldCashString = amountFieldCash.getText();
         String paymentTypeString = cashPaymentType.getText();
         try {
+            //Creating a MySQL statement which will insert into the database
             prestate = db.conn.prepareStatement("INSERT INTO `cashpayment`(CustomerName, Amount) "
                     + "Values(?,?)");
+            //Getting the string variables and placing them into the MySQL statement
             prestate.setString(1, customerNameString);
             prestate.setString(2, amountFieldCashString);
+            //Executing the query
             prestate.executeUpdate();
-
         } catch (Exception ex) {
+            //Print any errors to the terminal
             ex.printStackTrace();
         }
-
         try {
+            //Creating a MySQL statement which will insert into the database
             prestate = db.conn.prepareStatement("INSERT INTO `payment` (PaymentType, Amount, CustomerName)"
                     + "Values(?,?,?)");
+            //Gettng the string variables and placing them into the MySQL query
             prestate.setString(1, paymentTypeString);
             prestate.setString(2, amountFieldCashString);
             prestate.setString(3, customerNameString);
+            //Executing the query
             prestate.executeUpdate();
         } catch (Exception ex) {
-
         }
-
+        //Creating an invoice
         payment();
     }//GEN-LAST:event_storeCashPaymentActionPerformed
 
     private void closeCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeCashActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeCashActionPerformed
 

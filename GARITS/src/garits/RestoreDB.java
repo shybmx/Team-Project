@@ -3,8 +3,11 @@ package garits;
 public class RestoreDB extends javax.swing.JPanel {
     DBConnect db;
     public RestoreDB(DBConnect db) {
+        //Setting up all the componets within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the background from the JButtons and JPanel
         restoreButton.setOpaque(false);
         restoreButton.setContentAreaFilled(false); 
         restoreButton.setBorderPainted(false);
@@ -12,6 +15,7 @@ public class RestoreDB extends javax.swing.JPanel {
         closeButton.setContentAreaFilled(false); 
         closeButton.setBorderPainted(false);
         controlPanel.setOpaque(false);
+        //Setting the size of the JPanel
         this.setSize(1300, 900);
     }
 
@@ -82,15 +86,18 @@ public class RestoreDB extends javax.swing.JPanel {
 
     private void restoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreButtonActionPerformed
         try{
+           //A string variable which will get the location of the back up file 
            String str = "C:/xampp/mysql/bin/mysql -u root garits < C:/Users/shahzad/Desktop/test.sql";
+           //Execute the query on cmd
            Process process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c",str});
-           System.out.println(str);
        }catch(Exception ex){
+           //Print out an error message to the terminal
            ex.printStackTrace();
        }
     }//GEN-LAST:event_restoreButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        //Closes the JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
 

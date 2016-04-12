@@ -12,14 +12,23 @@ public class SupplierParts extends javax.swing.JFrame {
     PreparedStatement prestate;
     Stock stock;
     public SupplierParts(String supplier, DBConnect db, Stock stock) {
+        //Setting the all the componerts within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Passing in the supplier string
         this.supplier = supplier;
+        //Passing in the stock string
         this.stock = stock;
+        //Setting the size of the JFrame
         this.setSize(1280, 470);
+        //Making the JFrame not resizeable
         this.setResizable(false);
+        //Refreshing the JTable
         updateTable();
+        //Not making the program close when the close button is hit
          setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+         //Removing the backgrounds from the JButtons, JPanels
          selectToOrder.setOpaque(false);
         selectToOrder.setContentAreaFilled(false);
         selectToOrder.setBorderPainted(false);
@@ -30,11 +39,16 @@ public class SupplierParts extends javax.swing.JFrame {
     
     public void updateTable(){
         try{
+            //Creating a mySQL query that gets supplier from the parts table
             prestate = db.conn.prepareStatement("SELECT * FROM parts WHERE Supplier = '"+supplier+"'");
+            //Executing the query and placing it in a result set
             ResultSet result = prestate.executeQuery();
+            //Placing the result into a JTable
             partsTable.setModel(DbUtils.resultSetToTableModel(result));
+            //Closing this JFrame
             this.setVisible(false);
         }catch(Exception ex){
+            //An error message if there is a problem with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to Database");
         }
     } 
@@ -95,12 +109,16 @@ public class SupplierParts extends javax.swing.JFrame {
 
     private void selectToOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectToOrderActionPerformed
         try{
+            //Geting the selected row and placing it into an int variable
             int index = partsTable.getSelectedRow();
+            //Getting all the fields from the JTable and placing them into text fields
             String unitCost = partsTable.getValueAt(index, 5).toString();
             String supplierName = partsTable.getValueAt(index, 2).toString();
             String partName = partsTable.getValueAt(index, 1).toString();
+            //Passing in the items to the method
             stock.setTextFields(unitCost, partName, supplierName);
         }catch(Exception ex){
+            //Printing out the errors to the terminal
             ex.printStackTrace();
         }
     }//GEN-LAST:event_selectToOrderActionPerformed

@@ -8,9 +8,13 @@ public class SystemConfig extends javax.swing.JPanel {
     DBConnect db;
     PreparedStatement prestate;
     public SystemConfig(DBConnect db) {
+        //Setting the all the componerts within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Setting the size of the JFrame
         this.setSize(1300, 900);
+        //Removing the backgrounds from the JButtons, JPanels
         updateSystem.setOpaque(false);
         updateSystem.setContentAreaFilled(false); 
         updateSystem.setBorderPainted(false);
@@ -18,6 +22,7 @@ public class SystemConfig extends javax.swing.JPanel {
         closeSystem.setContentAreaFilled(false); 
         closeSystem.setBorderPainted(false);
         systemConfigPanel.setOpaque(false);
+        //refreshing the JTable
         insertIntoText();
     }
 
@@ -170,6 +175,7 @@ public class SystemConfig extends javax.swing.JPanel {
 
     public void insertIntoText(){
         try{
+            //Getting everything from the database
             prestate = db.conn.prepareStatement("SELECT * FROM `system config` ");
             ResultSet result = prestate.executeQuery();
             result.next();
@@ -195,6 +201,7 @@ public class SystemConfig extends javax.swing.JPanel {
     
     private void updateSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSystemActionPerformed
         try{
+            //Updating the database 
             prestate = db.conn.prepareStatement("UPDATE `system config` SET `value` = '"+vat.getText()+"' WHERE `variables` = 'VAT' ");
             prestate.execute();
             prestate = db.conn.prepareStatement("UPDATE `system config` SET `value` = '"+markUp.getText()+"'  WHERE `variables` = 'Mark up for Parts' ");
@@ -215,6 +222,7 @@ public class SystemConfig extends javax.swing.JPanel {
     }//GEN-LAST:event_updateSystemActionPerformed
 
     private void closeSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeSystemActionPerformed
+        //Closing the JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeSystemActionPerformed
 

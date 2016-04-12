@@ -10,8 +10,11 @@ public class Payment extends javax.swing.JPanel {
     PreparedStatement prestate;
 
     public Payment(DBConnect db) {
+        //Setting up all the componets within this JPanel
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the background from from all the JButtons and JPanels
         searchCustomerChequeButton.setOpaque(false);
         searchCustomerChequeButton.setContentAreaFilled(false);        
         searchCustomerChequeButton.setBorderPainted(false);
@@ -65,6 +68,7 @@ public class Payment extends javax.swing.JPanel {
         customerName.setEditable(false);
         amountPaid.setEditable(false);
         cashPaymentField.setEditable(false);
+        //Setting the size of the JPanel
         this.setSize(1300, 900);
     }
     
@@ -764,25 +768,33 @@ public class Payment extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashPaymentActionPerformed
+        //Removing the JPanel
         buttons.setVisible(false);
+        //Making another JPanel visable
         cashPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cashPaymentActionPerformed
 
     private void cardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardPaymentActionPerformed
+        //Removing the JPanel
         buttons.setVisible(false);
+        //Making another JPanel visable
         cardPaymentPanel.setVisible(true);
     }//GEN-LAST:event_cardPaymentActionPerformed
 
     private void chequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chequePaymentActionPerformed
+        //Removing the JPanel
         buttons.setVisible(false);
+        //Making another JPanel visable
         chequePaymentPanel.setVisible(true);
     }//GEN-LAST:event_chequePaymentActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Making this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void storeCardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeCardPaymentActionPerformed
+        //Getting all the values from the Text fields and placing them in a String variable
         String name = customerNameFieldCard.getText();
         String nameOnCard = nameOnCardFieldCard.getText();
         String amount = amountFieldCard.getText();
@@ -793,9 +805,11 @@ public class Payment extends javax.swing.JPanel {
         String securityNumber = securityNumberFieldCard.getText();
         String paymentType = paymentCard.getText();
         try {
+            //Creating a MySQL statement which will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`cardpayment` (CustomerName, CardOwnerName, "
                     + "Amount, CardNumber, ExpiryDate, SortCode, AccountNumber, SecuirtyNumber) "
                     + "Values(?,?,?,?,?,?,?,?)");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, name);
             prestate.setString(2, nameOnCard);
             prestate.setString(3, amount);
@@ -804,37 +818,57 @@ public class Payment extends javax.swing.JPanel {
             prestate.setString(6, sortCode);
             prestate.setString(7, accountNumber);
             prestate.setString(8, securityNumber);
+            //Executing the query
             prestate.executeUpdate();
+            //Creating a MySQL statement which will insert the payment details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                     + "Amount, CustomerName)"
                     + "Values (?,?,?) ");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, paymentType);
             prestate.setString(2, amount);
             prestate.setString(3, name);
+            //Executing the query
             prestate.executeUpdate();
+            //Creating a MySQL statement where it will select the amount spent in a month
             prestate = db.conn.prepareStatement("SELECT `Spent` FROM `customers` WHERE  name = '" + customerNameFieldCard.getText() + "' ");
+            //Executing the query
             ResultSet gs = prestate.executeQuery();
+            //Goes to the next result which is not the header
             gs.next();
+            //Creating a double variable which will get the spent
             double getSpent = gs.getDouble("Spent");
+            //Doing the maths to get the spent and parsing a string to a double
             getSpent = getSpent + Double.parseDouble(amountFieldCard.getText());
+            //Creating a MySQL statement which will update the amount spent
             prestate = db.conn.prepareStatement("UPDATE `customers` Set  `Spent` = '" + getSpent + "' WHERE `name` = '" + customerNameFieldCard.getText() + "' ");
+            //Executing the query
             prestate.execute();
+            //Creating a MySQL statement which will update the has paid to yes
             prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `HasPaid` = 'Yes' WHERE `Customer`= '"+name+"' ");
+            //Executing the query
             prestate.execute();
+            //Creating a MySQL statement which will update there statues to cleared
             prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Clear' Where `name` = '"+name+"' ");
+            //Executing the query
             prestate.execute();
+            //Make the Panel invisable
             cardPaymentPanel.setVisible(false);
+            //A pop up box showing the payment was successful
             JOptionPane.showMessageDialog(null, "Payment successfully recorded");
         } catch (Exception ex) {
+            //An errors message to show a an error with the database connection or MySQL statement 
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }        
     }//GEN-LAST:event_storeCardPaymentActionPerformed
 
     private void closeCardPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeCardPaymentActionPerformed
+        //Making the JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeCardPaymentActionPerformed
 
     private void storeChequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeChequePaymentActionPerformed
+        //Getting all the values from the Text fields and placing them in a String variable
         String name = nameFieldCheque.getText();
         String amount = amountFieldCheque.getText();
         String chequeDate = chequeDateFieldCheque.getText();
@@ -843,74 +877,115 @@ public class Payment extends javax.swing.JPanel {
         String memo = memoFieldCheque.getText();
         String paymentType = paymentCheque.getText();
         try {
+            //Creating a MySQL statement which will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO  `garits`.`chequepayment` (CustomerName, Amount, ChequeDate,"
                     + "PayToName, ChequeName, Memo) "
                     + "Values(?,?,?,?,?,?);");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, name);
             prestate.setString(2, amount);
             prestate.setString(3, chequeDate);
             prestate.setString(4, payToName);
             prestate.setString(5, chequeName);
             prestate.setString(6, memo);
+            //Executing the query
             prestate.executeUpdate();
+            //Creating a MySQL statement which will insert the payment details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                     + "Amount, CustomerName)"
                     + "Values (?,?,?) ");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, paymentType);
             prestate.setString(2, amount);
             prestate.setString(3, name);
+            //Executing the query
             prestate.executeUpdate();
+            //Creating a MySQL statement which will insert the payment details into the database
             prestate = db.conn.prepareStatement("SELECT `Spent` FROM `customers` WHERE  name = '" + nameFieldCheque.getText() + "' ");
+            //Executing the query
             ResultSet gs = prestate.executeQuery();
+            //Goes to the next result which is not the header
             gs.next();
+            //Creating a double variable which will get the spent
             double getSpent = gs.getDouble("Spent");
+            //Doing the maths to get the spent and parsing a string to a double
             getSpent = getSpent + Double.parseDouble(amountFieldCheque.getText());
+            //Creating a MySQL statement which will update the amount spent
             prestate = db.conn.prepareStatement("UPDATE `customers` Set  `Spent` = '" + getSpent + "' WHERE `name` = '" + nameFieldCheque.getText() + "' ");
+            //Executing the query
             prestate.execute();
+            //Creating a MySQL statement which will update the has paid to yes
             prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `HasPaid` = 'Yes' WHERE `Customer`= '"+name+"' ");
+            //Executing the query
             prestate.execute();
+            //Creating a MySQL statement which will update there statues to cleared
             prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Clear' Where `name` = '"+name+"' ");
+            //Executing the query
             prestate.execute();
+            //Make the Panel invisable
             cardPaymentPanel.setVisible(false);
+            //A pop up box showing the payment was successful
             JOptionPane.showMessageDialog(null, "Payment successfully recorded");
         } catch (Exception ex) {
+            //An errors message to show a an error with the database connection or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect to the database");
         }
     }//GEN-LAST:event_storeChequePaymentActionPerformed
 
     private void closeChequePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeChequePaymentActionPerformed
+        //Make this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeChequePaymentActionPerformed
 
     private void storeCashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeCashPaymentActionPerformed
+        //Getting all the values from the Text fields and placing them in a String variable
         String name = customerName.getText().toString();
         String amount = amountPaid.getText().toString();
         String paymentType = cashPaymentField.getText();
         try{
+            //Creating a MySQL statement which will insert the details into the database
             prestate = db.conn.prepareStatement("INSERT INTO  `garits`.`cashpayment` (CustomerName, Amount) "
                     + "Values(?,?);");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, name);
             prestate.setString(2, amount);
+            //Execute the query
             prestate.executeUpdate();
+            //Creating a MySQL statement which will insert the payment details into the database
             prestate = db.conn.prepareStatement("INSERT INTO `garits`.`payment` (PaymentType, "
                     + "Amount, CustomerName)"
                     + "Values (?,?,?) ");
+            //Getting the String and placing them in the MySQL statement
             prestate.setString(1, paymentType);
             prestate.setString(2, amount);
             prestate.setString(3, name);
+            //Execute the query
             prestate.executeUpdate();
+            //Creating a MySQL statement which will update the amount spent
             prestate = db.conn.prepareStatement("SELECT `Spent` FROM `customers` WHERE  name = '" + customerName.getText() + "' ");
+            //Execute the query and place it in a result set
             ResultSet gs = prestate.executeQuery();
+            //Goes to the next result which is not the header
             gs.next();
+            //Creating a double variable which will get the spent
             double getSpent = gs.getDouble("Spent");
+            //Doing the maths to get the spent and parsing a string to a double
             getSpent = getSpent + Double.parseDouble(amountPaid.getText());
+            //Creating a MySQL statement which will update the amount spent
             prestate = db.conn.prepareStatement("UPDATE `customers` Set  `Spent` = '" + getSpent + "' WHERE `name` = '" + customerName.getText() + "' ");
+            //Execute the query
             prestate.execute();
+            //Creating a MySQL statement which will update the has paid to yes
             prestate = db.conn.prepareStatement("UPDATE `jobsheets` SET `HasPaid` = 'Yes' WHERE `Customer`= '"+name+"' ");
+            //Execute the query
             prestate.execute();
+            //Creating a MySQL statement which will update there statues to cleared
             prestate = db.conn.prepareStatement("UPDATE `customers` SET `Status` = 'Clear' Where `name` = '"+name+"' ");
+            //Execute the query
             prestate.execute();
+            //Make the Panel invisable
             cardPaymentPanel.setVisible(false);
+            //A pop up box showing the payment was successful
             JOptionPane.showMessageDialog(null, "Payment successfully recorded");
         }catch(Exception ex){
             
@@ -918,18 +993,25 @@ public class Payment extends javax.swing.JPanel {
     }//GEN-LAST:event_storeCashPaymentActionPerformed
 
     private void closeCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeCashActionPerformed
+        //Make this JPanel invisable
         this.setVisible(false);
     }//GEN-LAST:event_closeCashActionPerformed
 
     private void searchCustomerCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerCardButtonActionPerformed
+        //Getting a Text field and placing it in a string variable
         String name = searchCustomerCard.getText().toString();
+        //Creating a new search customer payment frame JFrame
         SearchCustomerPayment searchCustomerPaymentFrame = new SearchCustomerPayment(db, name, jobNumberCard, customerNameFieldCard, amountFieldCard, customerTypeCard, discountTypeCard);
+        //Making the new JFrame visable
         searchCustomerPaymentFrame.setVisible(true);
     }//GEN-LAST:event_searchCustomerCardButtonActionPerformed
 
     private void searchCashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCashActionPerformed
+        //Getting a Text field and placing it in a string variable
         String name = searchCustomerCash.getText().toString();
+        //Creating a new search customer payment frame JFrame
         SearchCustomerPayment searchCustomerPaymentFrame = new SearchCustomerPayment(db, name, jobNumberCash, customerName, amountPaid, cashCustomerType, cashDiscountType);
+        //Making the new JFrame visable
         searchCustomerPaymentFrame.setVisible(true);
     }//GEN-LAST:event_searchCashActionPerformed
 
@@ -938,8 +1020,12 @@ public class Payment extends javax.swing.JPanel {
     }//GEN-LAST:event_customerNameActionPerformed
 
     private void searchCustomerChequeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerChequeButtonActionPerformed
+       //Getting a Text field and placing it in a string variable
        String name = searchCustomerCheque.getText().toString();
-       SearchCustomerPayment searchCustomerPaymentFrame = new SearchCustomerPayment(db, name, jobNumberCheque, nameFieldCheque, amountFieldCheque, chequeCustomerType, chequeDiscountType);
+       //Creating a new search customer payment frame JFrame
+        SearchCustomerPayment searchCustomerPaymentFrame = new SearchCustomerPayment(db, name, jobNumberCash, customerName, amountPaid, cashCustomerType, cashDiscountType);
+        //Making the new JFrame visable
+        searchCustomerPaymentFrame.setVisible(true);
     }//GEN-LAST:event_searchCustomerChequeButtonActionPerformed
 
     private void amountFieldChequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountFieldChequeActionPerformed

@@ -7,13 +7,18 @@ import javax.swing.JOptionPane;
 
 public class Pin extends javax.swing.JFrame {  
     DBConnect db = new DBConnect();
-     static String loggedUser;
+    static String loggedUser;
+    PreparedStatement prestate;
     public Pin(){
+        //Setting up the components within this JFrame
         initComponents();
+        //Removing the background from the JButtons
         login.setOpaque(false);
         login.setContentAreaFilled(false); 
         login.setBorderPainted(false);
+        //Making the JFrame none resize able 
         this.setResizable(false);
+        //Setting the size of the JFrame
         this.setSize(1300, 900);
     }
    
@@ -78,82 +83,130 @@ public class Pin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       PreparedStatement prestate;
+       //Getting the items from the text fields and placing them into a string variable
        String userName = insertUserName.getText();
        String password = insertPassWord.getText();
+       //Getting the username
        loggedUser = userName;
        try {
+           //Creating a MySQL statement which will check if the username, password is correct with the right position
             prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'admin'");
+            //Getting the string variables and placing them into the MySQL statement
             prestate.setString(1, userName);
             prestate.setString(2, password);
+            //Executing the query and placing it in a result set
             ResultSet resultadmin = prestate.executeQuery();
+            //Seting i equal to 0
             int i = 0;
+            //While the the next result
             while(resultadmin.next()){
+                //Goes up by 1
                 i++;
             }
+            //If i equals to 1
             if(i == 1){
+                //Create a new admin menu object
                 AdminMenu admin = new AdminMenu(db);
+                //Make JFrame invisable
                 this.setVisible(false);
+                //Make the new JFrame visable
                 admin.setVisible(true);
             }else{
+               //Creating a MySQL statement which will check if the username, password is correct with the right position
                prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'foreperson'");
+               //Getting the string variables and placing them into the MySQL statement
                prestate.setString(1, userName);
                prestate.setString(2, password);
+               //Executing the query and placing it in a result set
                ResultSet resultfore = prestate.executeQuery();
+               //While the the next result
                while(resultfore.next()){
+                   //Goes up by 1
                    i++;
                }
+               //If i equals to 1
                if(i == 1){
+                   //Creating a new fore person menu object
                    ForePerson forepersonmenu = new ForePerson(db);
+                   //Make this JFrame invisable
                    this.setVisible(false);
+                   //Make the new JFrame visable
                    forepersonmenu.setVisible(true);
                }else{
+                    //Creating a MySQL statement which will check if the username, password is correct with the right position
                      prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'mechanic'");
+               //Getting the string variables and placing them into the MySQL statement
                prestate.setString(1, userName);
                prestate.setString(2, password);
+               //Executing the query and placing it in a result set
                ResultSet resultmech = prestate.executeQuery();
+               //While the the next result
                while(resultmech.next()){
+                   //Goes up by 1
                    i++;
                }
+               //If i equals to 1
                if(i == 1){
+                   //Create a new mechanic menu objects
                    MechanicMenu mechanicmenu = new MechanicMenu(db);
+                   //Making this JFrame invisable
                    this.setVisible(false);
+                   //Making the new JFrame visable
                    mechanicmenu.setVisible(true);
                }else{
+                   //Creating a MySQL statement which will check if the username, password is correct with the right position
                    prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'franchisee'");
+               //Getting the string variables and placing them into the MySQL statement    
                prestate.setString(1, userName);
                prestate.setString(2, password);
+               //Executing the query and placing it in a result set
                ResultSet resultfran = prestate.executeQuery();
+               //While the the next result
                while(resultfran.next()){
+                   //Goes up by 1
                    i++;
                }
+               //If i equals to 1
                if(i == 1){
+                   //Creating a franchisee menu object
                    MainMenu franmenu = new MainMenu(db);
+                   //Making this JFrame invisable
                    this.setVisible(false);
+                   //Making the new JFrame visable
                    franmenu.setVisible(true);
                }else{
+                   //Creating a MySQL statement which will check if the username, password is correct with the right position
                    prestate = db.conn.prepareStatement("SELECT * FROM `login` WHERE `Username` = ? "
                     + "AND `Loginpassword`= ?"
                     + " AND `Position`= 'receptionist'");
+                   //Getting the string variables and placing them into the MySQL statement
                    prestate.setString(1, userName);
                    prestate.setString(2, password);
+                   //Executing the query and placing it in a result set
                    ResultSet resultrep = prestate.executeQuery();
+                   //While the the next result
                    while(resultrep.next()){
+                       //Goes up by 1
                        i++;
                    }
+                   //If i equals to 1
                    if(i == 1){
+                       //Creating a receptionist menu object
                        ReceptionistMenu receptionistmenu = new ReceptionistMenu(db);
+                       //Making this JFrame invisable
                        this.setVisible(false);
+                       //Making the new JFrame visable
                        receptionistmenu.setVisible(true);
                    }else{
+                       //A pop up box showing there was an error with the inserted details
                        JOptionPane.showMessageDialog(null, "Username or Password is incorrect");
                    }
                }
@@ -161,6 +214,7 @@ public class Pin extends javax.swing.JFrame {
                }     
             }
         } catch (Exception ex) {
+            //Showing a problem connecting to the database or MySQL statement
             JOptionPane.showMessageDialog(null, "Cannot connect with the database, Please try again later");
         } 
     }//GEN-LAST:event_loginActionPerformed
@@ -170,23 +224,23 @@ public class Pin extends javax.swing.JFrame {
     }//GEN-LAST:event_insertUserNameActionPerformed
 
     public void keyPressed(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            System.out.println("it works");
-        }
     }
     
     public  void startThread(){
-                Thread t = new Thread(new CreateReports());
-                 t.start();
-                 Thread t1 =new Thread(new ReminderCount());
-                 t1.start();
+        //Creating a new thread to create reports at the end of the month
+        Thread t = new Thread(new CreateReports());
+        //Start the thread
+         t.start();
+         //Creating a new thread to create a reminder count at the end of the month
+        Thread t1 =new Thread(new ReminderCount());
+        //Started the thread
+         t1.start();
     }
     
     private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed
     }//GEN-LAST:event_loginKeyPressed
 
     public static void main(String args[]) {
-       
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -208,21 +262,17 @@ public class Pin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Pin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-       
         java.awt.EventQueue.invokeLater(new Runnable() {
+            //Start the system
             public void run() {
+                //Creating the Object
                 Pin p = new Pin();
+                //Make this JFrame visable
                 p.setVisible(true);
+                //Start both threads
                 p.startThread();
             }
-        });
-        
-  
-        
-        
-        
-        
+        });  
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

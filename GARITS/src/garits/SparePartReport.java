@@ -3,8 +3,11 @@ package garits;
 public class SparePartReport extends javax.swing.JPanel {
     DBConnect db;
     public SparePartReport(DBConnect db) {
+        //Setting the all the componerts within this JFrame
         initComponents();
+        //Passing in the database connection
         this.db = db;
+        //Removing the backgrounds from the JButtons, JPanels
         close.setOpaque(false);
         close.setContentAreaFilled(false); 
         close.setBorderPainted(false);
@@ -12,6 +15,7 @@ public class SparePartReport extends javax.swing.JPanel {
         view.setContentAreaFilled(false); 
         view.setBorderPainted(false);
         panel.setOpaque(false);
+        //Setting the size of the JFrame
         this.setSize(1300, 900);
     }
 
@@ -88,11 +92,14 @@ public class SparePartReport extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+       //Closing this JPanel
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        //Creating a new create report object
         CreateReports cr = new CreateReports();
+        //Creating a spare part report
         cr.sparePartReport();
     }//GEN-LAST:event_viewActionPerformed
 
