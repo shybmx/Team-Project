@@ -1042,6 +1042,7 @@ public class CustomerInfo extends javax.swing.JPanel {
             editColour.setText(customerTable.getValueAt(index, 12).toString());
             buttons.setVisible(false);
             editUserPanel.setVisible(true);
+            System.out.println("here");
         }catch(Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "You must select a customer to edit");

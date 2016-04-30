@@ -165,10 +165,7 @@ public class CreateReports implements Runnable {
             if (cDay == lDay && (checked == false)) {
                 System.out.println("Hi its last day of the month " + m + " " + lDay);
                 try {
-                    
-                    
                     backUp();
-                    
                     prestate = db.conn.prepareStatement("UPDATE `customers` SET `Spent` = 0");
                     prestate.execute();
                     sparePartReport();
